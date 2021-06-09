@@ -6,7 +6,8 @@ import { IUserRepository } from "../../interfaces/repositories/IUserRepository";
 import crypto from "crypto";
 import { IUser } from "../../interfaces/models/User";
 import { hashPassword } from "../../services/bcrypt";
-import { registerUserMail } from "../../services/nodemailer";
+import { assignToken } from "../../services/jsonwebtoken";
+import { assign } from "nodemailer/lib/shared";
 
 export class GoogleLoginController extends BaseController {
   private authRepository: IAuthRepository;
@@ -50,18 +51,23 @@ export class GoogleLoginController extends BaseController {
       const user = await this.userRepository.getUserByEmail(
         this.googleAuth.email
       );
-      if (user !== null) return this.ok(res, user);
+      if (user !== null) {
+        const token = assignToken(user._id);
+        res.cookie("token", token, {
+          httpOnly: true,
+        });
+        return this.ok(res, user);
+      }
       this.googleAuth.name = response.payload.name;
       const generatePassword = crypto.randomBytes(5).toString("hex");
       this.googleAuth.password = hashPassword(generatePassword);
       const registerUser = await this.authRepository.registerUser(
         this.googleAuth
       );
-      if (registerUser)
-        await registerUserMail({
-          email: registerUser.email,
-          password: generatePassword,
-        });
+      if (!registerUser) return this.fail(res, "Cannot login using google");
+      res.cookie("token", assign(registerUser._id), {
+        httpOnly: true,
+      });
       return this.ok(res, registerUser);
     } catch (err: any) {
       console.log(err);
