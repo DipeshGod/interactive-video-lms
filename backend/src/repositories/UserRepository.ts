@@ -1,6 +1,6 @@
-import { Query } from 'mongoose';
-import { IUserDoc, IUserModel } from '../interfaces/models/User';
-import { IUserRepository } from '../interfaces/repositories/IUserRepository';
+import { Query } from "mongoose";
+import { IUserDoc, IUserModel } from "../interfaces/models/User";
+import { IUserRepository } from "../interfaces/repositories/IUserRepository";
 
 export class UserRepository implements IUserRepository {
   private model: IUserModel;
@@ -17,14 +17,14 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  // public getUserByEmail(email: string): any {
-  //   try {
-  //     const user = this.model.find({ email: email });
-  //     return user;
-  //   } catch (err: any) {
-  //     throw new Error(err);
-  //   }
-  // }
+  public getUserByEmail(email: string): any {
+    try {
+      const user = this.model.findOne({ email: email });
+      return user;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
 
   public editUserByEmail(userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {

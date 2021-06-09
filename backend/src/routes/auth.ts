@@ -8,6 +8,8 @@ import { User } from "./../models/User";
 import { ResetPassword } from "./../models/Code";
 import { UserRepository } from "../repositories/UserRepository";
 import { VerifyUserController } from "../controllers/auth/VerifyUserController";
+import { GoogleLoginController } from "../controllers/auth/GoogleLoginController";
+import { FacebookLoginController } from "../controllers/auth/FacebookLoginController";
 
 const router = Router();
 
@@ -32,6 +34,14 @@ router.post("/reset-password", (req, res) =>
 
 router.get("/verify/:id", (req, res) =>
   new VerifyUserController(authRepository).execute(req, res)
+);
+
+router.post("/facebook-login", (req, res) =>
+  new FacebookLoginController(authRepository).execute(req, res)
+);
+
+router.post("google-login", (req, res) =>
+  new GoogleLoginController(authRepository,userRepository).execute(req, res)
 );
 
 export { router as authRouter };

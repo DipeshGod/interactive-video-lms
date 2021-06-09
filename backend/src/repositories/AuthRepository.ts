@@ -69,9 +69,27 @@ export class AuthRepository implements IAuthRepository {
     userData: any
   ): Query<IUserDoc | null, IUserDoc, {}> {
     try {
-      let verified = this.userModel.findByIdAndUpdate(id, userData,{new:true});
+      let verified = this.userModel.findByIdAndUpdate(id, userData, {
+        new: true,
+      });
       if (!verified) throw new Error("Error while verifying");
       return verified;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
+  public googleLogin(userData: any): any {
+    try {
+      return "google login";
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
+  public facebookLogin(userData: any): any {
+    try {
+      return "facebook login";
     } catch (err: any) {
       throw new Error(err);
     }

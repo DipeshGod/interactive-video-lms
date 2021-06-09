@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import {
   createStyles,
@@ -44,6 +45,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const router = useRouter()
 
   const handleGetCode = async () => {
     if (email === undefined) {
@@ -61,7 +63,23 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleChangePassoword = () => {};
+  const handleChangePassoword = async() => {
+    if(password !== confirmPassword){
+      toast.info("password doesnt match")
+      return;
+    }
+
+    try{
+      const response = await api.post('/api/auth/reset-password',{code,email,password});
+      if(response.status===200){
+        router.push('/login');
+        toast.info("Password change success")
+      }
+    }catch(err) {
+      console.log("error changing password",err)
+    }
+
+  };
 
   return (
     <Layout>
