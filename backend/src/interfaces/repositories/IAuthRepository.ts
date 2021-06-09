@@ -13,4 +13,6 @@ export interface IAuthRepository {
     id: string
   ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}>;
   verifyUser(id: string, userData: IUser): any;
+  facebookLogin(data: any): any;
+  googleLogin(data: any): any;
 }

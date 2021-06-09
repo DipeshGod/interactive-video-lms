@@ -5,15 +5,15 @@ import { BaseController } from '../BaseController';
 import { hashPassword } from './../../services/bcrypt';
 
 export class RegisterUserController extends BaseController {
-  private userRepository: IAuthRepository;
+  private authRepository: IAuthRepository;
   mailSend: {
     id: string;
     email: string;
   };
 
-  constructor(userRepository: IAuthRepository) {
+  constructor(authRepository: IAuthRepository) {
     super();
-    this.userRepository = userRepository;
+    this.authRepository = authRepository;
     this.mailSend = {
       id: '',
       email: '',
@@ -26,7 +26,7 @@ export class RegisterUserController extends BaseController {
   ): Promise<void | any> {
     try {
       req.body.password = hashPassword(req.body.password);
-      const user = await this.userRepository.registerUser(req.body);
+      const user = await this.authRepository.registerUser(req.body);
       if (!user) return this.fail(res, `Can't register`);
       this.mailSend.id = user._id;
       this.mailSend.email = user.email;
