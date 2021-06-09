@@ -40,7 +40,7 @@ router.post("/facebook-login", (req, res) =>
   new FacebookLoginController(authRepository).execute(req, res)
 );
 
-router.post("google-login", (req, res) =>
+router.post("/google-login", (req, res) =>
   new GoogleLoginController(authRepository,userRepository).execute(req, res)
 );
 

@@ -68,6 +68,14 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = async(res) => {
+    try{
+      console.log('google',res)
+    }catch(err){
+      console.log('err',err)
+    }
+  }
+
   return (
     <Layout>
       <div
@@ -161,7 +169,7 @@ const Login = () => {
                     <GoogleLogin
                       clientId='658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com'
                       buttonText='Google'
-                      onSuccess={() => console.log('hello')}
+                      onSuccess={handleGoogleLogin}
                       onFailure={(e) => console.log('hello failure', e)}
                       cookiePolicy={'single_host_origin'}
                       render={(renderProps) => (
