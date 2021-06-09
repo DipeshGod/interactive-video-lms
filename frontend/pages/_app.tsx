@@ -11,6 +11,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
+import { Provider } from '../context/user';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -29,7 +30,7 @@ export default function MyApp(props: AppProps) {
   }, []);
 
   return (
-    <React.Fragment>
+    <Provider>
       <Head>
         <title>My page</title>
         <meta
@@ -57,7 +58,7 @@ export default function MyApp(props: AppProps) {
         draggable={false}
         pauseOnHover
       />
-    </React.Fragment>
+    </Provider>
   );
 }
 

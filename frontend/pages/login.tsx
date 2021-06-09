@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   Container,
   Typography,
@@ -19,6 +21,8 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import Layout from '../components/layout';
+import { Context } from '../context/user';
+import api from '../services/api';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +44,30 @@ const useStyles = makeStyles((theme: Theme) =>
 const Login = () => {
   const classes = useStyles();
 
+  const { state, dispatch } = useContext(Context);
+  const router = useRouter();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    let loginData = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    try {
+      const { data } = await api.post('/api/auth/login', loginData);
+      dispatch({ type: 'LOGIN', payload: data });
+
+      //save in localstorage to persist
+      localStorage.setItem('user', JSON.stringify(data));
+
+      //redirect
+      router.push('/');
+    } catch (err) {
+      console.log('Couldnt login', err);
+    }
+  };
+
   return (
     <Layout>
       <div
@@ -59,7 +87,7 @@ const Login = () => {
           <Box className={classes.card}>
             <Card raised>
               <CardContent>
-                <form>
+                <form onSubmit={handleLogin}>
                   <Box marginY='1rem'>
                     <FormControl variant='filled' fullWidth={true}>
                       <InputLabel htmlFor='filled-adornment-email'>
