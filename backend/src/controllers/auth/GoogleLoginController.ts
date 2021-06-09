@@ -1,10 +1,12 @@
-import { Request, Response } from 'express';
-import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
-import { BaseController } from '../BaseController';
-import { OAuth2Client } from 'google-auth-library';
-import { IUserRepository } from '../../interfaces/repositories/IUserRepository';
-import crypto from 'crypto';
-import { IUser } from '../../interfaces/models/User';
+import { Request, Response } from "express";
+import { IAuthRepository } from "../../interfaces/repositories/IAuthRepository";
+import { BaseController } from "../BaseController";
+import { OAuth2Client } from "google-auth-library";
+import { IUserRepository } from "../../interfaces/repositories/IUserRepository";
+import crypto from "crypto";
+import { IUser } from "../../interfaces/models/User";
+import { hashPassword } from "../../services/bcrypt";
+import { registerUserMail } from "../../services/nodemailer";
 
 export class GoogleLoginController extends BaseController {
   private authRepository: IAuthRepository;
@@ -21,13 +23,13 @@ export class GoogleLoginController extends BaseController {
     this.authRepository = authRepository;
     this.userRepository = userRepository;
     this.googleAuth = {
-      type: '',
-      name: '',
-      password: '',
-      email: '',
+      type: "student",
+      name: "",
+      password: "",
+      email: "",
       verified: true,
-      isEnterprise: '',
-      profilePicture: '',
+      isEnterprise: "",
+      profilePicture: "",
     };
   }
 
@@ -39,7 +41,30 @@ export class GoogleLoginController extends BaseController {
         audience: process.env.GOOGLE_CLIENT_ID,
       });
       console.log(response);
+      this.googleAuth.email = response.payload.email;
+      if (response.payload.email_verified === false)
+        return this.fail(
+          res,
+          "This email is not verified, verify your gmail account first"
+        );
+      const user = await this.userRepository.getUserByEmail(
+        this.googleAuth.email
+      );
+      if (user !== null) return this.ok(res, user);
+      this.googleAuth.name = response.payload.name;
+      const generatePassword = crypto.randomBytes(5).toString("hex");
+      this.googleAuth.password = hashPassword(generatePassword);
+      const registerUser = await this.authRepository.registerUser(
+        this.googleAuth
+      );
+      if (registerUser)
+        await registerUserMail({
+          email: registerUser.email,
+          password: generatePassword,
+        });
+      return this.ok(res, registerUser);
     } catch (err: any) {
+      console.log(err);
       return this.fail(res, err.toString());
     }
   }
