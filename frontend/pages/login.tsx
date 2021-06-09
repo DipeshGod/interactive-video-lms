@@ -70,10 +70,16 @@ const Login = () => {
 
   const handleGoogleLogin = async (res) => {
     try {
-      const response = await api.post('/api/auth/google-login', {
+      const { data } = await api.post('/api/auth/google-login', {
         googleIdToken: res.tokenId,
       });
-      console.log(response);
+      dispatch({ type: 'LOGIN', payload: data });
+
+      //save in localstorage to persist
+      localStorage.setItem('user', JSON.stringify(data));
+
+      //redirect
+      router.push('/');
     } catch (err) {
       console.log('err', err);
     }
