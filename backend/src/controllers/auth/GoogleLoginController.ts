@@ -41,7 +41,6 @@ export class GoogleLoginController extends BaseController {
         idToken: googleIdToken,
         audience: process.env.GOOGLE_CLIENT_ID,
       });
-      console.log(response);
       this.googleAuth.email = response.payload.email;
       if (response.payload.email_verified === false)
         return this.fail(
