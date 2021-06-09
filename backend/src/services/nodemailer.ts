@@ -56,3 +56,16 @@ export const verifyUserMail = async (data: any) => {
     <p><a href="${process.env.CLIENT_ADDRESS}/verify?id=${data.id}" target="_blank">Verify your Email Address</p>`,
   });
 };
+
+export const registerUserMail = async (data:any)=>{
+  await sender.sendMail({
+    from: "Learning Management System",
+    to: data.email,
+    subject:"Verify Email and Change Password✔",
+    text:"Verify Email and Change Password✔",
+    html:`<p><strong>Welcome to interactive video lms</strong></p>
+    <p>You can also login by using our system. Use the password below to login and change password</p>
+    <p><strong>${data.password}</strong></p>
+    `
+  })
+}
