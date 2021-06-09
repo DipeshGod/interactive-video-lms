@@ -68,13 +68,16 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async(res) => {
-    try{
-      console.log('google',res)
-    }catch(err){
-      console.log('err',err)
+  const handleGoogleLogin = async (res) => {
+    try {
+      const response = await api.post('/api/auth/google-login', {
+        googleIdToken: res.tokenId,
+      });
+      console.log(response);
+    } catch (err) {
+      console.log('err', err);
     }
-  }
+  };
 
   return (
     <Layout>
@@ -167,7 +170,7 @@ const Login = () => {
                     justifyContent='space-between'
                   >
                     <GoogleLogin
-                      clientId='658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com'
+                      clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
                       buttonText='Google'
                       onSuccess={handleGoogleLogin}
                       onFailure={(e) => console.log('hello failure', e)}
