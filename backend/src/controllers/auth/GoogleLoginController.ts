@@ -7,7 +7,6 @@ import crypto from "crypto";
 import { IUser } from "../../interfaces/models/User";
 import { hashPassword } from "../../services/bcrypt";
 import { assignToken } from "../../services/jsonwebtoken";
-import { assign } from "nodemailer/lib/shared";
 
 export class GoogleLoginController extends BaseController {
   private authRepository: IAuthRepository;
@@ -64,7 +63,7 @@ export class GoogleLoginController extends BaseController {
         this.googleAuth
       );
       if (!registerUser) return this.fail(res, "Cannot login using google");
-      res.cookie("token", assign(registerUser._id), {
+      res.cookie("token", assignToken(registerUser._id), {
         httpOnly: true,
       });
       return this.ok(res, registerUser);
