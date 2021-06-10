@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
 import { IUserRepository } from '../../interfaces/repositories/IUserRepository';
 import { hashPassword } from '../../services/bcrypt';
+import { resetPasswordValidator } from '../../services/validator/authValidator';
 import { BaseController } from '../BaseController';
 
 export class ResetPasswordController extends BaseController {
@@ -19,6 +20,7 @@ export class ResetPasswordController extends BaseController {
 
   protected async executeImpl(req: Request, res: Response) {
     try {
+      await resetPasswordValidator(req.body);
       const resetPasswordData: any = await this.authRepository.resetPassword(
         req.body.email
       );
