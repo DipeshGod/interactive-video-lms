@@ -85,6 +85,25 @@ const Login = () => {
     }
   };
 
+  const handleFacebookLogin = async (res) => {
+    const {userID,accessToken} = res;
+    try{
+      const { data } = await api.post('/api/auth/facebook-login', {
+        userID,
+        accessToken
+      });
+      dispatch({ type: 'LOGIN', payload: data });
+
+      //save in localstorage to persist
+      localStorage.setItem('user', JSON.stringify(data));
+
+      //redirect
+      router.push('/');
+    }catch(err){
+      console.log('err', err);
+    }
+  }
+
   return (
     <Layout>
       <div
@@ -193,10 +212,10 @@ const Login = () => {
                       )}
                     />
                     <FacebookLogin
-                      appId='1088597931155576'
+                      appId={`${process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID}`}
                       autoLoad={false}
                       fields='name,email,picture'
-                      callback={() => console.log('hello everyone')}
+                      callback={handleFacebookLogin}
                       size='medium'
                       render={(renderProps) => (
                         <Button

@@ -37,7 +37,7 @@ router.get("/verify/:id", (req, res) =>
 );
 
 router.post("/facebook-login", (req, res) =>
-  new FacebookLoginController(authRepository).execute(req, res)
+  new FacebookLoginController(authRepository,userRepository).execute(req, res)
 );
 
 router.post("/google-login", (req, res) =>
