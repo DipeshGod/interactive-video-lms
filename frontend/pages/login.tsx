@@ -86,11 +86,12 @@ const Login = () => {
   };
 
   const handleFacebookLogin = async (res) => {
-    const {userID,accessToken} = res;
-    try{
+    const { userID, accessToken } = res;
+
+    try {
       const { data } = await api.post('/api/auth/facebook-login', {
         userID,
-        accessToken
+        accessToken,
       });
       dispatch({ type: 'LOGIN', payload: data });
 
@@ -99,10 +100,10 @@ const Login = () => {
 
       //redirect
       router.push('/');
-    }catch(err){
+    } catch (err) {
       console.log('err', err);
     }
-  }
+  };
 
   return (
     <Layout>

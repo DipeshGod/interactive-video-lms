@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
-import { IUser } from "../../interfaces/models/User";
-import { IAuthRepository } from "../../interfaces/repositories/IAuthRepository";
-import { BaseController } from "../BaseController";
+import { Request, Response } from 'express';
+import { IUser } from '../../interfaces/models/User';
+import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
+import { BaseController } from '../BaseController';
 import fetch from 'node-fetch';
 import crypto from 'crypto';
-import { assignToken } from "../../services/jsonwebtoken";
-import { hashPassword } from "../../services/bcrypt";
-import { IUserRepository } from "../../interfaces/repositories/IUserRepository";
+import { assignToken } from '../../services/jsonwebtoken';
+import { hashPassword } from '../../services/bcrypt';
+import { IUserRepository } from '../../interfaces/repositories/IUserRepository';
 
 export class FacebookLoginController extends BaseController {
   private authRepository: IAuthRepository;
@@ -28,19 +28,17 @@ export class FacebookLoginController extends BaseController {
       verified: true,
       isEnterprise: '',
       profilePicture: '',
-    }
+    };
   }
 
   protected async executeImpl(req: Request, res: Response) {
     try {
-      console.log("req.body", req.body);
       const { userID, accessToken } = req.body;
       const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;
       const response: any = await fetch(url, { method: 'GET' });
-      const { email, name } = response;
+      const { email, name } = await response.json();
       this.facebookAuth.email = email;
       this.facebookAuth.name = name;
-      console.log('response', response);
       const user = await this.userRepository.getUserByEmail(
         this.facebookAuth.email
       );
