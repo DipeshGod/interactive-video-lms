@@ -44,7 +44,7 @@ const CourseIntro = ({ course }) => {
       <Divider />
       <Box marginTop='2rem'>
         <VideoPlayer
-          poster={`${process.env.NEXT_PUBLIC_API_URL}${course.coursePoster}`}
+          poster={`${process.env.NEXT_PUBLIC_UPLOAD_URL}${course.coursePoster}`}
           videoSources={course.introductoryVideo}
           videoTitle={''}
         />

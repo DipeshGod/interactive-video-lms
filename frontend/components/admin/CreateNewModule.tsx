@@ -19,9 +19,9 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState('');
-  const [filename, setFilename] = useState('Choose File');
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
+  const [uploadResponse, setUploadResponse] = useState<any>();
 
   const courseModuleMutation = useMutation((course: any) =>
     createCourseModule(course)
@@ -29,23 +29,19 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-    setFilename(e.target.files[0].name);
   };
 
-  const handleModuleCreateSubmit = async (e) => {
+  const handleCourseModuleVideoUpload = async (e) => {
     e.preventDefault();
 
-    //course video
     let formData = new FormData();
 
-    formData.append('title', e.target.moduleTitle.value);
-
-    [...e.target.moduleVideos.files].forEach((file, i) =>
+    [...e.target.courseIntroFiles.files].forEach((file, i) =>
       formData.append(file.name, file)
     );
 
     try {
-      const res = await api.post('/upload/course/video', formData, {
+      const res = await api.post('/api/upload/course/intross', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           setUploadPercentage(
@@ -54,11 +50,13 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
         },
       });
 
-      if (res.status === 201) {
-        setMessage('File Uploaded');
+      if (res.status === 200) {
+        setMessage('Files Uploaded');
+        setUploadResponse(res.data);
+      } else {
+        setMessage('Something went wrong');
+        return;
       }
-
-      console.log(res);
     } catch (err) {
       if (err.response.status === 500) {
         setMessage('There was a problem with the server');
@@ -66,24 +64,12 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
         setMessage(err.response.data.msg);
       }
       setUploadPercentage(0);
+      return;
     }
+  };
 
-    //course data
-    // const courseModuleData = {
-    //   title: e.target.moduleTitle.value,
-    //   description: e.target.moduleDescription.value,
-    // };
-
-    // courseModuleMutation.mutate(courseModuleData, {
-    //   onSuccess: () => {
-    //     console.log('course module created successfully');
-    //     setIsButtonDisabled(false);
-    //   },
-    //   onError: (error) => {
-    //     console.log('error creating the course module', error);
-    //     setIsButtonDisabled(false);
-    //   },
-    // });
+  const handleModuleCreateSubmit = async (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -127,8 +113,10 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
             margin='dense'
             name='moduleDescription'
           />
+        </form>
 
-          <Box marginTop='1rem'>
+        <Box marginTop='1rem'>
+          <form onSubmit={handleCourseModuleVideoUpload}>
             <Typography gutterBottom variant='overline'>
               Please select the videos for this module in order
             </Typography>
@@ -139,6 +127,14 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
               multiple
               onChange={handleFileChange}
             />
+            <Button
+              size='small'
+              variant='contained'
+              color='primary'
+              type='submit'
+            >
+              Upload
+            </Button>
             <LinearProgress
               style={{ marginTop: '10px' }}
               variant='determinate'
@@ -147,26 +143,23 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
             {message && (
               <Typography variant='subtitle2'>Videos Uploaded</Typography>
             )}
-          </Box>
+          </form>
+        </Box>
 
-          <DialogActions>
-            <Button
-              color='primary'
-              onClick={() => setShowCreateNewModule(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              color='primary'
-              variant='outlined'
-              disableElevation
-              type='submit'
-              disabled={isButtonDisabled}
-            >
-              Create Module
-            </Button>
-          </DialogActions>
-        </form>
+        <DialogActions>
+          <Button color='primary' onClick={() => setShowCreateNewModule(false)}>
+            Cancel
+          </Button>
+          <Button
+            color='primary'
+            variant='outlined'
+            disableElevation
+            type='submit'
+            disabled={isButtonDisabled}
+          >
+            Create Module
+          </Button>
+        </DialogActions>
       </DialogContent>
     </Dialog>
   );

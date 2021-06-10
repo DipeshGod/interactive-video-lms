@@ -31,7 +31,6 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
 
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
-    console.log(file);
   };
 
   const handleCourseIntroUpload = async (e) => {
@@ -54,7 +53,7 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
       });
 
       if (res.status === 200) {
-        setMessage('File Uploaded');
+        setMessage('Files Uploaded');
         setUploadResponse(res.data);
       } else {
         setMessage('Something went wrong');
