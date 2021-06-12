@@ -5,10 +5,10 @@ import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 
 //routes import
-import { courseRouter } from './src/routes/course';
-import { uploadRouter } from './src/routes/upload';
-import { authRouter } from './src/routes/auth';
-import { userRouter } from './src/routes/user';
+import { courseRouter } from './routes/course';
+import { uploadRouter } from './routes/upload';
+import { authRouter } from './routes/auth';
+import { userRouter } from './routes/user';
 import dotenv from 'dotenv';
 
 dotenv.config();
