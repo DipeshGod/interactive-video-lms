@@ -43,6 +43,7 @@ export class IntroUploadController extends BaseController {
       files.forEach(async (file: any) => {
         fileName = Date.now() + file.name;
         const mimeType = file.mimetype.split('/')[0];
+        console.log('req',path.dirname(require.main?.filename!));
         if (mimeType == 'image') {
           if (this.files.coursePoster != '')
             return this.forbidden(res, 'You can upload only one picture');
@@ -105,13 +106,13 @@ export class IntroUploadController extends BaseController {
     const baseName = basename(filename);
     console.log('basename', baseName);
 
-    ffmpeg('upload' + filename)
-      .output('upload/intro/video/480p' + baseName + '.mp4')
+    ffmpeg('src/upload' + filename)
+      .output('src/upload/intro/video/480p' + baseName + '.mp4')
       .videoCodec('libx264')
       .size('640x480')
       .format('mp4')
 
-      .output('upload/intro/video/720p' + baseName + '.mp4')
+      .output('src/upload/intro/video/720p' + baseName + '.mp4')
       .videoCodec('libx264')
       .size('1280x720')
       .format('mp4')

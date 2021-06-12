@@ -17,7 +17,7 @@ const app = express();
 
 //body parser middlewares
 app.use(cors());
-app.use(express.static('upload'));
+app.use(express.static('src/upload'));
 app.use(express.json());
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
