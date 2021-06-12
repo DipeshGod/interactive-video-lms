@@ -3,6 +3,7 @@ import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
 import { checkPassword } from '../../services/bcrypt';
 import { BaseController } from '../BaseController';
 import { assignToken } from '../../services/jsonwebtoken';
+import { loginValidator } from '../../services/validator/authValidator';
 
 export class LoginController extends BaseController {
   private authRepository: IAuthRepository;
@@ -17,6 +18,7 @@ export class LoginController extends BaseController {
     res: Response
   ): Promise<void | any> {
     try {
+      await loginValidator(req.body);
       const user = await this.authRepository.login(req.body);
       if (!user) return this.fail(res, 'error while logging in');
       if (!user.verified) return this.fail(res, 'please verify your email');

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
 import { verifyUserMail } from '../../services/nodemailer';
+import { registerValidator } from '../../services/validator/authValidator';
 import { BaseController } from '../BaseController';
 import { hashPassword } from './../../services/bcrypt';
 
@@ -25,6 +26,7 @@ export class RegisterUserController extends BaseController {
     res: Response
   ): Promise<void | any> {
     try {
+      await registerValidator(req.body);
       req.body.password = hashPassword(req.body.password);
       const user = await this.authRepository.registerUser(req.body);
       if (!user) return this.fail(res, `Can't register`);
