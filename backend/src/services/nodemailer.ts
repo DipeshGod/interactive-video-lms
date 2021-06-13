@@ -1,7 +1,4 @@
 import nodemailer from "nodemailer";
-import { IUserDoc } from "../interfaces/models/User";
-import { ResetPassword } from "./../models/Code";
-import crypto from "crypto";
 
 const sender = nodemailer.createTransport({
   service: "Gmail",
@@ -11,38 +8,17 @@ const sender = nodemailer.createTransport({
   },
 });
 
-const prepareMail = (details: any) => {
-  return {
+
+export const ForgotPassword = async (data: any) => {
+  await sender.sendMail({
     from: "Learning Management System",
-    to: details.email,
+    to: data.email,
     subject: "Forgot Password✔",
     text: "Forgot Password✔",
     html: `<p><strong>Hi</strong></p>
-    <p>We noticed you are having forgot your password,use the code below to reset your password</p>
-    <p><strong>${details.code}</strong></p>`,
-  };
-};
-
-export const ForgotPassword = async (user: IUserDoc) => {
-  console.log(user);
-  // console.log(`${process.env.NODEMAILER_SERVICE} hgsdhgd ${process.env.NODEMAILER_USER} sdasdgfas ${process.env.NODEMAILER_PASS}`)
-  console.log("crypto:", crypto.randomBytes(3).toString("hex"));
-  const resetPassword = new ResetPassword();
-  resetPassword.email = user.email;
-  resetPassword.code = crypto.randomBytes(3).toString("hex");
-  try {
-    const doc = await resetPassword.save();
-    if (doc) {
-      let mailBody = prepareMail({
-        email: doc.email,
-        code: doc.code,
-      });
-      await sender.sendMail(mailBody);
-    }
-  } catch (err) {
-    console.log("errrr", err);
-    return "Error sending mail";
-  }
+  <p>We noticed you are having forgot your password,use the code below to reset your password</p>
+  <p><strong>${data.code}</strong></p>`,
+  })
 };
 
 export const verifyUserMail = async (data: any) => {

@@ -29,7 +29,7 @@ export class CourseRepository implements ICourseRepository {
 
   public getCourseById(
     courseId: string
-  ): Query<ICourseDoc | null, ICourseDoc, {}> {
+  ):Query<ICourseDoc | null, ICourseDoc, {}> {
     try {
       let course = this.model.findById(courseId);
       return course;
@@ -52,7 +52,7 @@ export class CourseRepository implements ICourseRepository {
     }
   }
 
-  public deleteCourse(id: string): Query<ICourseDoc | null, ICourseDoc, {}> {
+  public deleteCourse(id: string): Query<ICourseDoc | null, ICourseDoc, {}>{
     try {
       return this.model.findByIdAndDelete(id);
     } catch (err: any) {

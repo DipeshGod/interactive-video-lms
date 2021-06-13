@@ -13,7 +13,7 @@ export class DeleteCourseController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ) {
     try {
       const course = await this.courseRepository.deleteCourse(req.params.id);
       return this.ok(res, course);

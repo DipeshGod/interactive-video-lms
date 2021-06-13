@@ -1,4 +1,4 @@
-import { IResetPasswordModel } from "../interfaces/models/Code";
+import { IResetPassword, IResetPasswordModel } from "../interfaces/models/Code";
 import { IUser, IUserDoc, IUserModel } from "../interfaces/models/User";
 import { IAuthRepository } from "../interfaces/repositories/IAuthRepository";
 import { Query } from "mongoose";
@@ -11,6 +11,15 @@ export class AuthRepository implements IAuthRepository {
   constructor(userModel: IUserModel, resetPasswordModel: IResetPasswordModel) {
     this.userModel = userModel;
     this.resetPasswordModel = resetPasswordModel;
+  }
+
+  public resetCodeSave(resetData: IResetPassword): Promise<IResetPasswordDoc> {
+    try {
+      let code = new this.resetPasswordModel(resetData);
+      return code.save();
+    } catch (err) {
+      throw new Error(`Cannot save resetcode`)
+    }
   }
 
   public registerUser(userData: IUser): Promise<IUserDoc> {
@@ -55,7 +64,7 @@ export class AuthRepository implements IAuthRepository {
 
   public removeResetPasswordModel(
     id: string
-  ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
+  ):Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
     try {
       let removed = this.resetPasswordModel.findByIdAndDelete(id);
       return removed;
@@ -67,7 +76,7 @@ export class AuthRepository implements IAuthRepository {
   public verifyUser(
     id: string,
     userData: any
-  ): Query<IUserDoc | null, IUserDoc, {}> {
+  ):Query<IUserDoc | null, IUserDoc, {}>{
     try {
       let verified = this.userModel.findByIdAndUpdate(id, userData, {
         new: true,
@@ -79,19 +88,4 @@ export class AuthRepository implements IAuthRepository {
     }
   }
 
-  public googleLogin(userData: any): any {
-    try {
-      return "google login";
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  }
-
-  public facebookLogin(userData: any): any {
-    try {
-      return "facebook login";
-    } catch (err: any) {
-      throw new Error(err);
-    }
-  }
 }

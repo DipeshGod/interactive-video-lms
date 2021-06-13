@@ -23,6 +23,7 @@
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.6.1",
     "randomstring": "^1.2.1"
   },
@@ -35,6 +36,7 @@
     "@types/fluent-ffmpeg": "^2.1.17",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/mongoose": "^5.10.5",
+    "@types/morgan": "^1.9.2",
     "@types/node": "^15.0.1",
     "@types/node-fetch": "^2.5.10",
     "@types/nodemailer": "^6.4.2",

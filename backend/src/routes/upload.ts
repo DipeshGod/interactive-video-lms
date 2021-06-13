@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { TestUploadController } from '../controllers/courseModule/upload/TestUploadController';
 import { UploadCourseModuleController } from '../controllers/courseModule/upload/UploadModuleVideoController';
 import { Course } from '../models/Course';
 import { CourseModule } from '../models/CourseModule';
@@ -18,5 +19,9 @@ router.post('/course/intro', (req, res) =>
 router.post('/course-module/video', (req, res) => {
   new UploadCourseModuleController(courseModuleRepository).execute(req, res)
 })
+
+/* router.post('/course-module/video', (req, res) => {
+  new TestUploadController(courseModuleRepository).execute(req, res)
+}) */
 
 export { router as uploadRouter };

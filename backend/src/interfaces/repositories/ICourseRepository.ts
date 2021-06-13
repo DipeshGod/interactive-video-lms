@@ -6,5 +6,5 @@ export interface ICourseRepository {
   createCourse(courseData: ICourse): Promise<ICourseDoc>;
   getCourseById(id: String): Query<ICourseDoc | null, ICourseDoc, {}>;
   deleteCourse(id: String): Query<ICourseDoc | null, ICourseDoc, {}>;
-  editCourse(id:String,courseData: ICourse): Query<ICourseDoc | null, ICourseDoc, {}>;
+  editCourse(id:String,courseData: ICourse):Query<ICourseDoc | null, ICourseDoc, {}>;
 }

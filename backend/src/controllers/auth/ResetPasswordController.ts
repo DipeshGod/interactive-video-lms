@@ -27,7 +27,9 @@ export class ResetPasswordController extends BaseController {
       if (req.body.code == resetPasswordData.code)
         req.body.password = hashPassword(req.body.password);
       else return this.fail(res, 'Wrong code entered');
-      const updatedUser = await this.userRepository.editUserByEmail(req.body);
+      const user = await this.userRepository.getUserByEmail(req.body.email);
+      if (!user) return this.fail(res, 'Provided Email address does not exist')
+      const updatedUser = await this.userRepository.editUser(user._id, req.body);
       if (updatedUser)
         await this.authRepository.removeResetPasswordModel(
           resetPasswordData._id

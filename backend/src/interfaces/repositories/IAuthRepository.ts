@@ -1,6 +1,6 @@
 import { IUser, IUserDoc } from "../models/User";
 import { Query } from "mongoose";
-import { IResetPasswordDoc } from "../models/Code";
+import { IResetPassword, IResetPasswordDoc } from "../models/Code";
 
 export interface IAuthRepository {
   registerUser(userData: IUser): Promise<IUserDoc>;
@@ -12,7 +12,6 @@ export interface IAuthRepository {
   removeResetPasswordModel(
     id: string
   ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}>;
-  verifyUser(id: string, userData: IUser): any;
-  facebookLogin(data: any): any;
-  googleLogin(data: any): any;
+  verifyUser(id: string, userData: IUser): Query<IUserDoc | null, IUserDoc, {}>;
+  resetCodeSave(data: IResetPassword): Promise<IResetPasswordDoc>;
 }

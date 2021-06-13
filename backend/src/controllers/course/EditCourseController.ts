@@ -13,7 +13,7 @@ export class EditCourseController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ){
     try {
       let course: any = await this.courseRepository.editCourse(
         req.params.id,

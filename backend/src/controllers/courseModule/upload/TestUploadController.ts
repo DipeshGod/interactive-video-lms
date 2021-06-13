@@ -4,18 +4,41 @@ import { ICourseModuleRepository } from "../../../interfaces/repositories/ICours
 import { resolutionConverter } from "../../../services/ffmpeg";
 import { BaseController } from "../../BaseController";
 
+export class FileObjectClass {
+    public LOW: string;
+    public SD: string;
+    public HD: string;
+    constructor() {
+        this.LOW = '',
+            this.SD = '',
+            this.HD = ''
+    }
+}
 
-export class UploadCourseModuleController extends BaseController {
+export class TestUploadController extends BaseController {
     private courseModuleRepository: ICourseModuleRepository;
 
+    private files: Array<FileObjectClass>
     constructor(courseModuleRepository: ICourseModuleRepository) {
         super();
         this.courseModuleRepository = courseModuleRepository;
-
+        this.files = new Array({
+            LOW: "",
+            SD: "",
+            HD: ""
+        }, {
+            LOW: "",
+            SD: "",
+            HD: ""
+        }, {
+            LOW: "",
+            SD: "",
+            HD: ""
+        })
     }
     protected async executeImpl(req: Request, res: Response) {
         try {
-            let dipesh: any[] = [];
+            //let totalFiles: [{}] = [{}];
             let files: any = [];
             let totalVideo = 0;
             let fileKeys = Object.keys(req.files!);
@@ -23,9 +46,11 @@ export class UploadCourseModuleController extends BaseController {
                 files.push(req.files![key])
                 totalVideo += 1;
             });
+            console.log('files', files);
             if (totalVideo > 3) return this.forbidden(res, 'You cannot upload more than 3 video');
             let fileName;
-            files.forEach((file: any) => {
+            let i = 0;
+            files.forEach(async (file: any) => {
                 fileName = Date.now() + file.name;
                 if (file.mimetype.split('/')[0] !== 'video')
                     return this.forbidden(res, 'You can only upload video');
@@ -33,19 +58,15 @@ export class UploadCourseModuleController extends BaseController {
                     (err: any) => {
                         if (err)
                             return this.fail(res, err.toString());
-                    }
+                    },
+                    ((this.files[i].HD = `/course/${fileName}`),
+                        (this.files[i].SD = `/course/720p${fileName}`),
+                        (this.files[i].LOW = `/course/480p${fileName}`))
                 );
-
-                dipesh.push({
-                    HD: `/course/${fileName}`,
-                    SD: `/course/720p${fileName}`,
-                    LOW: `/course/480p${fileName}`
-                })
-                resolutionConverter(`/course/${fileName}`, 'src/upload', 'src/upload/course');
-
-                console.log('files', dipesh);
+                resolutionConverter(this.files[i].HD, 'src/upload', 'src/upload/course');
+                i += 1;
             })
-            return this.ok(res, dipesh);
+            return this.ok(res, this.files);
         } catch (err: any) {
             return this.fail(res, err);
         }

@@ -13,7 +13,7 @@ export class GetCourseByIdController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ){
     try {
       const course = await this.courseRepository.getCourseById(req.params.id);
       return this.ok(res, course);

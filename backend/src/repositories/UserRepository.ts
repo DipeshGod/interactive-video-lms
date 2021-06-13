@@ -17,7 +17,7 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public getUserByEmail(email: string): any {
+  public getUserByEmail(email: string): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       const user = this.model.findOne({ email: email });
       return user;
@@ -26,11 +26,10 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public editUserByEmail(userData: any): Query<IUserDoc | null, IUserDoc, {}> {
+  public editUser(id: string, userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {
-      let user = this.model.findOneAndUpdate(
-        { email: userData.email },
-        userData,
+      let user = this.model.findByIdAndUpdate(
+        id, userData,
         { new: true }
       );
       return user;

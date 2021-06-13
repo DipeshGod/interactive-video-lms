@@ -9,7 +9,7 @@ export const resolutionConverter = (filename: any, outputDirectory: string, outp
     }
     return base;
   };
-  console.log(outputDirectory + filename);
+  console.log(`${outputDirectory}${filename}`);
   const baseName = basename(filename);
   console.log('basename', baseName);
 
@@ -19,7 +19,7 @@ export const resolutionConverter = (filename: any, outputDirectory: string, outp
     .size('640x480')
     .format('mp4')
 
-    .output(`${outputFileName}/480p${baseName}.mp4`)
+    .output(`${outputFileName}/720p${baseName}.mp4`)
     .videoCodec('libx264')
     .size('1280x720')
     .format('mp4')

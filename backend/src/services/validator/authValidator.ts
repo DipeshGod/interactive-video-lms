@@ -51,6 +51,9 @@ export const resetPasswordValidator = async (data: any) => {
         password: joi.string()
             .pattern(new RegExp('^[a-zA-z0-9]{8,15}$'))
             .required(),
+
+            code:joi.string()
+            .required()
     })
 
     return await resetPasswordSchema.validateAsync(data);

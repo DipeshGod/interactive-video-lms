@@ -36,12 +36,12 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
 
     let formData = new FormData();
 
-    [...e.target.courseIntroFiles.files].forEach((file, i) =>
+    [...e.target.moduleVideos.files].forEach((file, i) =>
       formData.append(file.name, file)
     );
 
     try {
-      const res = await api.post('/api/upload/course/intross', formData, {
+      const res = await api.post('/api/upload/course-module/video', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           setUploadPercentage(
@@ -70,6 +70,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
 
   const handleModuleCreateSubmit = async (e) => {
     e.preventDefault();
+    console.log('upload response',uploadResponse);
   };
 
   return (

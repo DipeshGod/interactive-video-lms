@@ -11,9 +11,10 @@ export class CreateCourseModuleController extends BaseController {
         this.courseModuleRepository = courseModuleRepository;
     }
 
-    protected async executeImpl(req: Request, res: Response) {
+    protected async executeImpl(req: Request, res: Response){
         try {
             const courseModule = await this.courseModuleRepository.createCourseModule(req.body);
+            console.log('req.body',req.body)
             return this.ok(res, courseModule);
         } catch (err: any) {
             return this.fail(res, err.toString());

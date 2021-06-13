@@ -3,6 +3,7 @@ import path from 'path';
 import { ICourseRepository } from '../../../interfaces/repositories/ICourseRepository';
 import { BaseController } from '../../BaseController';
 import ffmpeg from 'fluent-ffmpeg';
+import { resolutionConverter } from '../../../services/ffmpeg';
 
 export class IntroUploadController extends BaseController {
   private courseRepository: ICourseRepository;
@@ -32,7 +33,7 @@ export class IntroUploadController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ){
     try {
       let files: any = [];
       let fileKeys = Object.keys(req.files!);
@@ -81,51 +82,11 @@ export class IntroUploadController extends BaseController {
           );
         }
       });
-      this.resolutionConverter(this.files.introductoryVideo.HD, res).then(
-        () => {
-          console.log('finished');
-        }
-      );
-
+      resolutionConverter(this.files.introductoryVideo.HD, 'src/upload', 'src/upload/intro/video');
       return this.ok(res, this.files);
     } catch (err: any) {
       return this.fail(res, err);
     }
   }
 
-  public resolutionConverter = async (filename: any, res: Response) => {
-    console.log('this.filename', filename);
-    const basename = (str: any) => {
-      let base = new String(str).substring(str.lastIndexOf('/') + 1);
-      if (base.lastIndexOf('.') != -1) {
-        base = base.substring(0, base.lastIndexOf('.'));
-      }
-      return base;
-    };
-
-    const baseName = basename(filename);
-    console.log('basename', baseName);
-
-    ffmpeg('src/upload' + filename)
-      .output('src/upload/intro/video/480p' + baseName + '.mp4')
-      .videoCodec('libx264')
-      .size('640x480')
-      .format('mp4')
-
-      .output('src/upload/intro/video/720p' + baseName + '.mp4')
-      .videoCodec('libx264')
-      .size('1280x720')
-      .format('mp4')
-
-      .on('error', (err) => {
-        console.log('An error occured:' + err.message);
-      })
-      .on('progress', (progress) => {
-        console.log('Frames...' + progress.frames);
-      })
-      .on('end', () => {
-        console.log('Finished Procressing');
-      })
-      .run();
-  };
 }

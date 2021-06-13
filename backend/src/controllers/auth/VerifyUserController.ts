@@ -12,7 +12,7 @@ export class VerifyUserController extends BaseController {
     this.authRepository = authRepository;
   }
 
-  protected async executeImpl(req: Request, res: Response) {
+  protected async executeImpl(req: Request, res: Response){
     try {
       const id = req.params.id;
       if (!id) return this.fail(res, 'wrong api');

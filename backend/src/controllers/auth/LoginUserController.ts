@@ -16,7 +16,7 @@ export class LoginController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ){
     try {
       await loginValidator(req.body);
       const user = await this.authRepository.login(req.body);

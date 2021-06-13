@@ -13,7 +13,7 @@ export class CreateCourseController extends BaseController {
   protected async executeImpl(
     req: Request,
     res: Response
-  ): Promise<void | any> {
+  ){
     try {
       const course = await this.courseRepository.createCourse(req.body);
       return this.ok(res, course);

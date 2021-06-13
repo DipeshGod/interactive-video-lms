@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 
 //routes import
 import { courseRouter } from './routes/course';
@@ -17,6 +18,7 @@ dotenv.config();
 const app = express();
 
 //body parser middlewares
+app.use(morgan('dev'));
 app.use(cors());
 app.use(express.static('src/upload'));
 app.use(express.json());
