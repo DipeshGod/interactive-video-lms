@@ -35,12 +35,13 @@ export class AuthRepository implements IAuthRepository {
     try {
       let user = this.userModel
         .findOne({ email: userData.email })
-        .select('-password');
+        .select('+password');
       return user;
     } catch (err: any) {
-      throw new Error(`Couldn't find requested user`);
+      throw new Error(err);
     }
   }
+
 
   public forgotPassword(userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {

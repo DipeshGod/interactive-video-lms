@@ -22,7 +22,7 @@ router.post("/register", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  new LoginController(authRepository).execute(req, res);
+  new LoginController(authRepository, userRepository).execute(req, res);
 });
 
 router.post("/forgot-password", (req, res) =>

@@ -26,6 +26,15 @@ export class UserRepository implements IUserRepository {
     }
   }
 
+  public getUserById(id: string): Query<IUserDoc | null, IUserDoc, {}> {
+    try {
+      const user = this.model.findById(id);
+      return user;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
+
   public editUser(id: string, userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       let user = this.model.findByIdAndUpdate(
