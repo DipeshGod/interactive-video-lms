@@ -1,7 +1,6 @@
 import ffmpeg from 'fluent-ffmpeg';
 
 export const resolutionConverter = (filename: any, outputDirectory: string, outputFileName: string) => {
-  console.log('this.filename', filename);
   const basename = (str: any) => {
     let base = new String(str).substring(str.lastIndexOf('/') + 1);
     if (base.lastIndexOf('.') != -1) {
@@ -9,9 +8,7 @@ export const resolutionConverter = (filename: any, outputDirectory: string, outp
     }
     return base;
   };
-  console.log(`${outputDirectory}${filename}`);
   const baseName = basename(filename);
-  console.log('basename', baseName);
 
   ffmpeg(`${outputDirectory}${filename}`)
     .output(`${outputFileName}/480p${baseName}.mp4`)

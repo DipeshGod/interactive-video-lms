@@ -3,4 +3,5 @@ import { ICourseModule, ICourseModuleDoc } from '../models/CourseModule';
 
 export interface ICourseModuleRepository {
   createCourseModule(courseModuleData: ICourseModule): Promise<ICourseModuleDoc>;
+  getCourseModuleById(id: string): any;
 }

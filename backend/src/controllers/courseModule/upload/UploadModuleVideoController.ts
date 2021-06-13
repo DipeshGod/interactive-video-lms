@@ -42,8 +42,6 @@ export class UploadCourseModuleController extends BaseController {
                     LOW: `/course/480p${fileName}`
                 })
                 resolutionConverter(`/course/${fileName}`, 'src/upload', 'src/upload/course');
-
-                console.log('files', dipesh);
             })
             return this.ok(res, dipesh);
         } catch (err: any) {
