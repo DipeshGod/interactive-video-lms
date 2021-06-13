@@ -4,6 +4,12 @@ import {
   ICourseModuleModel,
 } from '../interfaces/models/CourseModule';
 
+const videoSchema = new mongoose.Schema({
+  HD: String,
+  SD: String,
+  LOW: String
+})
+
 const courseModuleSchema = new mongoose.Schema(
   {
     title: {
@@ -20,15 +26,9 @@ const courseModuleSchema = new mongoose.Schema(
       required: true,
     },
     videos: {
-      type: [String],
-      required: true,
-    },
-    assignments: {
-      type: [String],
-    },
-    quiz: {
-      type: [String],
-    },
+      type: [videoSchema],
+      //required: true,
+    }
   },
   { timestamps: true }
 );

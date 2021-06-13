@@ -36,6 +36,7 @@ export class IntroUploadController extends BaseController {
     try {
       let files: any = [];
       let fileKeys = Object.keys(req.files!);
+      console.log('fileKeys', fileKeys);
       fileKeys.forEach((key) => {
         files.push(req.files![key]);
       });
@@ -43,9 +44,8 @@ export class IntroUploadController extends BaseController {
       files.forEach(async (file: any) => {
         fileName = Date.now() + file.name;
         const mimeType = file.mimetype.split('/')[0];
-        console.log('req',path.dirname(require.main?.filename!));
-        if (mimeType == 'image') {
-          if (this.files.coursePoster != '')
+        if (mimeType === 'image') {
+          if (this.files.coursePoster !== '')
             return this.forbidden(res, 'You can upload only one picture');
           file.mv(
             `${path.dirname(
@@ -71,8 +71,8 @@ export class IntroUploadController extends BaseController {
               }
             },
             ((this.files.introductoryVideo.HD = `/intro/video/${fileName}`),
-            (this.files.introductoryVideo.SD = '/intro/video/720p' + fileName),
-            (this.files.introductoryVideo.LOW = '/intro/video/480p' + fileName))
+              (this.files.introductoryVideo.SD = '/intro/video/720p' + fileName),
+              (this.files.introductoryVideo.LOW = '/intro/video/480p' + fileName))
           );
         } else {
           return this.forbidden(

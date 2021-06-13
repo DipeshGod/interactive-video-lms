@@ -10,6 +10,7 @@ import { uploadRouter } from './routes/upload';
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
 import dotenv from 'dotenv';
+import { courseModuleRouter } from './routes/courseModule';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use('/api/course', courseRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/course-module', courseModuleRouter);
 
 mongoose.connect(
   'mongodb://localhost:27017/studentAssit',

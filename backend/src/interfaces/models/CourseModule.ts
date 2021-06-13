@@ -5,8 +5,6 @@ export interface ICourseModule {
   description: string;
   courseId: string;
   videos: string[];
-  assignments: string[];
-  quiz: string[];
 }
 
 export interface ICourseModuleDoc extends mongoose.Document {
@@ -14,8 +12,6 @@ export interface ICourseModuleDoc extends mongoose.Document {
   description: string;
   courseId: string;
   videos: string[];
-  assignments: string[];
-  quiz: string[];
 }
 
-export interface ICourseModuleModel extends mongoose.Model<ICourseModuleDoc> {}
+export interface ICourseModuleModel extends mongoose.Model<ICourseModuleDoc> { }

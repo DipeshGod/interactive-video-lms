@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { ICourseRepository } from '../../interfaces/repositories/ICourseRepository';
 import { BaseController } from '../BaseController';
-import path from 'path';
 
 export class CreateCourseController extends BaseController {
   private courseRepository: ICourseRepository;
