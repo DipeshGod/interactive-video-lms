@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useState, useRef } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -12,8 +13,10 @@ import {
   LinearProgress,
 } from '@material-ui/core';
 import api from '../../services/api';
-import { useMutation } from 'react-query';
-import createCourseModule from '../../services/client/course/createCourseModule';
+import { useMutation, useQueryClient } from 'react-query';
+import validator from 'validator';
+import createCourseModule from '../../services/client/courseModule/createCourseModule';
+import { toast } from 'react-toastify';
 
 const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -22,7 +25,11 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [uploadResponse, setUploadResponse] = useState<any>();
+  const formRef = useRef<any>();
 
+  const router = useRouter();
+
+  const queryClient = useQueryClient();
   const courseModuleMutation = useMutation((course: any) =>
     createCourseModule(course)
   );
@@ -70,7 +77,33 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
 
   const handleModuleCreateSubmit = async (e) => {
     e.preventDefault();
-    console.log('upload response',uploadResponse);
+    // setIsButtonDisabled(true);
+    const { moduleTitle, moduleDescription } = formRef.current;
+    if (!validator.isLength(moduleTitle.value, { min: 5 })) {
+      setError('Please enter valid course name');
+      return;
+    } else if (!validator.isLength(moduleDescription.value, { min: 10 })) {
+      setError('Course description must be of length at least 10');
+      return;
+    }
+    const courseData = {
+      title: moduleTitle.value,
+      description: moduleDescription.value,
+      courseId: router.query.id,
+      videos: uploadResponse,
+    };
+
+    courseModuleMutation.mutate(courseData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('courseModule');
+        setIsButtonDisabled(false);
+        toast.success(`Course created successfully`);
+      },
+      onError: (error: any) => {
+        toast.error('Something went wrong');
+        setIsButtonDisabled(false);
+      },
+    });
   };
 
   return (
@@ -89,6 +122,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
           </DialogContentText>
         )}
         <form
+          ref={formRef}
           onSubmit={handleModuleCreateSubmit}
           onInputCapture={() => {
             setError(null);
@@ -156,6 +190,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
             variant='outlined'
             disableElevation
             type='submit'
+            onClick={handleModuleCreateSubmit}
             disabled={isButtonDisabled}
           >
             Create Module
