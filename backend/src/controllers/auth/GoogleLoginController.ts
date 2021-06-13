@@ -33,7 +33,7 @@ export class GoogleLoginController extends BaseController {
     };
   }
 
-  protected async executeImpl(req: Request, res: Response){
+  protected async executeImpl(req: Request, res: Response) {
     try {
       const { googleIdToken } = req.body;
       const response = await this.client.verifyIdToken({

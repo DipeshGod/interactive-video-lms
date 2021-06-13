@@ -21,10 +21,7 @@ export class RegisterUserController extends BaseController {
     };
   }
 
-  protected async executeImpl(
-    req: Request,
-    res: Response
-  ){
+  protected async executeImpl(req: Request, res: Response) {
     try {
       await registerValidator(req.body);
       req.body.password = hashPassword(req.body.password);

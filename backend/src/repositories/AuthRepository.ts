@@ -1,8 +1,8 @@
-import { IResetPassword, IResetPasswordModel } from "../interfaces/models/Code";
-import { IUser, IUserDoc, IUserModel } from "../interfaces/models/User";
-import { IAuthRepository } from "../interfaces/repositories/IAuthRepository";
-import { Query } from "mongoose";
-import { IResetPasswordDoc } from "./../interfaces/models/Code";
+import { IResetPassword, IResetPasswordModel } from '../interfaces/models/Code';
+import { IUser, IUserDoc, IUserModel } from '../interfaces/models/User';
+import { IAuthRepository } from '../interfaces/repositories/IAuthRepository';
+import { Query } from 'mongoose';
+import { IResetPasswordDoc } from './../interfaces/models/Code';
 
 export class AuthRepository implements IAuthRepository {
   private userModel: IUserModel;
@@ -18,7 +18,7 @@ export class AuthRepository implements IAuthRepository {
       let code = new this.resetPasswordModel(resetData);
       return code.save();
     } catch (err) {
-      throw new Error(`Cannot save resetcode`)
+      throw new Error(`Cannot save resetcode`);
     }
   }
 
@@ -33,7 +33,9 @@ export class AuthRepository implements IAuthRepository {
 
   public login(userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {
-      let user = this.userModel.findOne({ email: userData.email });
+      let user = this.userModel
+        .findOne({ email: userData.email })
+        .select('-password');
       return user;
     } catch (err: any) {
       throw new Error(`Couldn't find requested user`);
@@ -64,7 +66,7 @@ export class AuthRepository implements IAuthRepository {
 
   public removeResetPasswordModel(
     id: string
-  ):Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
+  ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
     try {
       let removed = this.resetPasswordModel.findByIdAndDelete(id);
       return removed;
@@ -76,16 +78,15 @@ export class AuthRepository implements IAuthRepository {
   public verifyUser(
     id: string,
     userData: any
-  ):Query<IUserDoc | null, IUserDoc, {}>{
+  ): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       let verified = this.userModel.findByIdAndUpdate(id, userData, {
         new: true,
       });
-      if (!verified) throw new Error("Error while verifying");
+      if (!verified) throw new Error('Error while verifying');
       return verified;
     } catch (err: any) {
       throw new Error(err);
     }
   }
-
 }
