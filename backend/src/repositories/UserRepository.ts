@@ -22,7 +22,7 @@ export class UserRepository implements IUserRepository {
       const user = this.model.findOne({ email: email });
       return user;
     } catch (err: any) {
-      throw new Error(err);
+      throw new Error(err.toString());
     }
   }
 
@@ -31,7 +31,7 @@ export class UserRepository implements IUserRepository {
       const user = this.model.findById(id);
       return user;
     } catch (err: any) {
-      throw new Error(err);
+      throw new Error(err.toString());
     }
   }
 
@@ -43,7 +43,25 @@ export class UserRepository implements IUserRepository {
       );
       return user;
     } catch (err: any) {
-      throw new Error(err);
+      throw new Error(err.toString());
+    }
+  }
+
+  public deleteUser(id: string): any {
+    try {
+      const user = this.model.findByIdAndRemove(id);
+      return user;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
+
+  public getUserByIdWithPassword(id: string): Query<IUserDoc | null, IUserDoc, {}> {
+    try {
+      const user = this.model.findById(id).select('+password');
+      return user;
+    } catch (err: any) {
+      throw new Error(err.toString());
     }
   }
 }
