@@ -5,6 +5,7 @@ import Layout from '../../../components/layout';
 import getCoursesById from '../../../services/server/course/getCourseById';
 import CourseIntro from '../../../components/courses/CourseIntro';
 import CreateNewModule from '../../../components/admin/CreateNewModule';
+import CourseContent from '../../../components/courses/CourseContent';
 import { useState } from 'react';
 
 const ManageCourseContent = ({ course }) => {
@@ -23,6 +24,9 @@ const ManageCourseContent = ({ course }) => {
             >
               Add A module
             </Button>
+          </Box>
+          <Box>
+            <CourseContent />
           </Box>
         </Container>
         {showCreateNewModule && (
