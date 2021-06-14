@@ -15,7 +15,7 @@ export class UploadCourseModuleController extends BaseController {
     }
     protected async executeImpl(req: Request, res: Response) {
         try {
-            let dipesh: any[] = [];
+            let videos: any[] = [];
             let files: any = [];
             let totalVideo = 0;
             let fileKeys = Object.keys(req.files!);
@@ -26,6 +26,7 @@ export class UploadCourseModuleController extends BaseController {
             if (totalVideo > 3) return this.forbidden(res, 'You cannot upload more than 3 video');
             let fileName;
             files.forEach((file: any) => {
+                const videoTitle = file.name.split('.mp4')[0];
                 fileName = Date.now() + file.name;
                 if (file.mimetype.split('/')[0] !== 'video')
                     return this.forbidden(res, 'You can only upload video');
@@ -36,14 +37,15 @@ export class UploadCourseModuleController extends BaseController {
                     }
                 );
 
-                dipesh.push({
+                videos.push({
+                    title: videoTitle,
                     HD: `/course/${fileName}`,
                     SD: `/course/720p${fileName}`,
                     LOW: `/course/480p${fileName}`
                 })
                 resolutionConverter(`/course/${fileName}`, 'src/upload', 'src/upload/course');
             })
-            return this.ok(res, dipesh);
+            return this.ok(res, videos);
         } catch (err: any) {
             return this.fail(res, err);
         }

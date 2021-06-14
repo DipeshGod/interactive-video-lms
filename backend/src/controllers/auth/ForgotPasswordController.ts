@@ -3,7 +3,7 @@ import { IAuthRepository } from '../../interfaces/repositories/IAuthRepository';
 import { ForgotPassword } from '../../services/nodemailer';
 import { BaseController } from '../BaseController';
 import crypto from 'crypto';
-import { ResetPassword } from '../../models/Code';
+import { ResetPassword } from '../../models/ResetPassword';
 import { string } from 'joi';
 
 export class ForgotPasswordController extends BaseController {

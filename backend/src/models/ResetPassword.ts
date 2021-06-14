@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {  IResetPasswordDoc, IResetPasswordModel } from '../interfaces/models/Code';
+import {  IResetPasswordDoc, IResetPasswordModel } from '../interfaces/models/ResetPassword';
 
 const resetPasswordSchema = new mongoose.Schema(
     {

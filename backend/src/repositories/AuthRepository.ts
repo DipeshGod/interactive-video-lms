@@ -1,8 +1,8 @@
-import { IResetPassword, IResetPasswordModel } from '../interfaces/models/Code';
+import { IResetPassword, IResetPasswordModel } from '../interfaces/models/ResetPassword';
 import { IUser, IUserDoc, IUserModel } from '../interfaces/models/User';
 import { IAuthRepository } from '../interfaces/repositories/IAuthRepository';
 import { Query } from 'mongoose';
-import { IResetPasswordDoc } from './../interfaces/models/Code';
+import { IResetPasswordDoc } from '../interfaces/models/ResetPassword';
 
 export class AuthRepository implements IAuthRepository {
   private userModel: IUserModel;

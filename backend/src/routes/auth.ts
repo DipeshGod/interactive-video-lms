@@ -5,7 +5,7 @@ import { RegisterUserController } from "../controllers/auth/RegisterUserControll
 import { ResetPasswordController } from "../controllers/auth/ResetPasswordController";
 import { AuthRepository } from "../repositories/AuthRepository";
 import { User } from "./../models/User";
-import { ResetPassword } from "./../models/Code";
+import { ResetPassword } from "../models/ResetPassword";
 import { UserRepository } from "../repositories/UserRepository";
 import { VerifyUserController } from "../controllers/auth/VerifyUserController";
 import { GoogleLoginController } from "../controllers/auth/GoogleLoginController";

@@ -5,6 +5,7 @@ import {
 } from '../interfaces/models/CourseModule';
 
 const videoSchema = new mongoose.Schema({
+  title: String,
   HD: String,
   SD: String,
   LOW: String
@@ -27,8 +28,8 @@ const courseModuleSchema = new mongoose.Schema(
     },
     videos: {
       type: [videoSchema],
-      //required: true,
-    }
+      required: true,
+    },
   },
   { timestamps: true }
 );

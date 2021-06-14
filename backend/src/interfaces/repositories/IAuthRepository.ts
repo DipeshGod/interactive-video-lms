@@ -1,6 +1,6 @@
 import { IUser, IUserDoc } from "../models/User";
 import { Query } from "mongoose";
-import { IResetPassword, IResetPasswordDoc } from "../models/Code";
+import { IResetPassword, IResetPasswordDoc } from "../models/ResetPassword";
 
 export interface IAuthRepository {
   registerUser(userData: IUser): Promise<IUserDoc>;

@@ -7,18 +7,10 @@ import { hashPassword } from './../../services/bcrypt';
 
 export class RegisterUserController extends BaseController {
   private authRepository: IAuthRepository;
-  mailSend: {
-    id: string;
-    email: string;
-  };
 
   constructor(authRepository: IAuthRepository) {
     super();
     this.authRepository = authRepository;
-    this.mailSend = {
-      id: '',
-      email: '',
-    };
   }
 
   protected async executeImpl(req: Request, res: Response) {
@@ -27,9 +19,7 @@ export class RegisterUserController extends BaseController {
       req.body.password = hashPassword(req.body.password);
       const user = await this.authRepository.registerUser(req.body);
       if (!user) return this.fail(res, `Can't register`);
-      this.mailSend.id = user._id;
-      this.mailSend.email = user.email;
-      await verifyUserMail(this.mailSend);
+      await verifyUserMail({ id: user._id, email: user.email });
       return this.ok(res, user);
     } catch (err: any) {
       return this.fail(res, err.toString());
