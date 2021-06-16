@@ -5,6 +5,8 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
+  List,
+  ListItem,
 } from '@material-ui/core';
 import getCourseContent from '../../services/client/course/getCourseContent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -27,24 +29,41 @@ const CourseContent = () => {
 
   return (
     <div style={{ marginBottom: '3rem' }}>
-      {data.map((module) => (
-        <Accordion key={module._id}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant='h6'>{module.title}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>{module.description}</AccordionDetails>
+      <List>
+        {data.map((module) => (
+          <ListItem key={module._id}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                style={{ backgroundColor: '#f5f5f5' }}
+              >
+                <Typography variant='h6'>{module.title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>{module.description}</AccordionDetails>
 
-          {module.videos.map((video) => (
-            <AccordionDetails key={video.title}>
-              <VideoPlayer
-                poster={``}
-                videoSources={video}
-                videoTitle={''}
-              />
-            </AccordionDetails>
-          ))}
-        </Accordion>
-      ))}
+              {module.videos.map((video) => (
+                <AccordionDetails key={video.title}>
+                  <Accordion variant='outlined'>
+                    <AccordionSummary
+                      style={{ backgroundColor: '#fafafa' }}
+                      expandIcon={<ExpandMoreIcon />}
+                    >
+                      <Typography>{video.title}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <VideoPlayer
+                        poster={``}
+                        videoSources={video}
+                        videoTitle={''}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                </AccordionDetails>
+              ))}
+            </Accordion>
+          </ListItem>
+        ))}
+      </List>
     </div>
   );
 };
