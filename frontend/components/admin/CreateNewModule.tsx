@@ -17,6 +17,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 import createCourseModule from '../../services/client/courseModule/createCourseModule';
 import { toast } from 'react-toastify';
+import { CSVReader } from 'react-papaparse';
 
 const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -25,6 +26,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [uploadResponse, setUploadResponse] = useState<any>();
+  const [quizes, setQuizes] = useState();
   const formRef = useRef<any>();
 
   const router = useRouter();
@@ -91,6 +93,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
       description: moduleDescription.value,
       courseId: router.query.id,
       videos: uploadResponse,
+      quizes: quizes,
     };
 
     courseModuleMutation.mutate(courseData, {
@@ -98,12 +101,17 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
         queryClient.invalidateQueries('courseModule');
         setIsButtonDisabled(false);
         toast.success(`Course created successfully`);
+        setShowCreateNewModule(false);
       },
       onError: (error: any) => {
         toast.error('Something went wrong');
         setIsButtonDisabled(false);
       },
     });
+  };
+
+  const handleCSVInput = (data) => {
+    setQuizes(data);
   };
 
   return (
@@ -153,7 +161,7 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
         <Box marginTop='1rem'>
           <form onSubmit={handleCourseModuleVideoUpload}>
             <Typography gutterBottom variant='overline'>
-              Please select the videos for this module in order
+              Select the videos for this module in order
             </Typography>
             <input
               name='moduleVideos'
@@ -171,13 +179,24 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
               Upload
             </Button>
             <LinearProgress
-              style={{ marginTop: '10px' }}
+              style={{ margin: '10px 0' }}
               variant='determinate'
               value={uploadPercentage}
             />
             {message && (
               <Typography variant='subtitle2'>Videos Uploaded</Typography>
             )}
+            <Typography gutterBottom variant='overline'>
+              Select the csv file for quizes
+            </Typography>
+            <CSVReader
+              onDrop={handleCSVInput}
+              config={{ skipEmptyLines: true }}
+            >
+              <Typography variant='overline'>
+                Click To Add Quizes CSV File
+              </Typography>
+            </CSVReader>
           </form>
         </Box>
 

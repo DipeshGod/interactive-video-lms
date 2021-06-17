@@ -25,8 +25,6 @@ const CourseContent = () => {
     return <Loading />;
   }
 
-  console.log(data);
-
   return (
     <div style={{ marginBottom: '3rem' }}>
       <List>
