@@ -11,18 +11,17 @@ const Home = () => {
     <Layout>
       <div
         style={{
-          backgroundImage: 'url("./images/back2.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
         <Banner />
-        <Container>
+        {/* <Container>
           <Features />
           <PopularCourses />
           <FindInstructor />
           <Testimonials />
-        </Container>
+        </Container> */}
       </div>
     </Layout>
   );

@@ -5,7 +5,6 @@ import Navbar from './navbar';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     body: {
-      backgroundColor: theme.palette.secondary.main,
       minHeight: '93vh',
     },
   })
@@ -18,7 +17,7 @@ const Layout = ({ children }) => {
     <div className={classes.body}>
       <Navbar />
       <div>{children}</div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

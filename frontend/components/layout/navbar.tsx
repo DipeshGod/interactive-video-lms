@@ -180,7 +180,12 @@ export default function Navbar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='fixed'>
+      <AppBar
+        position='fixed'
+        color='inherit'
+        style={{ borderBottom: '2px solid #e0e0e0' }}
+        elevation={0}
+      >
         <Toolbar>
           {/* <IconButton
             edge='start'
@@ -190,10 +195,15 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography className={classes.title} variant='h6' noWrap>
+          <Typography
+            color='primary'
+            className={classes.title}
+            variant='h6'
+            noWrap
+          >
             STUDENT ASSIST
           </Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -205,11 +215,11 @@ export default function Navbar() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
+          </div> */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button
-              color='inherit'
+              color='primary'
               variant='outlined'
               size='small'
               disableElevation
@@ -217,7 +227,7 @@ export default function Navbar() {
               For Enterprise
             </Button>
             <Button
-              color='inherit'
+              color='primary'
               variant='outlined'
               size='small'
               disableElevation
@@ -225,7 +235,12 @@ export default function Navbar() {
               For Student
             </Button>
             <Link href='/login'>
-              <Button variant='contained' size='small'>
+              <Button
+                color='primary'
+                variant='outlined'
+                size='small'
+                disableElevation
+              >
                 Login
               </Button>
             </Link>
