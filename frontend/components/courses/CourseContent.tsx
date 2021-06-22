@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import {
@@ -7,13 +8,16 @@ import {
   Typography,
   List,
   ListItem,
+  Button,
 } from '@material-ui/core';
 import getCourseContent from '../../services/client/course/getCourseContent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import VideoPlayer from '../videoPlayer';
 import Loading from '../Loading';
+import QuizCard from './QuizCard';
 
 const CourseContent = () => {
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
   const router = useRouter();
   const courseId = router.query.id;
 
@@ -58,6 +62,24 @@ const CourseContent = () => {
                   </Accordion>
                 </AccordionDetails>
               ))}
+              <AccordionDetails>
+                {module.quizes.length > 0 && (
+                  <>
+                    <Button
+                      variant='outlined'
+                      onClick={() => setIsQuizOpen(true)}
+                    >
+                      Try out Quizes
+                    </Button>
+                    {isQuizOpen && (
+                      <QuizCard
+                        quizes={module.quizes}
+                        handleClose={() => setIsQuizOpen(false)}
+                      />
+                    )}
+                  </>
+                )}
+              </AccordionDetails>
             </Accordion>
           </ListItem>
         ))}

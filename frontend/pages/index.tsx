@@ -9,12 +9,7 @@ import Testimonials from '../components/home/Testimonials';
 const Home = () => {
   return (
     <Layout>
-      <div
-        style={{
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <div>
         <Banner />
         {/* <Container>
           <Features />
