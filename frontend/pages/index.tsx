@@ -11,12 +11,12 @@ const Home = () => {
     <Layout>
       <div>
         <Banner />
-        {/* <Container>
+        <Container>
           <Features />
-          <PopularCourses />
+          {/* <PopularCourses />
           <FindInstructor />
-          <Testimonials />
-        </Container> */}
+          <Testimonials /> */}
+        </Container>
       </div>
     </Layout>
   );

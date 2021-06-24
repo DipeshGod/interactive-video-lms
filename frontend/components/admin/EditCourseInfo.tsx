@@ -10,13 +10,19 @@ import {
   LinearProgress,
 } from '@material-ui/core';
 import { useState, useRef } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import validator from 'validator';
 import api from '../../services/api';
-import createCourse from '../../services/client/course/createCourse';
+import editCourseInfo from '../../services/client/course/editCourseInfo';
+import getCoursesById from '../../services/client/course/getCourseById';
+import Loading from '../Loading';
 
-const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
+const EditCourseInfo = ({
+  showEditCourseInfo,
+  setShowEditCourseInfo,
+  courseId,
+}) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState([]);
@@ -25,9 +31,23 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [uploadResponse, setUploadResponse] = useState<any>();
   const formRef = useRef<any>();
+  const [updatedData, setUpdatedData] = useState(null);
 
   const queryClient = useQueryClient();
-  const courseMutation = useMutation((course: any) => createCourse(course));
+
+  const { data, isLoading } = useQuery(
+    ['course', courseId],
+    () => getCoursesById(courseId),
+    {
+      onSuccess: (data) => {
+        setUpdatedData(data);
+      },
+    }
+  );
+
+  const courseEditMutation = useMutation((course: any) =>
+    editCourseInfo(course)
+  );
 
   const handleFileChange = (e) => {
     setFile([...e.target.files]);
@@ -70,7 +90,7 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
     }
   };
 
-  const handleCourseCreateSubmit = async () => {
+  const handleCourseEditSubmit = async () => {
     // setIsButtonDisabled(true);
     const {
       courseName,
@@ -100,29 +120,37 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
       instructors: courseInstructors.value.split(', '),
     };
 
-    courseMutation.mutate(courseData, {
-      onSuccess: () => {
-        queryClient.invalidateQueries('courses');
-        setIsButtonDisabled(false);
-        toast.success(`Course created successfully`);
-        setShowEditCourseInfo(false);
-      },
-      onError: (error: any) => {
-        toast.error('Something went wrong');
-        setIsButtonDisabled(false);
-      },
-    });
+    console.log(courseData);
+
+    // courseMutation.mutate(courseData, {
+    //   onSuccess: () => {
+    //     queryClient.invalidateQueries('courses');
+    //     setIsButtonDisabled(false);
+    //     toast.success(`Course created successfully`);
+    //     setShowEditCourseInfo(false);
+    //   },
+    //   onError: (error: any) => {
+    //     toast.error('Something went wrong');
+    //     setIsButtonDisabled(false);
+    //   },
+    // });
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  console.log('ud', updatedData);
 
   return (
     <Dialog
       open={showEditCourseInfo}
       onClose={() => setShowEditCourseInfo(false)}
     >
-      <DialogTitle>Create New Course</DialogTitle>
+      <DialogTitle>Edit Course</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Please fill in the following informations to create new course.
+          Please change the content that needs to be updated.
         </DialogContentText>
         {error && (
           <DialogContentText className='error' color='error'>
@@ -140,12 +168,15 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
           <TextField
             label='Course Name'
             placeholder='enter the course name'
-            defaultValue='nepal'
             fullWidth
             size='small'
             variant='outlined'
             margin='dense'
             name='courseName'
+            value={updatedData.name}
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, name: e.target.value })
+            }
           />
           <TextField
             label='Course Description'
@@ -156,6 +187,10 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
             multiline
             margin='dense'
             name='courseDescription'
+            value={updatedData.description}
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, description: e.target.value })
+            }
           />
           <TextField
             label='Course Category'
@@ -165,6 +200,10 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
             variant='outlined'
             margin='dense'
             name='courseCategory'
+            value={updatedData.category}
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, category: e.target.value })
+            }
           />
           <TextField
             label='Course Price'
@@ -175,6 +214,10 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
             variant='outlined'
             margin='dense'
             name='coursePrice'
+            value={updatedData.price}
+            onChange={(e) =>
+              setUpdatedData({ ...updatedData, price: e.target.value })
+            }
           />
           <TextField
             label='Course Features'
@@ -245,10 +288,10 @@ const EditCourseInfo = ({ showEditCourseInfo, setShowEditCourseInfo }) => {
             variant='outlined'
             disableElevation
             type='submit'
-            onClick={handleCourseCreateSubmit}
+            onClick={handleCourseEditSubmit}
             disabled={isButtonDisabled}
           >
-            Create Course
+            Upadate Course Info
           </Button>
         </DialogActions>
       </DialogContent>
