@@ -8,6 +8,8 @@ import {
   DialogTitle,
   Typography,
   LinearProgress,
+  Switch,
+  Box,
 } from '@material-ui/core';
 import { useState, useRef } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
@@ -24,6 +26,8 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [uploadResponse, setUploadResponse] = useState<any>();
+  const [isFree, setIsFree] = useState(false);
+  const [published, setIsPublished] = useState(false);
   const formRef = useRef<any>();
 
   const queryClient = useQueryClient();
@@ -81,6 +85,10 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
       courseInstructors,
       coursePrice,
     } = formRef.current;
+
+    console.log('isFree', isFree);
+    console.log('isPublus', published);
+
     if (!validator.isLength(courseName.value, { min: 5 })) {
       setError('Please enter valid course name');
       return;
@@ -93,6 +101,8 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
       description: courseDescription.value,
       category: courseCategory.value,
       price: coursePrice.value,
+      isFree: isFree,
+      published: published,
       features: courseFeatures.value.split(','),
       goals: courseGoals.value.split(','),
       introductoryVideo: uploadResponse.introductoryVideo,
@@ -176,6 +186,24 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
             margin='dense'
             name='coursePrice'
           />
+          <Box>
+            <Typography variant='overline'>MAKE IT FREE COURSE</Typography>
+            <Switch
+              color='primary'
+              name='isFree'
+              checked={isFree}
+              onChange={() => setIsFree(!isFree)}
+            />
+          </Box>
+          <Box>
+            <Typography variant='overline'>PUBLISH THIS COURSE</Typography>
+            <Switch
+              color='primary'
+              name='published'
+              checked={published}
+              onChange={() => setIsPublished(!published)}
+            />
+          </Box>
           <TextField
             label='Course Features'
             placeholder='comma separated features of the course'
