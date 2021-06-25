@@ -1,19 +1,14 @@
-
-import { Request, Response } from "express";
-import { ICourseModuleRepository } from "../../interfaces/repositories/ICourseModuleRepository";
-import { BaseController } from "../BaseController";
+import { Request, Response } from 'express';
+import { ICourseModuleRepository } from '../../interfaces/repositories/ICourseModuleRepository';
+import { BaseController } from '../BaseController';
 
 export class CreateCourseModuleController extends BaseController {
-    private courseModuleRepository: ICourseModuleRepository;
+  private courseModuleRepository: ICourseModuleRepository;
 
-    constructor(courseModuleRepository: ICourseModuleRepository) {
-        super();
-        this.courseModuleRepository = courseModuleRepository;
-    }
-
-    protected async executeImpl(req: Request, res: Response) {
-        try {
-
+  constructor(courseModuleRepository: ICourseModuleRepository) {
+    super();
+    this.courseModuleRepository = courseModuleRepository;
+  }
             let quizes: any = []
             if (req.body.quizes) {
                 req.body.quizes.forEach((quiz: any) => {
@@ -31,4 +26,5 @@ export class CreateCourseModuleController extends BaseController {
             return this.fail(res, err.toString());
         }
     }
+  }
 }

@@ -6,8 +6,6 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -18,7 +16,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  InputBase,
   Badge,
   MenuItem,
   Menu,
@@ -30,55 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       marginBottom: '4rem',
     },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
+
+    toolbar: {
+      padding: '0 4rem',
+      [theme.breakpoints.down('sm')]: {
+        padding: '0 1rem',
       },
     },
-    search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
-    },
+
     sectionDesktop: {
       display: 'none',
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('sm')]: {
         display: 'flex',
         alignItems: 'center',
         '& button': {
@@ -88,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     sectionMobile: {
       display: 'flex',
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('sm')]: {
         display: 'none',
       },
     },
@@ -180,52 +139,27 @@ export default function Navbar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='fixed'>
-        <Toolbar>
-          {/* <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='open drawer'
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography className={classes.title} variant='h6' noWrap>
+      <AppBar
+        position='fixed'
+        color='inherit'
+        style={{ borderBottom: '2px solid #e0e0e0' }}
+        elevation={0}
+      >
+        <Toolbar className={classes.toolbar}>
+          <Typography color='primary' variant='h6' noWrap>
             STUDENT ASSIST
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Button
-              color='inherit'
-              variant='outlined'
-              size='small'
-              disableElevation
-            >
+            <Button color='primary' variant='text' disableElevation>
               For Enterprise
             </Button>
-            <Button
-              color='inherit'
-              variant='outlined'
-              size='small'
-              disableElevation
-            >
-              For Student
+            <Button color='primary' variant='text' disableElevation>
+              For Students
             </Button>
             <Link href='/login'>
-              <Button variant='contained' size='small'>
+              <Button color='primary' variant='outlined' disableElevation>
                 Login
               </Button>
             </Link>

@@ -7,14 +7,26 @@ import {
   createStyles,
 } from '@material-ui/core';
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 import CreateNewCourse from '../../components/admin/CreateNewCourse';
 import CourseAdminList from '../../components/admin/CourseAdminList';
 import Layout from '../../components/layout';
+import Loading from '../../components/Loading';
+import getCourses from '../../services/client/course/getCourses';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
 const Admin = () => {
   const [showCreateNewCourse, setShowCreateNewCourse] = useState(false);
+
+  const { data: courseData, isLoading: isCourseLoading } = useQuery(
+    'courses',
+    getCourses
+  );
+
+  if (isCourseLoading) {
+    return <Loading />;
+  }
 
   return (
     <Layout>
@@ -31,7 +43,7 @@ const Admin = () => {
             </Button>
           </Box>
           <Box>
-            <CourseAdminList />
+            <CourseAdminList courses={courseData} />
           </Box>
         </Container>
         {

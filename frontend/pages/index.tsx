@@ -9,19 +9,13 @@ import Testimonials from '../components/home/Testimonials';
 const Home = () => {
   return (
     <Layout>
-      <div
-        style={{
-          backgroundImage: 'url("./images/back2.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
+      <div>
         <Banner />
         <Container>
           <Features />
-          <PopularCourses />
+          {/* <PopularCourses />
           <FindInstructor />
-          <Testimonials />
+          <Testimonials /> */}
         </Container>
       </div>
     </Layout>

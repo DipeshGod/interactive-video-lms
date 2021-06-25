@@ -1,39 +1,35 @@
 import Link from 'next/link';
 import {
-  Typography,
-  Backdrop,
-  Container,
   makeStyles,
-  Button,
   Theme,
-  Box,
   createStyles,
+  Box,
+  Typography,
+  Button,
 } from '@material-ui/core';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     banner: {
-      height: '90vh',
-      backgroundImage: 'url("./images/back.jpg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer - 1,
-      color: '#fff',
-      width: '100%',
-      height: '90vh',
-      position: 'static',
-    },
-
-    content: {
-      display: 'flex',
-      flexDirection: 'column',
-      marginBottom: '4rem',
-      padding: '0 10rem',
+      backgroundColor: 'white',
+      padding: '1rem 4rem',
       [theme.breakpoints.down('xs')]: {
-        padding: '0 1rem',
+        padding: '1rem',
+      },
+    },
+    bannerIntro: {
+      [theme.breakpoints.down('sm')]: {
+        flexBasis: '100%',
+      },
+    },
+    bannerImg: {
+      minHeight: '80vh',
+      backgroundImage: "url('/images/banner.png')",
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'contain',
+      [theme.breakpoints.down('sm')]: {
+        flexBasis: '100%',
       },
     },
   })
@@ -44,32 +40,28 @@ const Banner = () => {
 
   return (
     <div className={classes.banner}>
-      <Backdrop open={true} className={classes.backdrop}>
-        <Container className={classes.content}>
-          <Typography variant='h4' align='center' gutterBottom>
-            LEARN TOP QUALITY COURSES WHICH WILL SET YOUR CAREER APART
+      <Box
+        display='flex'
+        flexWrap='wrap'
+        alignItems='center'
+        justifyContent='space-between'
+      >
+        <Box flexBasis='45%' className={classes.bannerIntro}>
+          <Typography variant='h3' gutterBottom>
+            Online learning platform for the future
           </Typography>
-          <Typography
-            style={{ fontSize: '1.4rem', marginBottom: '2rem' }}
-            align='center'
-            variant='subtitle1'
-          >
-            Practicality of things you learn is what defines success. Here, you
-            will get to learn from industry expert lecturers so that you are
-            ready to apply it in the real world !
+          <Typography style={{ fontSize: '1.2rem' }} gutterBottom>
+            Modern education platform empowered by qualtity contents and
+            technology asissted learning
           </Typography>
-          <Box margin='auto'>
-            <Button
-              color='primary'
-              variant='contained'
-              size='large'
-              startIcon={<MenuBookIcon color='secondary' />}
-            >
-              <Link href='/courses'>Explore Our Courses</Link>
-            </Button>
-          </Box>
-        </Container>
-      </Backdrop>
+          <Button variant='outlined' size='large' color='primary'>
+            Learn More
+          </Button>
+        </Box>
+        <Box flexBasis='55%' className={classes.bannerImg}>
+          <p style={{ display: 'none' }}>just some stuff</p>
+        </Box>
+      </Box>
     </div>
   );
 };
