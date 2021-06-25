@@ -28,10 +28,14 @@ export class FacebookLoginController extends BaseController {
       verified: true,
       isEnterprise: '',
       profilePicture: '',
+      isInstructor: {
+        bio: '',
+        qualification: ''
+      }
     };
   }
 
-  protected async executeImpl(req: Request, res: Response){
+  protected async executeImpl(req: Request, res: Response) {
     try {
       const { userID, accessToken } = req.body;
       const url = `https://graph.facebook.com/v2.11/${userID}/?fields=id,name,email&access_token=${accessToken}`;

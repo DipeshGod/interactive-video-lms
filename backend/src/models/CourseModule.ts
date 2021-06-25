@@ -12,9 +12,9 @@ const videoSchema = new mongoose.Schema({
 })
 
 const quizSchema = new mongoose.Schema({
-  question:String,
-  options:[String],
-  answer:String
+  question: String,
+  options: [String],
+  answer: String
 
 })
 
@@ -37,8 +37,11 @@ const courseModuleSchema = new mongoose.Schema(
       type: [videoSchema],
       required: true,
     },
-    quizes:{
-      type:[quizSchema]
+    quizes: {
+      type: [quizSchema]
+    },
+    questions: {
+      type: [String]
     }
   },
   { timestamps: true }

@@ -36,7 +36,13 @@ export const registerValidator = async (data: any) => {
 
         isEnterprise: joi.string(),
 
-        type: joi.string()
+        type: joi.string(),
+
+        isInstructor: joi.object({
+            bio: joi.string(),
+
+            qualification: joi.string()
+        })
     })
 
     return await registerSchema.validateAsync(data);
@@ -52,7 +58,7 @@ export const resetPasswordValidator = async (data: any) => {
             .pattern(new RegExp('^[a-zA-z0-9]{8,15}$'))
             .required(),
 
-            code:joi.string()
+        code: joi.string()
             .required()
     })
 
