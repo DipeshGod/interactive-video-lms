@@ -45,6 +45,14 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isFree: {
+      type: Boolean,
+      default: false
+    },
+    published: {
+      type: Boolean,
+      default: true
+    }
   },
   { timestamps: true }
 );

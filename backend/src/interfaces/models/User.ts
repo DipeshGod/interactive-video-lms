@@ -8,6 +8,10 @@ export interface IUser {
     profilePicture: string;
     verified: boolean;
     isEnterprise: string;
+    isInstructor: {
+        bio: string,
+        qualification: string
+    }
 }
 
 export interface IUserDoc extends mongoose.Document {
@@ -18,6 +22,10 @@ export interface IUserDoc extends mongoose.Document {
     profilePicture: string;
     verified: boolean;
     isEnterprise: string;
+    isInstructor: {
+        bio: string,
+        qualification: string
+    }
 }
 
 export interface IUserModel extends mongoose.Model<IUserDoc> { }

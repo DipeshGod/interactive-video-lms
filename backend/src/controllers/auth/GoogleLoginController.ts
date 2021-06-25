@@ -30,6 +30,10 @@ export class GoogleLoginController extends BaseController {
       verified: true,
       isEnterprise: '',
       profilePicture: '',
+      isInstructor: {
+        bio: '',
+        qualification: ''
+      }
     };
   }
 

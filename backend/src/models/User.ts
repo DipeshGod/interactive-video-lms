@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
 import { IUser, IUserDoc, IUserModel } from './../interfaces/models/User';
 
+const instructorSchema = new mongoose.Schema({
+    bio: {
+        type: String
+    },
+    qualification: {
+        type: String
+    }
+})
+
 const userSchema = new mongoose.Schema(
     {
         type: {
@@ -32,6 +41,9 @@ const userSchema = new mongoose.Schema(
         },
         isEnterprise: {
             type: String
+        },
+        isInstructor: {
+            type: instructorSchema
         }
     }
 );

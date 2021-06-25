@@ -14,6 +14,8 @@ export interface ICourse {
   instructors: string[];
   price: number;
   coursePoster: string;
+  isFree: boolean;
+  published: boolean;
 }
 
 export interface ICourseDoc extends mongoose.Document {
@@ -30,6 +32,8 @@ export interface ICourseDoc extends mongoose.Document {
   instructors: string[];
   price: number;
   coursePoster: string;
+  isFree: boolean;
+  published: boolean;
 }
 
 export interface ICourseModel extends mongoose.Model<ICourseDoc> { }
