@@ -8,7 +8,7 @@ const EditorComponent = dynamic(() => import('react-editor-js'), {
 const Editor = () => {
   return (
     <div>
-      <EditorComponent tools={EDITOR_JS_TOOLS} />
+      <h2>This is editor</h2>
     </div>
   );
 };
