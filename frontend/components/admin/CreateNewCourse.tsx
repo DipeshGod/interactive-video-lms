@@ -93,11 +93,11 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
       description: courseDescription.value,
       category: courseCategory.value,
       price: coursePrice.value,
-      features: courseFeatures.value.split(', '),
-      goals: courseGoals.value.split(', '),
+      features: courseFeatures.value.split(','),
+      goals: courseGoals.value.split(','),
       introductoryVideo: uploadResponse.introductoryVideo,
       coursePoster: uploadResponse.coursePoster,
-      instructors: courseInstructors.value.split(', '),
+      instructors: courseInstructors.value.split(','),
     };
 
     courseMutation.mutate(courseData, {

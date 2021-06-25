@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import VideoPlayer from '../videoPlayer';
 import Loading from '../Loading';
 import QuizCard from './QuizCard';
+import QuestionAndAnswer from './QuestionAndAnswer';
 
 const CourseContent = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -84,6 +85,7 @@ const CourseContent = () => {
           </ListItem>
         ))}
       </List>
+      <QuestionAndAnswer />
     </div>
   );
 };
