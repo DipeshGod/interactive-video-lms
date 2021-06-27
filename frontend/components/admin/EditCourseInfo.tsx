@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import {
   Button,
   DialogActions,
@@ -32,11 +33,12 @@ const EditCourseInfo = ({
   const [uploadResponse, setUploadResponse] = useState<any>();
   const formRef = useRef<any>();
   const [updatedData, setUpdatedData] = useState(null);
+  const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(
-    ['course', courseId],
+  const { isLoading } = useQuery(
+    [['course', courseId], courseId],
     () => getCoursesById(courseId),
     {
       onSuccess: (data) => {
@@ -46,7 +48,7 @@ const EditCourseInfo = ({
   );
 
   const courseEditMutation = useMutation((course: any) =>
-    editCourseInfo(course)
+    editCourseInfo(course, courseId)
   );
 
   const handleFileChange = (e) => {
@@ -92,60 +94,51 @@ const EditCourseInfo = ({
 
   const handleCourseEditSubmit = async () => {
     // setIsButtonDisabled(true);
-    const {
-      courseName,
-      courseDescription,
-      courseCategory,
-      courseFeatures,
-      courseGoals,
-      courseInstructors,
-      coursePrice,
-    } = formRef.current;
-    if (!validator.isLength(courseName.value, { min: 5 })) {
+
+    if (!validator.isLength(updatedData.name, { min: 5 })) {
       setError('Please enter valid course name');
       return;
-    } else if (!validator.isLength(courseDescription.value, { min: 10 })) {
+    } else if (!validator.isLength(updatedData.description, { min: 10 })) {
       setError('Course description must be of length at least 10');
       return;
     }
     const courseData = {
-      name: courseName.value,
-      description: courseDescription.value,
-      category: courseCategory.value,
-      price: coursePrice.value,
-      features: courseFeatures.value.split(', '),
-      goals: courseGoals.value.split(', '),
-      introductoryVideo: uploadResponse.introductoryVideo,
-      coursePoster: uploadResponse.coursePoster,
-      instructors: courseInstructors.value.split(', '),
+      name: updatedData.name,
+      description: updatedData.description,
+      category: updatedData.category,
+      price: updatedData.price,
+      features: updatedData.features,
+      goals: updatedData.goals,
+      introductoryVideo: updatedData.introductoryVideo,
+      coursePoster: updatedData.coursePoster,
+      instructors: updatedData.instructors,
     };
 
-    console.log(courseData);
-
-    // courseMutation.mutate(courseData, {
-    //   onSuccess: () => {
-    //     queryClient.invalidateQueries('courses');
-    //     setIsButtonDisabled(false);
-    //     toast.success(`Course created successfully`);
-    //     setShowEditCourseInfo(false);
-    //   },
-    //   onError: (error: any) => {
-    //     toast.error('Something went wrong');
-    //     setIsButtonDisabled(false);
-    //   },
-    // });
+    courseEditMutation.mutate(courseData, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('courses');
+        setIsButtonDisabled(false);
+        toast.success(`Course updated successfully`);
+        setShowEditCourseInfo(false);
+      },
+      onError: (error: any) => {
+        toast.error('Something went wrong');
+        setIsButtonDisabled(false);
+      },
+    });
   };
 
   if (isLoading) {
     return <Loading />;
   }
 
-  console.log('ud', updatedData);
-
   return (
     <Dialog
       open={showEditCourseInfo}
-      onClose={() => setShowEditCourseInfo(false)}
+      onClose={() => {
+        setShowEditCourseInfo(false);
+        router.reload();
+      }}
     >
       <DialogTitle>Edit Course</DialogTitle>
       <DialogContent>
@@ -227,6 +220,13 @@ const EditCourseInfo = ({
             variant='outlined'
             multiline
             margin='dense'
+            value={updatedData.features.join(',')}
+            onChange={(e) =>
+              setUpdatedData({
+                ...updatedData,
+                features: e.target.value.split(','),
+              })
+            }
             name='courseFeatures'
           />
           <TextField
@@ -238,6 +238,13 @@ const EditCourseInfo = ({
             multiline
             margin='dense'
             name='courseGoals'
+            value={updatedData.goals.join(',')}
+            onChange={(e) =>
+              setUpdatedData({
+                ...updatedData,
+                goals: e.target.value.split(','),
+              })
+            }
           />
           <TextField
             label='Instructors'
@@ -247,6 +254,13 @@ const EditCourseInfo = ({
             variant='outlined'
             margin='dense'
             name='courseInstructors'
+            value={updatedData.instructors.join(',')}
+            onChange={(e) =>
+              setUpdatedData({
+                ...updatedData,
+                instructors: e.target.value.split(','),
+              })
+            }
           />
         </form>
 
@@ -279,7 +293,13 @@ const EditCourseInfo = ({
         </form>
 
         <DialogActions>
-          <Button color='primary' onClick={() => setShowEditCourseInfo(false)}>
+          <Button
+            color='primary'
+            onClick={() => {
+              setShowEditCourseInfo(false);
+              router.reload();
+            }}
+          >
             Cancel
           </Button>
           <Button
