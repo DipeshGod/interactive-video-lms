@@ -17,7 +17,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 import createCourseModule from '../../services/client/courseModule/createCourseModule';
 import { toast } from 'react-toastify';
-import { CSVReader } from 'react-papaparse';
 
 const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -110,10 +109,6 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
     });
   };
 
-  const handleCSVInput = (data) => {
-    setQuizes(data);
-  };
-
   return (
     <Dialog
       open={showCreateNewModule}
@@ -186,17 +181,6 @@ const CreateNewModule = ({ showCreateNewModule, setShowCreateNewModule }) => {
             {message && (
               <Typography variant='subtitle2'>Videos Uploaded</Typography>
             )}
-            <Typography gutterBottom variant='overline'>
-              Select the csv file for quizes
-            </Typography>
-            <CSVReader
-              onDrop={handleCSVInput}
-              config={{ skipEmptyLines: true }}
-            >
-              <Typography variant='overline'>
-                Click To Add Quizes CSV File
-              </Typography>
-            </CSVReader>
           </form>
         </Box>
 

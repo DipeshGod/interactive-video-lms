@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
@@ -79,6 +80,13 @@ const CourseContent = () => {
                     )}
                   </>
                 )}
+              </AccordionDetails>
+              <AccordionDetails>
+                <Link href={`/admin/courseContent/exercises/${module._id}`}>
+                  <Button variant='outlined' color='secondary'>
+                    Create Exercises
+                  </Button>
+                </Link>
               </AccordionDetails>
             </Accordion>
           </ListItem>
