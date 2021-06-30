@@ -12,7 +12,7 @@ export class GetCourseModule extends BaseController {
     protected async executeImpl(req: Request, res: Response) {
         try {
             const id = req.params.id;
-            const modules = await this.courseModuleRepository.getCourseModuleById(id);
+            const modules = await this.courseModuleRepository.getCourseModuleByCourseId(id);
             return this.ok(res, modules);
         } catch (err: any) {
             return this.fail(res, err);

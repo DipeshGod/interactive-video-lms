@@ -2,6 +2,7 @@ import { Router } from "express";
 import { CreateCourseModuleController } from "../controllers/courseModule/CreateCourseModuleController";
 import { DeleteCourseModuleController } from "../controllers/courseModule/DeleteCourseModuleController";
 import { EditCourseModuleController } from "../controllers/courseModule/EditCourseModuleController";
+import { CreateExerciseController } from "../controllers/courseModule/exercise/CreateExerciseController";
 import { GetCourseModule } from "../controllers/courseModule/GetCourseModuleController";
 import { CourseModule } from "../models/CourseModule";
 import { CourseModuleRepository } from "../repositories/CourseModuleRepository";
@@ -25,6 +26,11 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     new DeleteCourseModuleController(courseModuleRepository).execute(req, res);
+})
+
+
+router.post('/exercise/:id', (req, res) => {
+    new CreateExerciseController(courseModuleRepository).execute(req, res);
 })
 
 export { router as courseModuleRouter }

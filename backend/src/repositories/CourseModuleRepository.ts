@@ -19,7 +19,7 @@ export class CourseModuleRepository implements ICourseModuleRepository {
         }
     }
 
-    public getCourseModuleById(id: string): Query<ICourseModuleDoc[], ICourseModuleDoc, {}> {
+    public getCourseModuleByCourseId(id: string): Query<ICourseModuleDoc[], ICourseModuleDoc, {}> {
         try {
             const courseModules = this.model.find({ courseId: id })
             return courseModules;
@@ -45,6 +45,15 @@ export class CourseModuleRepository implements ICourseModuleRepository {
             return courseModule;
         } catch (err: any) {
             throw new Error(err.toString());
+        }
+    }
+
+    public getCourseModuleByModuleId(id: string):Query<ICourseModuleDoc | null, ICourseModuleDoc, {}> {
+        try {
+            const courseModule = this.model.findById(id);
+            return courseModule;
+        } catch (err: any) {
+            throw new Error(err.toString())
         }
     }
 }

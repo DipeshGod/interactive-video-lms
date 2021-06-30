@@ -5,9 +5,10 @@ import {
 } from '../interfaces/models/CourseModule';
 
 const quizSchema = new mongoose.Schema({
+  type: String,
   question: String,
   options: [String],
-  answer: String
+  answer: [String]
 
 })
 
@@ -35,8 +36,9 @@ const courseModuleSchema = new mongoose.Schema(
       }],
       required: true,
     },
-    quizes: {
-      type: [quizSchema]
+    exercise: {
+      type: [quizSchema],
+      default:[]
     },
     questions: {
       type: [String]
