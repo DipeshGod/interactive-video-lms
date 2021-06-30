@@ -14,6 +14,7 @@ router.post('/', (req, res) => {
     new CreateCourseModuleController(courseModuleRepository).execute(req, res);
 })
 
+
 router.get('/:id', (req, res) => {
     new GetCourseModule(courseModuleRepository).execute(req, res);
 })

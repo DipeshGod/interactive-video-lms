@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { ICourse, ICourseDoc, ICourseModel } from '../interfaces/models/Course';
 
 const introVideoSchema = new mongoose.Schema({
@@ -6,6 +6,18 @@ const introVideoSchema = new mongoose.Schema({
   SD: String,
   HD: String,
 });
+
+const reviewSchema = new mongoose.Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  },
+  comment: String,
+  rating: {
+    type: Number,
+    enum: [1, 2, 3, 4, 5]
+  }
+})
 
 const courseSchema = new mongoose.Schema(
   {
@@ -30,8 +42,9 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     introductoryVideo: {
-      type: introVideoSchema,
-      required: true,
+      LOW: String,
+      SD: String,
+      HD: String
     },
     instructors: {
       type: [String],
@@ -52,7 +65,8 @@ const courseSchema = new mongoose.Schema(
     published: {
       type: Boolean,
       default: true
-    }
+    },
+    review: [reviewSchema],
   },
   { timestamps: true }
 );
