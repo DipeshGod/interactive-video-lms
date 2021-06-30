@@ -38,11 +38,8 @@ const courseModuleSchema = new mongoose.Schema(
     },
     exercise: {
       type: [quizSchema],
-      default:[]
+      default: []
     },
-    questions: {
-      type: [String]
-    }
   },
   { timestamps: true }
 );

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Typography,
   TextField,
@@ -8,10 +9,20 @@ import {
   Radio,
   Button,
 } from '@material-ui/core';
+import { useMutation, useQueryClient } from 'react-query';
+import createExercise from '../../services/client/exercise/createExercise';
 
 const CreateMultipleChoice = () => {
   const [answer, setAnswer] = useState(0);
+  const [question, setQuestion] = useState('');
   const [quizOptions, setQuizOptions] = useState([]);
+
+  const courseExerciseMutation = useMutation((exercise: any) =>
+  createExercise(exercise, id)
+);
+
+  const router = useRouter();
+  const id = router.query.id;
 
   const handleOptionInput = (e) => {
     console.log(e.keyCode);
@@ -24,6 +35,12 @@ const CreateMultipleChoice = () => {
   const handleAnswerSelect = (e) => {
     setAnswer(Number(e.target.name));
   };
+
+  const handleMultipleChoiceSubmit = () => {
+    console.log('question',question);
+    console.log('options',quizOptions);
+    console.log('answers',answer)
+  }
 
   return (
     <>
@@ -38,6 +55,7 @@ const CreateMultipleChoice = () => {
           <TextField
             label='Enter a option and press enter to create another'
             variant='outlined'
+            onChange={(e)=>setQuestion(e.target.value)} 
             onKeyUp={handleOptionInput}
             fullWidth
           />
@@ -57,6 +75,7 @@ const CreateMultipleChoice = () => {
           style={{ marginTop: '1rem' }}
           variant='outlined'
           color='primary'
+          onClick={handleMultipleChoiceSubmit}
         >
           Create Mutiple Choice Question
         </Button>

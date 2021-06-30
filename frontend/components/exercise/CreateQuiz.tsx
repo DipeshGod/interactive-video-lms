@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Typography,
   TextField,
@@ -8,13 +9,22 @@ import {
   Radio,
   Button,
 } from '@material-ui/core';
+import { useMutation, useQueryClient } from 'react-query';
+import createExercise from '../../services/client/exercise/createExercise';
 
 const CreateQuiz = () => {
   const [answer, setAnswer] = useState(0);
+  const [question, setQuestion] = useState('');
   const [quizOptions, setQuizOptions] = useState([]);
+  const router = useRouter();
+  const id = router.query.id;
+
+  const courseExerciseMutation = useMutation((exercise: any) =>
+  createExercise(exercise, id)
+);
 
   const handleOptionInput = (e) => {
-    console.log(e.keyCode);
+
     if (e.keyCode === 13) {
       setQuizOptions([...quizOptions, e.target.value]);
       e.target.value = '';
@@ -25,6 +35,24 @@ const CreateQuiz = () => {
     setAnswer(Number(e.target.name));
   };
 
+  const handleQuizSubmit = () => {
+    
+    let quiz = {
+      question,
+      options:quizOptions,
+      answer:[answer],
+      type:'quiz'
+    }
+    courseExerciseMutation.mutate(quiz, {
+      onSuccess: () => {
+        console.log('maza aayo hai');
+      },
+      onError: () => {
+        console.log('err aayo hai');
+      },
+    });
+  }
+
   return (
     <>
       <Typography variant='h5' gutterBottom>
@@ -32,7 +60,7 @@ const CreateQuiz = () => {
       </Typography>
       <Box marginY='1rem'>
         <Box marginY='1rem'>
-          <TextField label='Enter the question' variant='outlined' fullWidth />
+          <TextField label='Enter the question' variant='outlined' onChange={(e)=>setQuestion(e.target.value)} fullWidth />
         </Box>
         <Box marginY='1rem'>
           <TextField
@@ -57,6 +85,7 @@ const CreateQuiz = () => {
           style={{ marginTop: '1rem' }}
           variant='outlined'
           color='primary'
+          onClick={handleQuizSubmit}
         >
           Create Quiz
         </Button>
