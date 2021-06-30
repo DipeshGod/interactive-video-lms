@@ -64,7 +64,7 @@ const CourseContent = () => {
                 </AccordionDetails>
               ))}
               <AccordionDetails>
-                {module.quizes.length > 0 && (
+                {/* {module.quizes.length > 0 && (
                   <>
                     <Button
                       variant='outlined'
@@ -79,7 +79,7 @@ const CourseContent = () => {
                       />
                     )}
                   </>
-                )}
+                )} */}
               </AccordionDetails>
               <AccordionDetails>
                 <Link href={`/admin/courseContent/exercises/${module._id}`}>

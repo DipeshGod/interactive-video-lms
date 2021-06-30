@@ -86,9 +86,6 @@ const CreateNewCourse = ({ showCreateNewCourse, setShowCreateNewCourse }) => {
       coursePrice,
     } = formRef.current;
 
-    console.log('isFree', isFree);
-    console.log('isPublus', published);
-
     if (!validator.isLength(courseName.value, { min: 5 })) {
       setError('Please enter valid course name');
       return;
