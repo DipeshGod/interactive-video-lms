@@ -48,12 +48,21 @@ export class CourseModuleRepository implements ICourseModuleRepository {
         }
     }
 
-    public getCourseModuleByModuleId(id: string):Query<ICourseModuleDoc | null, ICourseModuleDoc, {}> {
+    public getCourseModuleByModuleId(id: string): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}> {
         try {
             const courseModule = this.model.findById(id);
             return courseModule;
         } catch (err: any) {
             throw new Error(err.toString())
+        }
+    }
+
+    public editExercise(id: string, exerciseData: any) {
+        try {
+            const updatedExercise = this.model.find({ review: id })
+            return updatedExercise;
+        } catch (err: any) {
+            throw new Error(err.toString());
         }
     }
 }
