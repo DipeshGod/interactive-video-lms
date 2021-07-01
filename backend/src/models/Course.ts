@@ -7,17 +7,6 @@ const introVideoSchema = new mongoose.Schema({
   HD: String,
 });
 
-const reviewSchema = new mongoose.Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
-  comment: String,
-  rating: {
-    type: Number,
-    enum: [1, 2, 3, 4, 5]
-  }
-})
 
 const courseSchema = new mongoose.Schema(
   {
@@ -66,11 +55,10 @@ const courseSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
-    review: [reviewSchema],
   },
   { timestamps: true }
 );
 
-const Course = mongoose.model<ICourseDoc, ICourseModel>('Course', courseSchema);
+const Course = mongoose.model<ICourseDoc, ICourseModel>('course', courseSchema);
 
 export { Course };

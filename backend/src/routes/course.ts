@@ -4,7 +4,6 @@ import { DeleteCourseController } from '../controllers/course/DeleteCourseContro
 import { EditCourseController } from '../controllers/course/EditCourseController';
 import { GetCourseByIdController } from '../controllers/course/GetCourseByIdController';
 import { GetCourseController } from '../controllers/course/GetCourseController';
-import { CreateReviewController } from '../controllers/course/review/CreateReviewController';
 import { Course } from '../models/Course';
 import { CourseModule } from '../models/CourseModule';
 import { CourseRepository } from '../repositories/CourseRepository';
@@ -37,14 +36,6 @@ router.put('/:id', (req, res) =>
 /* Delete Course */
 router.delete('/:id', (req, res) =>
   new DeleteCourseController(courseRepository).execute(req, res)
-);
-
-router.get('/review/:id', (req, res) =>
-  new CreateReviewController(courseRepository).execute(req, res)
-);
-
-router.put('/review/:id', (req, res) =>
-  new CreateReviewController(courseRepository).execute(req, res)
 );
 
 export { router as courseRouter };
