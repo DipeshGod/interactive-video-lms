@@ -12,6 +12,7 @@ router.post('/', (req, res) =>
     new CreateReviewController(reviewRepository).execute(req, res)
 );
 
+//course id
 router.get('/:id', (req, res) =>
     new GetReviewController(reviewRepository).execute(req, res)
 );
