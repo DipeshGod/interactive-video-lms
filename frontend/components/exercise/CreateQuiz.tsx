@@ -20,11 +20,10 @@ const CreateQuiz = () => {
   const id = router.query.id;
 
   const courseExerciseMutation = useMutation((exercise: any) =>
-  createExercise(exercise, id)
-);
+    createExercise(exercise, id)
+  );
 
   const handleOptionInput = (e) => {
-
     if (e.keyCode === 13) {
       setQuizOptions([...quizOptions, e.target.value]);
       e.target.value = '';
@@ -36,14 +35,13 @@ const CreateQuiz = () => {
   };
 
   const handleQuizSubmit = () => {
-    
-    let quiz = {
+    let exercise = {
       question,
-      options:quizOptions,
-      answer:[answer],
-      type:'quiz'
-    }
-    courseExerciseMutation.mutate(quiz, {
+      options: quizOptions,
+      answer: [answer],
+      type: 'quiz',
+    };
+    courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
         console.log('maza aayo hai');
       },
@@ -51,7 +49,7 @@ const CreateQuiz = () => {
         console.log('err aayo hai');
       },
     });
-  }
+  };
 
   return (
     <>
@@ -60,7 +58,12 @@ const CreateQuiz = () => {
       </Typography>
       <Box marginY='1rem'>
         <Box marginY='1rem'>
-          <TextField label='Enter the question' variant='outlined' onChange={(e)=>setQuestion(e.target.value)} fullWidth />
+          <TextField
+            label='Enter the question'
+            variant='outlined'
+            onChange={(e) => setQuestion(e.target.value)}
+            fullWidth
+          />
         </Box>
         <Box marginY='1rem'>
           <TextField

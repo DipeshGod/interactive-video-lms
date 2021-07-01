@@ -31,13 +31,13 @@ const CreateYesNo = () => {
     if (value === 'no') {
       answer = [false];
     }
-    let yesNo = {
+    let exercise = {
       question,
       answer,
       type: 'yesNo',
     };
 
-    courseExerciseMutation.mutate(yesNo, {
+    courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
         console.log('maza aayo hai');
       },
