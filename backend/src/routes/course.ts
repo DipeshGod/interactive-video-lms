@@ -39,6 +39,10 @@ router.delete('/:id', (req, res) =>
   new DeleteCourseController(courseRepository).execute(req, res)
 );
 
+router.get('/review/:id', (req, res) =>
+  new CreateReviewController(courseRepository).execute(req, res)
+);
+
 router.put('/review/:id', (req, res) =>
   new CreateReviewController(courseRepository).execute(req, res)
 );

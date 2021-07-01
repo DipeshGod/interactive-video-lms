@@ -12,9 +12,9 @@ export class GetExerciseController extends BaseController {
 
     protected async executeImpl(req: Request, res: Response) {
         try {
-            const courseModule:any = await this.courseModuleRepository.getCourseModuleByModuleId(req.params.id);
-            if (!courseModule) return this.fail(res, 'cannot find any module with given id');
-            return this.ok(res, courseModule.exercise);
+            const exercises = await this.courseModuleRepository.getCourseModuleByModuleId(req.params.id);
+            if (!exercises) return this.fail(res, 'cannot find any module with given id');
+            return this.ok(res, exercises);
         } catch (err: any) {
             return this.fail(res, err);
         }

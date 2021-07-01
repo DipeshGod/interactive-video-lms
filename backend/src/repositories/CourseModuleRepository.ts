@@ -59,7 +59,7 @@ export class CourseModuleRepository implements ICourseModuleRepository {
 
     public getExercises(id: string): any {
         try {
-            const exercises = this.model.find({ exercise: id })
+            const exercises = this.model.findById(id).select("exercise");
             return exercises;
         } catch (err: any) {
             throw new Error(err.toString());
@@ -68,7 +68,7 @@ export class CourseModuleRepository implements ICourseModuleRepository {
 
     public editExercise(id: string): any {
         try {
-            const updatedExercise = this.model.find({ exercise: { _id: id } })
+            const updatedExercise = this.model.find({ "exercise._id": id }).select("exercise");
             return updatedExercise;
         } catch (err: any) {
             throw new Error(err.toString());

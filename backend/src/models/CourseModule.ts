@@ -6,6 +6,10 @@ import {
 
 const quizSchema = new mongoose.Schema({
   type: String,
+  scope:{
+    type:String,
+    enum:['module','preTest','finalTest']
+  },
   question: {
     type: String,
     unique: true,
