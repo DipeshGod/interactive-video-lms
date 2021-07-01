@@ -14,8 +14,9 @@ export class EditExerciseController extends BaseController {
     protected async executeImpl(req: Request, res: Response) {
         try {
             const id = req.params.id;
-            const updatedCourseModule = await this.courseModuleRepository.editExercise(id, req.body);
+            const updatedCourseModule = await this.courseModuleRepository.editExercise(id);
             console.log('updated ', updatedCourseModule);
+            return this.ok(res, updatedCourseModule);
         } catch (err: any) {
             return this.fail(res, err.toString());
         }

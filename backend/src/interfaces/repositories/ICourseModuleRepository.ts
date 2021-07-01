@@ -7,5 +7,5 @@ export interface ICourseModuleRepository {
   editCourseModule(id: string, moduleData: ICourseModuleDoc): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}>;
   deleteCourseModule(id: string): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}>;
   getCourseModuleByModuleId(id: string): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}>;
-  editExercise(id:string,exerciseData:any):any
+  editExercise(id: string): any
 }

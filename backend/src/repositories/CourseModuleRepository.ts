@@ -57,9 +57,18 @@ export class CourseModuleRepository implements ICourseModuleRepository {
         }
     }
 
-    public editExercise(id: string, exerciseData: any) {
+    public getExercises(id: string): any {
         try {
-            const updatedExercise = this.model.find({ review: id })
+            const exercises = this.model.find({ exercise: id })
+            return exercises;
+        } catch (err: any) {
+            throw new Error(err.toString());
+        }
+    }
+
+    public editExercise(id: string): any {
+        try {
+            const updatedExercise = this.model.find({ exercise: { _id: id } })
             return updatedExercise;
         } catch (err: any) {
             throw new Error(err.toString());

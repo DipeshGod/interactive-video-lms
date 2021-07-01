@@ -6,7 +6,11 @@ import {
 
 const quizSchema = new mongoose.Schema({
   type: String,
-  question: String,
+  question: {
+    type: String,
+    unique: true,
+    minlength:5
+  },
   options: [String],
   answer: [String]
 
