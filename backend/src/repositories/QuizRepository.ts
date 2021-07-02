@@ -11,8 +11,8 @@ export class QuizRepository implements IQuizRepository {
 
     public createQuiz(quizData: IQuiz): any {
         try {
-           /*  const quiz = new this.model(quizData);
-            return quiz.save(); */
+            const quiz = new this.model(quizData);
+            return quiz.save();
         } catch (err: any) {
             throw new Error(err.toString());
         }
@@ -20,8 +20,8 @@ export class QuizRepository implements IQuizRepository {
 
     public getQuiz(id: string): any {
         try {
-            /* const quiz = this.model.find({});
-            return quiz; */
+            const quiz = this.model.find({});
+            return quiz;
         } catch (err: any) {
             throw new Error(err.toString());
         }
