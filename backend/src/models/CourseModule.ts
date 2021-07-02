@@ -4,22 +4,6 @@ import {
   ICourseModuleModel,
 } from '../interfaces/models/CourseModule';
 
-const quizSchema = new mongoose.Schema({
-  type: String,
-  scope:{
-    type:String,
-    enum:['module','preTest','finalTest']
-  },
-  question: {
-    type: String,
-    unique: true,
-    minlength:5
-  },
-  options: [String],
-  answer: [String]
-
-})
-
 const courseModuleSchema = new mongoose.Schema(
   {
     title: {
@@ -43,11 +27,7 @@ const courseModuleSchema = new mongoose.Schema(
         HD: String
       }],
       required: true,
-    },
-    exercise: {
-      type: [quizSchema],
-      default: []
-    },
+    }
   },
   { timestamps: true }
 );
