@@ -5,6 +5,7 @@ export interface IQuiz {
     question: string;
     options: [string];
     answer: [string];
+    association: string;
 }
 
 export interface IQuizDoc extends mongoose.Document {
@@ -13,6 +14,7 @@ export interface IQuizDoc extends mongoose.Document {
     question: string;
     options: [string];
     answer: [string];
+    association: string;
 }
 
 export interface IQuizModel extends mongoose.Model<IQuizDoc> { }

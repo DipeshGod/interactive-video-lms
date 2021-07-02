@@ -7,6 +7,8 @@ const router = Router();
 
 const quizRepository = new QuizRepository(Quiz);
 
-router.post('/',(req,res)=>
-    new CreateQuizController(quizRepository).execute(req,res)
+router.post('/', (req, res) =>
+    new CreateQuizController(quizRepository).execute(req, res)
 );
+
+export { router as quizRouter }

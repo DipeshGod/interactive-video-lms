@@ -19,7 +19,7 @@ export class ReviewRepository implements IReviewRepository {
 
     public getReview(id: string): any {
         try {
-            const reviews = this.reviewModel.find({ course: id });
+            const reviews = this.reviewModel.find({ course: id }).populate('user');;
             return reviews;
         } catch (err: any) {
             throw new Error(err.toString());

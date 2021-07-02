@@ -3,8 +3,9 @@ import mongoose, { } from 'mongoose';
 import { IQuizDoc, IQuizModel } from '../interfaces/models/Quiz';
 
 const quizSchema = new mongoose.Schema({
-    bothId: {
-        type: string
+    association: {
+        type: mongoose.Types.ObjectId,
+        required: true,
     },
     category: {
         type: String,
