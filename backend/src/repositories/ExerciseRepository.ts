@@ -1,15 +1,15 @@
 import { } from 'mongoose';
-import { IQuiz, IQuizModel } from '../interfaces/models/Quiz';
-import { IQuizRepository } from '../interfaces/repositories/IQuizRepository';
+import { IExercise, IExerciseModel } from '../interfaces/models/Exercise';
+import { IExerciseRepository } from '../interfaces/repositories/IExerciseRepository';
 
-export class QuizRepository implements IQuizRepository {
-    private model: IQuizModel;
+export class ExerciseRepository implements IExerciseRepository {
+    private model: IExerciseModel;
 
-    constructor(model: IQuizModel) {
+    constructor(model: IExerciseModel) {
         this.model = model;
     }
 
-    public createQuiz(quizData: IQuiz): any {
+    public createExercise(quizData: IExercise): any {
         try {
             const quiz = new this.model(quizData);
             return quiz.save();
@@ -18,7 +18,7 @@ export class QuizRepository implements IQuizRepository {
         }
     }
 
-    public getQuiz(id: string): any {
+    public getExercise(id: string): any {
         try {
             const quiz = this.model.find({});
             return quiz;

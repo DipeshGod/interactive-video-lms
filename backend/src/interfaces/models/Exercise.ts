@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-export interface IQuiz {
+export interface IExercise {
     category: string;
     type: string;
     question: string;
@@ -8,7 +8,7 @@ export interface IQuiz {
     association: string;
 }
 
-export interface IQuizDoc extends mongoose.Document {
+export interface IExerciseDoc extends mongoose.Document {
     category: string;
     type: string;
     question: string;
@@ -17,4 +17,4 @@ export interface IQuizDoc extends mongoose.Document {
     association: string;
 }
 
-export interface IQuizModel extends mongoose.Model<IQuizDoc> { }
+export interface IExerciseModel extends mongoose.Model<IExerciseDoc> { }

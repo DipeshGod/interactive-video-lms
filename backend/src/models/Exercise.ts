@@ -1,8 +1,8 @@
 import { string } from 'joi';
 import mongoose, { } from 'mongoose';
-import { IQuizDoc, IQuizModel } from '../interfaces/models/Quiz';
+import { IExerciseDoc, IExerciseModel } from '../interfaces/models/Exercise';
 
-const quizSchema = new mongoose.Schema({
+const exerciseSchema = new mongoose.Schema({
     association: {
         type: mongoose.Types.ObjectId,
         required: true,
@@ -26,6 +26,6 @@ const quizSchema = new mongoose.Schema({
     answer: [String]
 })
 
-const Quiz = mongoose.model<IQuizDoc, IQuizModel>('quiz', quizSchema);
+const Exercise = mongoose.model<IExerciseDoc, IExerciseModel>('exercise', exerciseSchema);
 
-export { Quiz };
+export { Exercise };

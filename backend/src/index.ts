@@ -13,7 +13,7 @@ import { userRouter } from './routes/user';
 import dotenv from 'dotenv';
 import { courseModuleRouter } from './routes/courseModule';
 import { reviewRouter } from './routes/review';
-import { quizRouter } from './routes/quiz';
+import { exerciseRouter } from './routes/exercise';
 
 dotenv.config();
 
@@ -35,7 +35,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/course-module', courseModuleRouter);
 app.use('/api/review', reviewRouter);
-app.use('/api/quiz', quizRouter)
+app.use('/api/exercise', exerciseRouter)
 
 mongoose.connect(
   'mongodb://localhost:27017/studentAssit',
