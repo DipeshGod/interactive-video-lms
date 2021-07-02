@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { useMutation, useQueryClient } from 'react-query';
 import createExercise from '../../services/client/exercise/createExercise';
+import { toast } from 'react-toastify';
 
 const CreateQuiz = () => {
   const [answer, setAnswer] = useState(0);
@@ -35,6 +36,10 @@ const CreateQuiz = () => {
   };
 
   const handleQuizSubmit = () => {
+    if (question.length < 5) {
+      toast.error('Please enter valid question');
+      return;
+    }
     let exercise = {
       question,
       options: quizOptions,

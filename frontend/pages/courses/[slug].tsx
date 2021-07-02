@@ -4,6 +4,7 @@ import { dehydrate } from 'react-query/hydration';
 import Layout from '../../components/layout';
 import CourseIntro from '../../components/courses/CourseIntro';
 import getCoursesById from '../../services/server/course/getCourseById';
+import CourseReview from '../../components/courses/CourseReview';
 
 const CourseDetails = ({ course }) => {
   return (
@@ -16,6 +17,7 @@ const CourseDetails = ({ course }) => {
               ENROLL NOW for Rs. {course.price}
             </Button>
           </Box>
+          <CourseReview />
         </Container>
       </div>
     </Layout>

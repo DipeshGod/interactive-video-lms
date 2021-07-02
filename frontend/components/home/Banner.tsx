@@ -54,9 +54,16 @@ const Banner = () => {
             Modern education platform empowered by qualtity contents and
             technology asissted learning
           </Typography>
-          <Button variant='outlined' size='large' color='primary'>
-            Learn More
-          </Button>
+          <Link href='/courses'>
+            <Button
+              style={{ marginTop: '1rem' }}
+              variant='outlined'
+              size='large'
+              color='primary'
+            >
+              Our Courses
+            </Button>
+          </Link>
         </Box>
         <Box flexBasis='55%' className={classes.bannerImg}>
           <p style={{ display: 'none' }}>just some stuff</p>
