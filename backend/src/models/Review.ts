@@ -18,7 +18,8 @@ const reviewSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        enum: [1, 2, 3, 4, 5],
+        min: 1,
+        max: 5,
         required: true
     }
 });
