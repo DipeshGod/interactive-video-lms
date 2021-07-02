@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { useMutation, useQueryClient } from 'react-query';
 import createExercise from '../../services/client/exercise/createExercise';
+import { toast } from 'react-toastify';
 
 const CreateYesNo = () => {
   const [value, setValue] = useState('yes');
@@ -24,6 +25,10 @@ const CreateYesNo = () => {
   );
 
   const handleYesNoSubmit = () => {
+    if (question.length < 5) {
+      toast.error('Please enter valid question');
+      return;
+    }
     let answer: any;
     if (value === 'yes') {
       answer = [true];
