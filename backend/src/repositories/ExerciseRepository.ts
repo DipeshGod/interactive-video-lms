@@ -9,10 +9,10 @@ export class ExerciseRepository implements IExerciseRepository {
         this.model = model;
     }
 
-    public createExercise(quizData: IExercise): any {
+    public createExercise(exerciseData: IExercise): any {
         try {
-            const quiz = new this.model(quizData);
-            return quiz.save();
+            const exercise = new this.model(exerciseData);
+            return exercise.save();
         } catch (err: any) {
             throw new Error(err.toString());
         }
@@ -24,6 +24,35 @@ export class ExerciseRepository implements IExerciseRepository {
             return exercises;
         } catch (err: any) {
             throw new Error(err.toString());
+        }
+    }
+
+    public deleteExercise(id: string): any {
+        try {
+            const exercise = this.model.findByIdAndDelete(id);
+            return exercise;
+        } catch (err: any) {
+            throw new Error(err.toString());
+        }
+    }
+
+    public editExercise(id: string, exerciseData: IExercise): any {
+        try {
+            const exercise = this.model.findByIdAndUpdate(id, exerciseData, {
+                new: true,
+            });
+            return exercise;
+        } catch (err: any) {
+            throw new Error(err.toString());
+        }
+    }
+
+    public getCourseExercise(id: string, category: string) {
+        try {
+            const exercises = this.model.find({ association: id, category: category });
+            return exercises;
+        } catch (err: any) {
+            throw new Error(err.toString())
         }
     }
 }

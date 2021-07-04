@@ -12,8 +12,18 @@ export class GetExerciseController extends BaseController {
 
     protected async executeImpl(req: Request, res: Response) {
         try {
-            const exercises = await this.exerciseRepository.getExercise(req.params.id);
-            return this.ok(res, exercises);
+            const id = req.params.id;
+            const category: any = req.query.category;
+            if (!category) {
+                const exercises = await this.exerciseRepository.getExercise(id);
+                return this.ok(res, exercises);
+            }
+            if (category === 'preTest' || 'finalTest') {
+                const exercises = await this.exerciseRepository.getCourseExercise(id, category);
+                return this.ok(res, exercises);
+            }
+            console.log('yaha aayo');
+
         } catch (err: any) {
             return this.fail(res, err);
         }
