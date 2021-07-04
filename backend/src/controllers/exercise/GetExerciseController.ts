@@ -12,8 +12,8 @@ export class GetExerciseController extends BaseController {
 
     protected async executeImpl(req: Request, res: Response) {
         try {
-            const quizes = await this.exerciseRepository.getExercise(req.params.id);
-            return this.ok(res, quizes);
+            const exercises = await this.exerciseRepository.getExercise(req.params.id);
+            return this.ok(res, exercises);
         } catch (err: any) {
             return this.fail(res, err);
         }

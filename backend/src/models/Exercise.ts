@@ -23,7 +23,10 @@ const exerciseSchema = new mongoose.Schema({
         minLength: 5
     },
     options: [String],
-    answer: [String]
+    answer: {
+        type: [String],
+        required: true
+    }
 })
 
 const Exercise = mongoose.model<IExerciseDoc, IExerciseModel>('exercise', exerciseSchema);

@@ -58,7 +58,7 @@ const courseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+/* Created by: ref:user */
 const Course = mongoose.model<ICourseDoc, ICourseModel>('course', courseSchema);
 
 export { Course };

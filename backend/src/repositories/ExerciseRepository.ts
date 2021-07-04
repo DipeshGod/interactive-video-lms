@@ -20,8 +20,8 @@ export class ExerciseRepository implements IExerciseRepository {
 
     public getExercise(id: string): any {
         try {
-            const quiz = this.model.find({});
-            return quiz;
+            const exercises = this.model.find({ association: id });
+            return exercises;
         } catch (err: any) {
             throw new Error(err.toString());
         }
