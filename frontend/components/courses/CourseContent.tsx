@@ -84,7 +84,7 @@ const CourseContent = () => {
               <AccordionDetails>
                 <Link href={`/admin/courseContent/exercises/${module._id}`}>
                   <Button variant='outlined' color='secondary'>
-                    Create Exercises
+                    Manage Exercises
                   </Button>
                 </Link>
               </AccordionDetails>

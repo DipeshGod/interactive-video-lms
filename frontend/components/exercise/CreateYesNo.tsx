@@ -21,7 +21,7 @@ const CreateYesNo = () => {
 
   const queryClient = useQueryClient();
   const courseExerciseMutation = useMutation((exercise: any) =>
-    createExercise(exercise, id)
+    createExercise(exercise)
   );
 
   const handleYesNoSubmit = () => {
@@ -40,11 +40,13 @@ const CreateYesNo = () => {
       question,
       answer,
       type: 'yesNo',
+      category: 'module',
+      association: id,
     };
 
     courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
-        console.log('maza aayo hai');
+        queryClient.invalidateQueries(['exercise', id]);
       },
       onError: () => {
         console.log('err aayo hai');

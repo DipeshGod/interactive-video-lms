@@ -2,6 +2,7 @@ import { Divider, makeStyles, Theme, createStyles } from '@material-ui/core';
 import CreateMultipleChoice from '../exercise/CreateMultipleChoice';
 import CreateQuiz from '../exercise/CreateQuiz';
 import CreateYesNo from '../exercise/CreateYesNo';
+import ExerciseAdminList from './ExerciseAdminList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CreateExercise = () => {
+const ManageExercise = ({ id }) => {
   const classes = useStyles();
 
   return (
@@ -40,10 +41,10 @@ const CreateExercise = () => {
         <CreateMultipleChoice />
       </div>
       <div className={classes.list}>
-        <h3>This is where all list is shown</h3>
+        <ExerciseAdminList id={id} />
       </div>
     </div>
   );
 };
 
-export default CreateExercise;
+export default ManageExercise;

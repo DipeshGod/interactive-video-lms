@@ -1,13 +1,20 @@
 import { Container } from '@material-ui/core';
-import CreateExercise from '../../../../components/admin/CreateExercise';
+import ManageExercise from '../../../../components/admin/ManageExercise';
 import Layout from '../../../../components/layout';
 
-const Exercises = () => {
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  return {
+    props: { id }, // will be passed to the page component as props
+  };
+}
+
+const Exercises = ({ id }) => {
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
-          <CreateExercise />
+          <ManageExercise id={id} />
         </Container>
       </div>
     </Layout>
