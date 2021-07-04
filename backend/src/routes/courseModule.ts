@@ -2,9 +2,6 @@ import { Router } from "express";
 import { CreateCourseModuleController } from "../controllers/courseModule/CreateCourseModuleController";
 import { DeleteCourseModuleController } from "../controllers/courseModule/DeleteCourseModuleController";
 import { EditCourseModuleController } from "../controllers/courseModule/EditCourseModuleController";
-import { CreateExerciseController } from "../controllers/courseModule/exercise/CreateExerciseController";
-import { EditExerciseController } from "../controllers/courseModule/exercise/EditExerciseController";
-import { GetExerciseController } from "../controllers/courseModule/exercise/GetExerciseController";
 import { GetCourseModule } from "../controllers/courseModule/GetCourseModuleController";
 import { CourseModule } from "../models/CourseModule";
 import { CourseModuleRepository } from "../repositories/CourseModuleRepository";
@@ -30,16 +27,6 @@ router.delete('/:id', (req, res) =>
     new DeleteCourseModuleController(courseModuleRepository).execute(req, res)
 );
 
-router.put('/exercise/:id', (req, res) =>
-    new EditExerciseController(courseModuleRepository).execute(req, res)
-);
 
-router.get('/exercise/:id', (req, res) =>
-    new GetExerciseController(courseModuleRepository).execute(req, res)
-);
-
-router.post('/exercise/:id', (req, res) =>
-    new CreateExerciseController(courseModuleRepository).execute(req, res)
-);
 
 export { router as courseModuleRouter }
