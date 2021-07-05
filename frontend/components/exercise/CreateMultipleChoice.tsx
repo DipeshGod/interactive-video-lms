@@ -16,8 +16,9 @@ const CreateMultipleChoice = () => {
   const [question, setQuestion] = useState('');
   const [quizOptions, setQuizOptions] = useState([]);
 
+  const queryClient = useQueryClient();
   const courseExerciseMutation = useMutation((exercise: any) =>
-    createExercise(exercise, id)
+    createExercise(exercise)
   );
 
   const router = useRouter();
@@ -50,11 +51,13 @@ const CreateMultipleChoice = () => {
       question,
       options: quizOptions,
       answer,
-      type: 'multiChoice',
+      type: 'multipleChoice',
+      category: 'module',
+      association: id,
     };
     courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
-        console.log('maza aayo hai');
+        queryClient.invalidateQueries(['exercise', id]);
       },
       onError: () => {
         console.log('err aayo hai');
@@ -86,13 +89,18 @@ const CreateMultipleChoice = () => {
         </Box>
 
         {quizOptions.map((option, i) => (
-          <FormControlLabel
-            key={i}
-            control={
-              <Checkbox name={`${i}`} value={i} onChange={handleAnswerSelect} />
-            }
-            label={option}
-          />
+          <Box key={i}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name={`${i}`}
+                  value={i}
+                  onChange={handleAnswerSelect}
+                />
+              }
+              label={option}
+            />
+          </Box>
         ))}
       </Box>
       <Button
