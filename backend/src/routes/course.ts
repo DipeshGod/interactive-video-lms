@@ -7,7 +7,7 @@ import { GetCourseController } from '../controllers/course/GetCourseController';
 import { Course } from '../models/Course';
 import { CourseModule } from '../models/CourseModule';
 import { CourseRepository } from '../repositories/CourseRepository';
-// import { authentication } from './../middleware/authenticate';
+import { authentication } from './../middleware/authenticate';
 
 const router = Router();
 
@@ -15,7 +15,7 @@ const courseRepository = new CourseRepository(Course);
 
 //course routes
 /* Get all course */
-router.get('/', (req, res) =>
+router.get('/', authentication, (req, res) =>
   new GetCourseController(courseRepository).execute(req, res)
 );
 

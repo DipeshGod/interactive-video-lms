@@ -1,23 +1,26 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { IUser } from '../interfaces/models/User';
+import { User } from './../models/User';
+
+interface IAuthReq extends Request {
+    loggedInUser: any
+}
 
 const authentication = async (req: Request, res: Response) => {
     try {
-        let getToken: any;
-        if (req.headers['x-access-token'])
-            getToken = req.headers['x-access-token'];
-        if (req.headers['authorization'])
-            getToken = req.headers['authorization'];
-        if (req.headers['token'])
-            getToken = req.headers['token'];
-        if (req.query.token)
-            getToken = req.query.token;
-            getToken
-        console.log('getToken', getToken);
-        if (!getToken) throw new Error('Authentication token not rpovided');
-        const token = getToken.toString();
-        const decoded = await jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
-        console.log(decoded);
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({
+            message: "Please, Login."
+        })
+        const decoded: any = await jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
+        if (!decoded) return res.status(401).json({
+            message: 'Token Expired, Login Again'
+        })
+        const loggedInUser = await User.findById(decoded.id)
+        if (!loggedInUser) return res.status(401).json({
+            message: "User with provided token is removed from system"
+        })
     } catch (err: any) {
         throw new Error(err.toString());
     }
