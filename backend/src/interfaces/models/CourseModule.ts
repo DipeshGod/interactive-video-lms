@@ -7,6 +7,7 @@ export interface ICourseModule {
   videos: string[];
   quizes: string[];
   questions: string[];
+  hasExercise: boolean;
 }
 
 export interface ICourseModuleDoc extends mongoose.Document {
@@ -16,6 +17,7 @@ export interface ICourseModuleDoc extends mongoose.Document {
   videos: string[];
   quizes: string[];
   questions: string[];
+  hasExercise: boolean;
 }
 
 export interface ICourseModuleModel extends mongoose.Model<ICourseModuleDoc> { }

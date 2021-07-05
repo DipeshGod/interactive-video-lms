@@ -29,18 +29,14 @@ export const courseValidator = async (data: any) => {
         price: joi.number()
             .required(),
 
-        coursePoster: joi.string()
-            .required(),
+        coursePoster: joi.string(),
 
         introductoryVideo: joi.object({
-            LOW: joi.string()
-                .required(),
+            LOW: joi.string(),
 
-            SD: joi.string()
-                .required(),
+            SD: joi.string(),
 
-            HD: joi.string()
-                .required()
+            HD: joi.string(),
         })
     })
 

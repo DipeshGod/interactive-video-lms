@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
         type: {
             type: String,
             default: 'student',
-            enum: ['superAdmin', 'instructor', 'student']
+            enum: ['superAdmin', 'enterprise','instructor', 'student']
         },
         name: {
             type: String,
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema(
             default: false
         },
         isEnterprise: {
-            type: String
+            type: Boolean
         },
         isInstructor: {
             type: instructorSchema

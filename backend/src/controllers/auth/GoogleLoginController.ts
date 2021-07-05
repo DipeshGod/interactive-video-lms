@@ -28,7 +28,7 @@ export class GoogleLoginController extends BaseController {
       password: '',
       email: '',
       verified: true,
-      isEnterprise: '',
+      isEnterprise: false,
       profilePicture: '',
       isInstructor: {
         bio: '',

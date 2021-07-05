@@ -26,8 +26,11 @@ const courseModuleSchema = new mongoose.Schema(
         SD: String,
         HD: String
       }],
-      required: true,
-    }
+    },
+    hasExercise: {
+      type: Boolean,
+      default: false
+    },
   },
   { timestamps: true }
 );

@@ -7,6 +7,7 @@ import { GetCourseController } from '../controllers/course/GetCourseController';
 import { Course } from '../models/Course';
 import { CourseModule } from '../models/CourseModule';
 import { CourseRepository } from '../repositories/CourseRepository';
+// import { authentication } from './../middleware/authenticate';
 
 const router = Router();
 

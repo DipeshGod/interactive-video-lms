@@ -1,18 +1,14 @@
 import mongoose, { Schema } from 'mongoose';
 import { ICourse, ICourseDoc, ICourseModel } from '../interfaces/models/Course';
 
-const introVideoSchema = new mongoose.Schema({
-  LOW: String,
-  SD: String,
-  HD: String,
-});
-
-
 const courseSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+    },
+    association: {
+      type: mongoose.Types.ObjectId,
     },
     description: {
       type: String,
@@ -45,7 +41,6 @@ const courseSchema = new mongoose.Schema(
     },
     coursePoster: {
       type: String,
-      required: true,
     },
     isFree: {
       type: Boolean,

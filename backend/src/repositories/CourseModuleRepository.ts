@@ -28,7 +28,7 @@ export class CourseModuleRepository implements ICourseModuleRepository {
         }
     }
 
-    public editCourseModule(id: string, moduleData: ICourseModuleDoc): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}> {
+    public editCourseModule(id: string, moduleData: ICourseModuleDoc | any): Query<ICourseModuleDoc | null, ICourseModuleDoc, {}> {
         try {
             const updatedModule = this.model.findByIdAndUpdate(id, moduleData, {
                 new: true

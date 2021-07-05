@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 export interface ICourse {
   name: string;
+  association: string;
   description: string;
   category: string;
   features: string[];
@@ -20,6 +21,7 @@ export interface ICourse {
 
 export interface ICourseDoc extends mongoose.Document {
   name: string;
+  association: string;
   description: string;
   category: string;
   features: string[];

@@ -7,7 +7,7 @@ export interface IUser {
     password: string;
     profilePicture: string;
     verified: boolean;
-    isEnterprise: string;
+    isEnterprise: boolean;
     isInstructor: {
         bio: string,
         qualification: string
@@ -21,7 +21,7 @@ export interface IUserDoc extends mongoose.Document {
     password: string;
     profilePicture: string;
     verified: boolean;
-    isEnterprise: string;
+    isEnterprise: boolean;
     isInstructor: {
         bio: string,
         qualification: string
