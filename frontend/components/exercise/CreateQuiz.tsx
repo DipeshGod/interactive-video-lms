@@ -20,8 +20,9 @@ const CreateQuiz = () => {
   const router = useRouter();
   const id = router.query.id;
 
+  const queryClient = useQueryClient();
   const courseExerciseMutation = useMutation((exercise: any) =>
-    createExercise(exercise, id)
+    createExercise(exercise)
   );
 
   const handleOptionInput = (e) => {
@@ -45,10 +46,12 @@ const CreateQuiz = () => {
       options: quizOptions,
       answer: [answer],
       type: 'quiz',
+      category: 'module',
+      association: id,
     };
     courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
-        console.log('maza aayo hai');
+        queryClient.invalidateQueries(['exercise', id]);
       },
       onError: () => {
         console.log('err aayo hai');

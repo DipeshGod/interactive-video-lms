@@ -15,7 +15,7 @@ const ManageCourseContent = ({ course }) => {
     <Layout>
       <div style={{ paddingTop: '2rem' }}>
         <Container>
-          <CourseIntro course={course} />
+          {/* <CourseIntro course={course} /> */}
           <Box marginY='2rem'>
             <Button
               color='primary'

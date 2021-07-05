@@ -7,15 +7,12 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  List,
-  ListItem,
   Button,
 } from '@material-ui/core';
 import getCourseContent from '../../services/client/course/getCourseContent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import VideoPlayer from '../videoPlayer';
 import Loading from '../Loading';
-import QuizCard from './QuizCard';
 
 const CourseContent = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -30,68 +27,57 @@ const CourseContent = () => {
     return <Loading />;
   }
 
+  console.log(data);
+
   return (
     <div style={{ marginBottom: '3rem' }}>
-      <List>
-        {data.map((module) => (
-          <ListItem key={module._id}>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                style={{ backgroundColor: '#f5f5f5' }}
-              >
-                <Typography variant='h6'>{module.title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>{module.description}</AccordionDetails>
+      {data.map((module) => (
+        <Accordion key={module._id} style={{ marginTop: '1rem' }} elevation={3}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            style={{
+              backgroundColor: '#f5f5f5',
+            }}
+          >
+            <Typography variant='h6'>{module.title}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>{module.description}</AccordionDetails>
 
-              {module.videos.map((video) => (
-                <AccordionDetails key={video.title}>
-                  <Accordion variant='outlined'>
-                    <AccordionSummary
-                      style={{ backgroundColor: '#fafafa' }}
-                      expandIcon={<ExpandMoreIcon />}
-                    >
-                      <Typography>{video.title}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <VideoPlayer
-                        poster={``}
-                        videoSources={video}
-                        videoTitle={''}
-                      />
-                    </AccordionDetails>
-                  </Accordion>
+          {module.videos.map((video) => (
+            <AccordionDetails key={video.title}>
+              <Accordion variant='outlined'>
+                <AccordionSummary
+                  style={{ backgroundColor: '#fafafa' }}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  <Typography>{video.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <VideoPlayer
+                    poster={``}
+                    videoSources={video}
+                    videoTitle={''}
+                  />
                 </AccordionDetails>
-              ))}
-              <AccordionDetails>
-                {/* {module.quizes.length > 0 && (
-                  <>
-                    <Button
-                      variant='outlined'
-                      onClick={() => setIsQuizOpen(true)}
-                    >
-                      Try out Quizes
-                    </Button>
-                    {isQuizOpen && (
-                      <QuizCard
-                        quizes={module.quizes}
-                        handleClose={() => setIsQuizOpen(false)}
-                      />
-                    )}
-                  </>
-                )} */}
-              </AccordionDetails>
-              <AccordionDetails>
-                <Link href={`/admin/courseContent/exercises/${module._id}`}>
-                  <Button variant='outlined' color='secondary'>
-                    Manage Exercises
-                  </Button>
-                </Link>
-              </AccordionDetails>
-            </Accordion>
-          </ListItem>
-        ))}
-      </List>
+              </Accordion>
+            </AccordionDetails>
+          ))}
+          <AccordionDetails>
+            {module.hasExercise && (
+              <Button color='primary' variant='outlined'>
+                Take A Quiz
+              </Button>
+            )}
+          </AccordionDetails>
+          <AccordionDetails>
+            <Link href={`/admin/courseContent/exercises/${module._id}`}>
+              <Button variant='outlined' color='secondary'>
+                Manage Exercises
+              </Button>
+            </Link>
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
   );
 };
