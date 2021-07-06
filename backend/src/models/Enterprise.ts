@@ -18,6 +18,18 @@ const enterpriseSchema = new mongoose.Schema({
     features: {
         type: [String],
         enum: ['exercise', 'assignment']
+    },
+    courses: {
+        type: [mongoose.Types.ObjectId],
+        ref: 'course'
+    },
+    totalUsers: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
     }
 })
 

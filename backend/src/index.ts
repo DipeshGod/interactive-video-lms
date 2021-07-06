@@ -4,16 +4,16 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 
 import { courseRouter } from './routes/course';
 import { uploadRouter } from './routes/upload';
 import { authRouter } from './routes/auth';
 import { userRouter } from './routes/user';
-import dotenv from 'dotenv';
 import { courseModuleRouter } from './routes/courseModule';
 import { reviewRouter } from './routes/review';
 import { exerciseRouter } from './routes/exercise';
-import { IUser } from './interfaces/models/User';
+import { enterpriseRouter } from './routes/enterprise';
 
 dotenv.config();
 
@@ -35,7 +35,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/course-module', courseModuleRouter);
 app.use('/api/review', reviewRouter);
-app.use('/api/exercise', exerciseRouter)
+app.use('/api/exercise', exerciseRouter);
+app.use('/api/enterprise', enterpriseRouter);
 
 mongoose.connect(
   'mongodb://localhost:27017/studentAssit',
