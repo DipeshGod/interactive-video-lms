@@ -29,7 +29,7 @@ const ExerciseAdminList = ({ id }) => {
     deleteExerciseMutation.mutate(exerciseId, {
       onSuccess: () => {
         queryClient.invalidateQueries(['exercise', id]);
-        toast.warning('Course deleted successfully');
+        toast.warning('deleted successfully');
       },
       onError: () => {
         console.log('err aayo hai');

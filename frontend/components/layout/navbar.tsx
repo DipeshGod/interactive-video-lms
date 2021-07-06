@@ -155,9 +155,7 @@ export default function Navbar() {
             <Button color='primary' variant='text' disableElevation>
               For Enterprise
             </Button>
-            <Button color='primary' variant='text' disableElevation>
-              For Students
-            </Button>
+
             <Link href='/login'>
               <Button color='primary' variant='outlined' disableElevation>
                 Login
