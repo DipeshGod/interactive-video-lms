@@ -5,7 +5,6 @@ import fileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 
-//routes import
 import { courseRouter } from './routes/course';
 import { uploadRouter } from './routes/upload';
 import { authRouter } from './routes/auth';
@@ -14,6 +13,7 @@ import dotenv from 'dotenv';
 import { courseModuleRouter } from './routes/courseModule';
 import { reviewRouter } from './routes/review';
 import { exerciseRouter } from './routes/exercise';
+import { IUser } from './interfaces/models/User';
 
 dotenv.config();
 

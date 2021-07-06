@@ -4,6 +4,7 @@ import { EditUserInfoController } from '../controllers/user/EditUserInfoControll
 import { EditUserPasswordController } from '../controllers/user/EditUserPasswordController';
 import { GetUserByIdController } from '../controllers/user/GetUserByIDController';
 import { GetUserController } from '../controllers/user/GetUserController';
+import { authentication } from '../middleware/authenticate';
 import { User } from '../models/User';
 import { UserRepository } from '../repositories/UserRepository';
 
@@ -23,11 +24,11 @@ router.get('/:id', (req, res) => {
     new GetUserByIdController(userRepository).execute(req, res)
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', authentication, (req, res) => {
     new EditUserInfoController(userRepository).execute(req, res)
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', authentication, (req, res) => {
     new DeleteUserController(userRepository).execute(req, res)
 });
 

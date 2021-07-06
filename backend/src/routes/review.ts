@@ -3,12 +3,13 @@ import { CreateReviewController } from "../controllers/review/CreateReviewContro
 import { GetReviewController } from "../controllers/review/GetReviewController";
 import { Review } from "../models/Review";
 import { ReviewRepository } from "../repositories/ReviewRepository";
+import { authentication } from "../middleware/authenticate";
 
 const router = Router();
 
 const reviewRepository = new ReviewRepository(Review);
 
-router.post('/', (req, res) =>
+router.post('/', authentication, (req, res) =>
     new CreateReviewController(reviewRepository).execute(req, res)
 );
 
