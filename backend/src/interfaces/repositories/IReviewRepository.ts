@@ -1,7 +1,8 @@
-import { IReview } from "../models/Review";
+import { Query } from "mongoose";
+import { IReview, IReviewDoc } from "../models/Review";
 
 export interface IReviewRepository {
-    createReview(reviewData: IReview): any;
-    getReview(id: string): any;
-    checkUser(user: string, course: string): any;
+    createReview(reviewData: IReview): Promise<IReviewDoc>;
+    getReview(id: string): Query<IReviewDoc[], IReviewDoc, {}>;
+    checkUser(user: string, course: string): Query<IReviewDoc[], IReviewDoc, {}>;
 }

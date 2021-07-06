@@ -1,5 +1,5 @@
-import { } from 'mongoose';
-import { IExercise, IExerciseModel } from '../interfaces/models/Exercise';
+import { Query } from 'mongoose';
+import { IExercise, IExerciseDoc, IExerciseModel } from '../interfaces/models/Exercise';
 import { IExerciseRepository } from '../interfaces/repositories/IExerciseRepository';
 
 export class ExerciseRepository implements IExerciseRepository {
@@ -9,7 +9,7 @@ export class ExerciseRepository implements IExerciseRepository {
         this.model = model;
     }
 
-    public createExercise(exerciseData: IExercise): any {
+    public createExercise(exerciseData: IExercise): Promise<IExerciseDoc> {
         try {
             const exercise = new this.model(exerciseData);
             return exercise.save();
@@ -18,7 +18,7 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public getExercise(id: string): any {
+    public getExercise(id: string): Query<IExerciseDoc[], IExerciseDoc, {}> {
         try {
             const exercises = this.model.find({ association: id });
             return exercises;
@@ -27,7 +27,7 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public deleteExercise(id: string): any {
+    public deleteExercise(id: string): Query<IExerciseDoc | null, IExerciseDoc, {}>{
         try {
             const exercise = this.model.findByIdAndDelete(id);
             return exercise;
@@ -36,7 +36,7 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public editExercise(id: string, exerciseData: IExercise): any {
+    public editExercise(id: string, exerciseData: IExercise):  Query<IExerciseDoc | null, IExerciseDoc, {}> {
         try {
             const exercise = this.model.findByIdAndUpdate(id, exerciseData, {
                 new: true,
@@ -47,7 +47,7 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public getCourseExercise(id: string, category: string) {
+    public getCourseExercise(id: string, category: string):Query<IExerciseDoc[], IExerciseDoc, {}> {
         try {
             const exercises = this.model.find({ association: id, category: category });
             return exercises;

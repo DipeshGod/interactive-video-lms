@@ -47,7 +47,7 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public deleteUser(id: string): any {
+  public deleteUser(id: string): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       const user = this.model.findByIdAndRemove(id);
       return user;

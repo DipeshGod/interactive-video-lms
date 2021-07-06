@@ -1,8 +1,9 @@
-import { IEnterprise } from "../models/Enterprise";
+import { Query } from "mongoose";
+import { IEnterprise, IEnterpriseDoc } from "../models/Enterprise";
 
 export interface IEnterpriseRepository {
-    createEnterprise(enterpriseData: IEnterprise): any;
-    getEnterprise(id: string): any;
-    editEnterprise(id: string, enterpriseData: IEnterprise): any;
-    deleteEnterprise(id: string): any;
+    createEnterprise(enterpriseData: IEnterprise): Promise<IEnterpriseDoc>;
+    getEnterprise(id: string): Query<IEnterpriseDoc | null, IEnterpriseDoc, {}>;
+    editEnterprise(id: string, enterpriseData: IEnterprise): Query<IEnterpriseDoc | null, IEnterpriseDoc, {}>;
+    deleteEnterprise(id: string): Query<IEnterpriseDoc | null, IEnterpriseDoc, {}>;
 }

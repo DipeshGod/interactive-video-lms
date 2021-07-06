@@ -1,4 +1,5 @@
-import { IReview, IReviewModel } from "../interfaces/models/Review";
+import { Query } from "mongoose";
+import { IReview, IReviewDoc, IReviewModel } from "../interfaces/models/Review";
 import { IReviewRepository } from "../interfaces/repositories/IReviewRepository";
 
 export class ReviewRepository implements IReviewRepository {
@@ -8,7 +9,7 @@ export class ReviewRepository implements IReviewRepository {
         this.reviewModel = reviewModel
     }
 
-    public createReview(reviewData: IReview): any {
+    public createReview(reviewData: IReview): Promise<IReviewDoc> {
         try {
             const review = new this.reviewModel(reviewData).save();
             return review;
@@ -17,7 +18,7 @@ export class ReviewRepository implements IReviewRepository {
         }
     }
 
-    public getReview(id: string): any {
+    public getReview(id: string): Query<IReviewDoc[], IReviewDoc, {}> {
         try {
             const reviews = this.reviewModel.find({ course: id }).populate('user');;
             return reviews;
@@ -26,7 +27,7 @@ export class ReviewRepository implements IReviewRepository {
         }
     }
 
-    public checkUser(user: string, course: string): any {
+    public checkUser(user: string, course: string): Query<IReviewDoc[], IReviewDoc, {}> {
         try {
             const userAlreadyExists = this.reviewModel.find({ user: user, course: course });
             return userAlreadyExists;

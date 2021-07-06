@@ -11,7 +11,7 @@ export class CourseRepository implements ICourseRepository {
 
   public getCourse(): Query<ICourseDoc[], ICourseDoc, {}> {
     try {
-      let courses = this.model.find({});
+      const courses = this.model.find({});
       return courses;
     } catch (err) {
       throw new Error('Couldnt get courses');
@@ -20,30 +20,25 @@ export class CourseRepository implements ICourseRepository {
 
   public createCourse(courseData: ICourse): Promise<ICourseDoc> {
     try {
-      let course = new this.model(courseData);
+      const course = new this.model(courseData);
       return course.save();
     } catch (err) {
       throw new Error('Couldnt create course');
     }
   }
 
-  public getCourseById(
-    courseId: string
-  ):Query<ICourseDoc | null, ICourseDoc, {}> {
+  public getCourseById(courseId: string): Query<ICourseDoc | null, ICourseDoc, {}> {
     try {
-      let course = this.model.findById(courseId);
+      const course = this.model.findById(courseId);
       return course;
     } catch (err) {
       throw new Error('Couldnt get the requested course');
     }
   }
 
-  public editCourse(
-    courseId: string,
-    courseData: ICourse
-  ): Query<ICourseDoc | null, ICourseDoc, {}> {
+  public editCourse(courseId: string, courseData: ICourse): Query<ICourseDoc | null, ICourseDoc, {}> {
     try {
-      let course = this.model.findByIdAndUpdate(courseId, courseData, {
+      const course = this.model.findByIdAndUpdate(courseId, courseData, {
         new: true,
       });
       return course;
@@ -52,7 +47,7 @@ export class CourseRepository implements ICourseRepository {
     }
   }
 
-  public deleteCourse(id: string): Query<ICourseDoc | null, ICourseDoc, {}>{
+  public deleteCourse(id: string): Query<ICourseDoc | null, ICourseDoc, {}> {
     try {
       return this.model.findByIdAndDelete(id);
     } catch (err: any) {

@@ -1,4 +1,5 @@
-import { IEnterprise, IEnterpriseModel } from "../interfaces/models/Enterprise";
+import { Query } from "mongoose";
+import { IEnterprise, IEnterpriseDoc, IEnterpriseModel } from "../interfaces/models/Enterprise";
 import { IEnterpriseRepository } from "../interfaces/repositories/IEnterpriseRepository";
 
 export class EnterpriseRepository implements IEnterpriseRepository {
@@ -8,7 +9,7 @@ export class EnterpriseRepository implements IEnterpriseRepository {
         this.model = model;
     }
 
-    public createEnterprise(enterpriseData: IEnterprise) {
+    public createEnterprise(enterpriseData: IEnterprise): Promise<IEnterpriseDoc> {
         try {
             const enterprise = new this.model(enterpriseData);
             return enterprise.save();
@@ -17,7 +18,7 @@ export class EnterpriseRepository implements IEnterpriseRepository {
         }
     }
 
-    public getEnterprise(id: string) {
+    public getEnterprise(id: string):Query<IEnterpriseDoc | null, IEnterpriseDoc, {}> {
         try {
             const enterprise = this.model.findById(id);
             return enterprise;
@@ -26,7 +27,7 @@ export class EnterpriseRepository implements IEnterpriseRepository {
         }
     }
 
-    public editEnterprise(id: string, enterpriseData: IEnterprise) {
+    public editEnterprise(id: string, enterpriseData: IEnterprise):Query<IEnterpriseDoc | null, IEnterpriseDoc, {}> {
         try {
             const enterprise = this.model.findByIdAndUpdate(id, enterpriseData, {
                 new: true
@@ -37,7 +38,7 @@ export class EnterpriseRepository implements IEnterpriseRepository {
         }
     }
 
-    public deleteEnterprise(id: string) {
+    public deleteEnterprise(id: string):Query<IEnterpriseDoc | null, IEnterpriseDoc, {}> {
         try {
             const enterprise = this.model.findByIdAndRemove(id);
             return enterprise;

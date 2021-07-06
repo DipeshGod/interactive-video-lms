@@ -52,22 +52,16 @@ export class AuthRepository implements IAuthRepository {
     }
   }
 
-  public resetPassword(
-    email: string
-  ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
+  public resetPassword(email: string): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
     try {
-      let passwordForgotUser = this.resetPasswordModel.findOne({
-        email: email,
-      });
+      let passwordForgotUser = this.resetPasswordModel.findOne({ email: email });
       return passwordForgotUser;
     } catch (err: any) {
       throw new Error(err);
     }
   }
 
-  public removeResetPasswordModel(
-    id: string
-  ): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
+  public removeResetPasswordModel(id: string): Query<IResetPasswordDoc | null, IResetPasswordDoc, {}> {
     try {
       let removed = this.resetPasswordModel.findByIdAndDelete(id);
       return removed;
@@ -76,10 +70,7 @@ export class AuthRepository implements IAuthRepository {
     }
   }
 
-  public verifyUser(
-    id: string,
-    userData: any
-  ): Query<IUserDoc | null, IUserDoc, {}> {
+  public verifyUser(id: string, userData: any): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       let verified = this.userModel.findByIdAndUpdate(id, userData, {
         new: true,
