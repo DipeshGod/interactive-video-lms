@@ -1,4 +1,5 @@
 import { Container } from '@material-ui/core';
+import EditModule from '../../../../components/admin/EditModule';
 import ManageExercise from '../../../../components/admin/ManageExercise';
 import Layout from '../../../../components/layout';
 
@@ -9,11 +10,12 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Exercises = ({ id }) => {
+const Module = ({ id }) => {
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
+          <EditModule id={id} />
           <ManageExercise id={id} />
         </Container>
       </div>
@@ -21,4 +23,4 @@ const Exercises = ({ id }) => {
   );
 };
 
-export default Exercises;
+export default Module;

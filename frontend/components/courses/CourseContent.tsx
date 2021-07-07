@@ -1,19 +1,13 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, RefetchOptions } from 'react-query';
+import { useQuery } from 'react-query';
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Box,
-  DialogActions,
 } from '@material-ui/core';
 import getCourseContent from '../../services/client/course/getCourseContent';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -23,7 +17,6 @@ import Exercises from './exercises';
 import getExerciseById from '../../services/client/exercise/getExerciseById';
 
 const CourseContent = () => {
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [exerciseByModule, setExerciseByModule] = useState();
   const [moduleId, setModuleId] = useState('');
@@ -33,7 +26,7 @@ const CourseContent = () => {
   const courseId = router.query.id;
 
   const { isLoading } = useQuery(
-    'courseContent',
+    ['courseContent', courseId],
     () => getCourseContent(courseId),
     {
       onSuccess: (data) => {
@@ -116,49 +109,11 @@ const CourseContent = () => {
             )}
           </AccordionDetails>
           <AccordionDetails>
-            <Link href={`/admin/courseContent/exercises/${module._id}`}>
+            <Link href={`/admin/courseContent/module/${module._id}`}>
               <Button variant='outlined' color='secondary' size='small'>
-                Manage Exercises
+                Manage Module
               </Button>
             </Link>
-            <Button
-              size='small'
-              variant='outlined'
-              style={{ marginLeft: '1rem' }}
-              onClick={() => setIsEditOpen(true)}
-            >
-              Edit Module
-            </Button>
-            <Dialog open={isEditOpen} onClose={() => setIsEditOpen(false)}>
-              <DialogTitle>Edit {module.title} Info</DialogTitle>
-              <DialogContent style={{ minWidth: '50vw' }}>
-                <Box>
-                  <TextField
-                    label='Module Title'
-                    margin='dense'
-                    variant='outlined'
-                    value={data[index].title}
-                    onChange={(e) => handleChange(e, index)}
-                    fullWidth
-                  />
-                </Box>
-                <Box>
-                  <TextField
-                    label='Module Description'
-                    margin='dense'
-                    variant='outlined'
-                    value={data[index].description}
-                    multiline
-                    rows={2}
-                    fullWidth
-                  />
-                </Box>
-              </DialogContent>
-              <DialogActions>
-                <Button>Update</Button>
-                <Button onClick={() => setIsEditOpen(false)}>Cancel</Button>
-              </DialogActions>
-            </Dialog>
           </AccordionDetails>
         </Accordion>
       ))}
