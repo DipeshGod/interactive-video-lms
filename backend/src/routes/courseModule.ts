@@ -6,6 +6,8 @@ import { GetCourseModule } from "../controllers/courseModule/GetCourseModuleCont
 import { CourseModule } from "../models/CourseModule";
 import { CourseModuleRepository } from "../repositories/CourseModuleRepository";
 import { authentication } from "../middleware/authenticate";
+import { GetCourseByIdController } from "../controllers/course/GetCourseByIdController";
+import { GetCourseModuleByIDController } from "../controllers/courseModule/GetCourseModuleByIDController";
 
 const router = Router();
 
@@ -15,7 +17,7 @@ router.post('/', authentication, (req, res) =>
     new CreateCourseModuleController(courseModuleRepository).execute(req, res)
 );
 
-
+/* Course ID */
 router.get('/:id', (req, res) =>
     new GetCourseModule(courseModuleRepository).execute(req, res)
 );
@@ -26,6 +28,10 @@ router.put('/:id', authentication, (req, res) =>
 
 router.delete('/:id', authentication, (req, res) =>
     new DeleteCourseModuleController(courseModuleRepository).execute(req, res)
+);
+
+router.get('/module/:id', (req, res) =>
+    new GetCourseModuleByIDController(courseModuleRepository).execute(req, res)
 );
 
 

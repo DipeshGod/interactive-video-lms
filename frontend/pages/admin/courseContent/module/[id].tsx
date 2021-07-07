@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Container, Divider } from '@material-ui/core';
 import EditModule from '../../../../components/admin/EditModule';
 import ManageExercise from '../../../../components/admin/ManageExercise';
 import Layout from '../../../../components/layout';
@@ -16,6 +16,7 @@ const Module = ({ id }) => {
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
           <EditModule id={id} />
+          <Divider style={{margin:'2rem 0'}}/>
           <ManageExercise id={id} />
         </Container>
       </div>
