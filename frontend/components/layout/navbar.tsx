@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   fade,
   makeStyles,
@@ -19,7 +20,10 @@ import {
   Badge,
   MenuItem,
   Menu,
+  Avatar,
+  Box,
 } from '@material-ui/core';
+import { Context } from '../../context/user';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -56,12 +60,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Navbar() {
   const classes = useStyles();
+  const router = useRouter();
+  const { state, dispatch } = useContext(Context);
+  console.log(state);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -80,6 +91,12 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+    localStorage.removeItem('user');
+    router.push('/');
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -91,8 +108,25 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {state.user && state.user.type === 'superAdmin' && (
+        <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
+          <Button variant='text' color='secondary' size='small'>
+            <Link href='/admin'>Welcome Admin</Link>
+          </Button>
+        </MenuItem>
+      )}
+      <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
+        <Button variant='text' color='secondary' size='small'>
+          <Link href='/dashboard'>Dashboard</Link>
+        </Button>
+      </MenuItem>
+      <Box onClick={handleLogout}>
+        <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
+          <Button variant='text' color='secondary' size='small'>
+            Logout
+          </Button>
+        </MenuItem>
+      </Box>
     </Menu>
   );
 
@@ -152,15 +186,38 @@ export default function Navbar() {
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Button color='primary' variant='text' disableElevation>
+            {/* <Button color='primary' variant='text' disableElevation>
               For Enterprise
-            </Button>
+            </Button> */}
 
-            <Link href='/login'>
-              <Button color='primary' variant='outlined' disableElevation>
-                Login
-              </Button>
-            </Link>
+            {state.user ? (
+              <Box
+                marginLeft='20px'
+                display='flex'
+                alignItems='center'
+                style={{ cursor: 'pointer' }}
+                onClick={handleClick}
+              >
+                <Avatar alt={state.user.name} src={''} />
+                <Typography
+                  variant='overline'
+                  style={{ marginLeft: '1rem', fontSize: '1.1rem' }}
+                >
+                  {state.user.name}
+                </Typography>
+              </Box>
+            ) : (
+              <>
+                <Button color='primary' variant='text' disableElevation>
+                  For Enterprise
+                </Button>
+                <Link href='/login'>
+                  <Button color='primary' variant='outlined' disableElevation>
+                    Login
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
