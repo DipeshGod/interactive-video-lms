@@ -11,6 +11,7 @@ import { VerifyUserController } from "../controllers/auth/VerifyUserController";
 import { GoogleLoginController } from "../controllers/auth/GoogleLoginController";
 import { FacebookLoginController } from "../controllers/auth/FacebookLoginController";
 import { loginValidator } from "../services/validator/authValidator";
+import { LogoutController } from "../controllers/auth/LogoutController";
 
 const router = Router();
 
@@ -33,6 +34,10 @@ router.post("/reset-password", (req, res) =>
   new ResetPasswordController(authRepository, userRepository).execute(req, res)
 );
 
+router.get('/logout', (req, res) =>
+  new LogoutController().execute(req, res)
+);
+
 router.get("/verify/:id", (req, res) =>
   new VerifyUserController(authRepository).execute(req, res)
 );
@@ -44,5 +49,6 @@ router.post("/facebook-login", (req, res) =>
 router.post("/google-login", (req, res) =>
   new GoogleLoginController(authRepository, userRepository).execute(req, res)
 );
+
 
 export { router as authRouter };
