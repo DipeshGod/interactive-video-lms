@@ -50,6 +50,14 @@ const courseSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
+    hasPreTest: {
+      type: Boolean,
+      default: false
+    },
+    hasFinalTest: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );

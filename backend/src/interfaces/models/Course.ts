@@ -17,6 +17,8 @@ export interface ICourse {
   coursePoster: string;
   isFree: boolean;
   published: boolean;
+  hasPreTest: boolean;
+  hasFinalTest: boolean;
 }
 
 export interface ICourseDoc extends mongoose.Document {
@@ -36,6 +38,8 @@ export interface ICourseDoc extends mongoose.Document {
   coursePoster: string;
   isFree: boolean;
   published: boolean;
+  hasPreTest: boolean;
+  hasFinalTest: boolean;
 }
 
 export interface ICourseModel extends mongoose.Model<ICourseDoc> { }

@@ -10,7 +10,7 @@ const authentication = async (req: Request, res: Response, next: NextFunction) =
             message: "Please, Login."
         })
         const decoded: any = await jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
-        const loggedInUser = await User.findById(decoded.id)
+        const loggedInUser = await User.findById(decoded.id);
         if (!loggedInUser) return res.status(401).json({
             message: "User with provided token is removed from system"
         })
