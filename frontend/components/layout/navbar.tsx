@@ -7,9 +7,7 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {
@@ -163,11 +161,11 @@ export default function Navbar() {
       )}
 
       {state.user ? (
-        <>
+        <div>
           <MenuItem>
             <Link href='/dashboard'>
               <IconButton aria-label='show 4 new mails' color='inherit'>
-                <SupervisorAccountIcon />
+                <DashboardIcon />
                 <Typography style={{ marginLeft: '10px' }}>
                   Dashboard
                 </Typography>
@@ -185,7 +183,7 @@ export default function Navbar() {
               <Typography style={{ marginLeft: '10px' }}>Logout</Typography>
             </IconButton>
           </MenuItem>
-        </>
+        </div>
       ) : (
         <MenuItem>
           <Link href='/login'>

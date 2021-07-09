@@ -5,7 +5,20 @@ import CourseCard from '../../components/courses/CourseCard';
 import Layout from '../../components/layout';
 import getCourses from '../../services/server/course/getCourses';
 
+export async function getServerSideProps({ params }) {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery('courses', () => getCourses());
+
+  return {
+    props: {
+      courses: dehydrate(queryClient).queries[0].state.data,
+    },
+  };
+}
+
 const Courses = ({ courses }) => {
+  console.log('courses', courses);
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
@@ -25,6 +38,7 @@ const Courses = ({ courses }) => {
                 description={course.description}
                 price={course.price}
                 id={course._id}
+                isFree={course.isFree}
                 key={course._id}
               />
             ))}
@@ -34,17 +48,5 @@ const Courses = ({ courses }) => {
     </Layout>
   );
 };
-
-export async function getServerSideProps({ params }) {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery('courses', () => getCourses());
-
-  return {
-    props: {
-      courses: dehydrate(queryClient).queries[0].state.data,
-    },
-  };
-}
 
 export default Courses;
