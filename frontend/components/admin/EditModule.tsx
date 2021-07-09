@@ -8,19 +8,19 @@ import {
   TextField,
   Typography,
   Button,
-} from "@material-ui/core";
-import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
-import { toast } from "react-toastify";
-import editCourseModule from "../../services/client/courseModule/editCourseModule";
-import getCourseModuleById from "../../services/client/courseModule/getCourseModuleById";
-import Loading from "../Loading";
+} from '@material-ui/core';
+import { useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { toast } from 'react-toastify';
+import editCourseModule from '../../services/client/courseModule/editCourseModule';
+import getCourseModuleById from '../../services/client/courseModule/getCourseModuleById';
+import Loading from '../Loading';
 
 const EditModule = ({ id }) => {
   const [data, setData] = useState<any>();
 
   const { isLoading } = useQuery(
-    ["courseModule", id],
+    ['courseModule', id],
     () => getCourseModuleById(id),
     {
       onSuccess: (data) => {
@@ -33,63 +33,67 @@ const EditModule = ({ id }) => {
     editCourseModule(updatedModule, id)
   );
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const handleEditModule = () => {
     mutation.mutate(data, {
       onSuccess: () => {
-        toast.info("Course updated successfully");
+        toast.info('Course updated successfully');
       },
       onError: () => {
-        console.log("error occurred");
+        console.log('error occurred');
       },
     });
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (!data) {
+    return '';
+  }
+
   return (
     <div>
-      <Typography variant="h5">Edit Module </Typography>
-      <Box marginY="1rem">
+      <Typography variant='h5'>Edit Module </Typography>
+      <Box marginY='1rem'>
         <TextField
-          label="Title"
+          label='Title'
           value={data.title}
-          variant="outlined"
+          variant='outlined'
           onChange={(e) => setData({ ...data, title: e.target.value })}
           fullWidth
         />
       </Box>
-      <Box marginY="1rem">
+      <Box marginY='1rem'>
         <TextField
-          label="Description"
+          label='Description'
           value={data.description}
-          variant="outlined"
+          variant='outlined'
           multiline
           onChange={(e) => setData({ ...data, description: e.target.value })}
           fullWidth
         />
       </Box>
-      <Box marginY="1rem">
-        <FormControl component="fieldset">
+      <Box marginY='1rem'>
+        <FormControl component='fieldset'>
           <FormLabel>Has Exercise</FormLabel>
           <RadioGroup
-            name="hasExercise"
+            name='hasExercise'
             value={data.hasExercise}
             onChange={(e) => {
               setData({
                 ...data,
-                hasExercise: e.target.value === "true" ? true : false,
+                hasExercise: e.target.value === 'true' ? true : false,
               });
             }}
           >
-            <FormControlLabel value={true} control={<Radio />} label="True" />
-            <FormControlLabel value={false} control={<Radio />} label="False" />
+            <FormControlLabel value={true} control={<Radio />} label='True' />
+            <FormControlLabel value={false} control={<Radio />} label='False' />
           </RadioGroup>
         </FormControl>
       </Box>
 
-      <Button color="primary" variant="outlined" onClick={handleEditModule}>
+      <Button color='primary' variant='outlined' onClick={handleEditModule}>
         Edit Module
       </Button>
     </div>

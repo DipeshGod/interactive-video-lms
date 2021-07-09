@@ -46,7 +46,7 @@ const CreateQuiz = () => {
       options: quizOptions,
       answer: [answer],
       type: 'quiz',
-      category: 'module',
+      category: router.query.category,
       association: id,
     };
     courseExerciseMutation.mutate(exercise, {
