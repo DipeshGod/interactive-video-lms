@@ -45,7 +45,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const router = useRouter()
+  const router = useRouter();
 
   const handleGetCode = async () => {
     if (email === undefined) {
@@ -63,22 +63,25 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleChangePassoword = async() => {
-    if(password !== confirmPassword){
-      toast.info("password doesnt match")
+  const handleChangePassoword = async () => {
+    if (password !== confirmPassword) {
+      toast.info('password doesnt match');
       return;
     }
 
-    try{
-      const response = await api.post('/api/auth/reset-password',{code,email,password});
-      if(response.status===200){
+    try {
+      const response = await api.post('/api/auth/reset-password', {
+        code,
+        email,
+        password,
+      });
+      if (response.status === 200) {
         router.push('/login');
-        toast.info("Password change success")
+        toast.info('Password change success');
       }
-    }catch(err) {
-      console.log("error changing password",err)
+    } catch (err) {
+      console.log('error changing password', err);
     }
-
   };
 
   return (
@@ -86,7 +89,7 @@ const ForgotPassword = () => {
       <div
         style={{
           paddingTop: '2rem',
-          minHeight: '80vh',
+          minHeight: '100vh',
           backgroundImage: 'url("./images/login_back.svg")',
         }}
       >
