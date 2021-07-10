@@ -1,10 +1,10 @@
 import { string } from 'joi';
-import mongoose, { } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { IExerciseDoc, IExerciseModel } from '../interfaces/models/Exercise';
 
 const exerciseSchema = new mongoose.Schema({
     association: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         required: true,
     },
     category: {

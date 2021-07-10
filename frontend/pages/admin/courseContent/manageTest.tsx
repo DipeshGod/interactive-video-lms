@@ -10,7 +10,10 @@ const ManageTest = () => {
     <Layout>
       <Container>
         <Box marginY="6rem">
-          <ManageExercise id={router.query.id} />
+          <ManageExercise
+            id={router.query.id}
+            category={router.query.category}
+          />
         </Box>
       </Container>
     </Layout>

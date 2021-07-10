@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { IEnterpriseDoc, IEnterpriseModel } from '../interfaces/models/Enterprise';
 
 const enterpriseSchema = new mongoose.Schema({
@@ -8,11 +8,11 @@ const enterpriseSchema = new mongoose.Schema({
         unique: true
     },
     users: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'user'
     },
     admins: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'user'
     },
     features: {
@@ -20,7 +20,7 @@ const enterpriseSchema = new mongoose.Schema({
         enum: ['exercise', 'assignment']
     },
     courses: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         ref: 'course'
     },
     totalUsers: {

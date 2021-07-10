@@ -18,16 +18,16 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public getExercise(id: string): Query<IExerciseDoc[], IExerciseDoc, {}> {
+    public getExercise(id: string, category: string): Query<IExerciseDoc[], IExerciseDoc, {}> {
         try {
-            const exercises = this.model.find({ association: id });
+            const exercises = this.model.find({ association: id, category: category });
             return exercises;
         } catch (err: any) {
             throw new Error(err.toString());
         }
     }
 
-    public deleteExercise(id: string): Query<IExerciseDoc | null, IExerciseDoc, {}>{
+    public deleteExercise(id: string): Query<IExerciseDoc | null, IExerciseDoc, {}> {
         try {
             const exercise = this.model.findByIdAndDelete(id);
             return exercise;
@@ -36,7 +36,7 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public editExercise(id: string, exerciseData: IExercise):  Query<IExerciseDoc | null, IExerciseDoc, {}> {
+    public editExercise(id: string, exerciseData: IExercise): Query<IExerciseDoc | null, IExerciseDoc, {}> {
         try {
             const exercise = this.model.findByIdAndUpdate(id, exerciseData, {
                 new: true,
@@ -47,12 +47,12 @@ export class ExerciseRepository implements IExerciseRepository {
         }
     }
 
-    public getCourseExercise(id: string, category: string):Query<IExerciseDoc[], IExerciseDoc, {}> {
-        try {
-            const exercises = this.model.find({ association: id, category: category });
-            return exercises;
-        } catch (err: any) {
-            throw new Error(err.toString())
-        }
-    }
+    /*  public getCourseExercise(id: string, category: string):Query<IExerciseDoc[], IExerciseDoc, {}> {
+         try {
+             const exercises = this.model.find({ association: id, category: category });
+             return exercises;
+         } catch (err: any) {
+             throw new Error(err.toString())
+         }
+     } */
 }

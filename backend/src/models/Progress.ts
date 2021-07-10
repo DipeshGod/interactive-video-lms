@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IStudentProgressDoc, IStudentProgressModel } from "../interfaces/models/Progress";
 
 const progressSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'user'
     },
     courseId: {
-        type: mongoose.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'course'
     },
     preTestScore: {
@@ -18,7 +18,7 @@ const progressSchema = new mongoose.Schema({
     },
     module: [{
         id: {
-            type: mongoose.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'module'
         },
         score: {

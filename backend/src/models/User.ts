@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { IUser, IUserDoc, IUserModel } from './../interfaces/models/User';
 
 const instructorSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
         type: {
             type: String,
             default: 'student',
-            enum: ['superAdmin', 'enterprise','instructor', 'student']
+            enum: ['superAdmin', 'enterprise', 'instructor', 'student']
         },
         name: {
             type: String,
@@ -44,6 +44,11 @@ const userSchema = new mongoose.Schema(
         },
         isInstructor: {
             type: instructorSchema
+        },
+        enrolledCourse: {
+            type: [Schema.Types.ObjectId],
+            ref: 'course',
+            default: []
         }
     }
 );

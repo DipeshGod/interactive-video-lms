@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import {
   Button,
   DialogActions,
@@ -11,15 +11,15 @@ import {
   LinearProgress,
   Switch,
   Box,
-} from '@material-ui/core';
-import { useState, useRef } from 'react';
-import { useMutation, useQueryClient, useQuery } from 'react-query';
-import { toast } from 'react-toastify';
-import validator from 'validator';
-import api from '../../services/api';
-import editCourseInfo from '../../services/client/course/editCourseInfo';
-import getCoursesById from '../../services/client/course/getCourseById';
-import Loading from '../Loading';
+} from "@material-ui/core";
+import { useState, useRef } from "react";
+import { useMutation, useQueryClient, useQuery } from "react-query";
+import { toast } from "react-toastify";
+import validator from "validator";
+import api from "../../services/api";
+import editCourseInfo from "../../services/client/course/editCourseInfo";
+import getCoursesById from "../../services/client/course/getCourseById";
+import Loading from "../Loading";
 
 const EditCourseInfo = ({
   showEditCourseInfo,
@@ -29,8 +29,8 @@ const EditCourseInfo = ({
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState([]);
-  const [filename, setFilename] = useState('Choose File');
-  const [message, setMessage] = useState('');
+  const [filename, setFilename] = useState("Choose File");
+  const [message, setMessage] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState<number>(0);
   const [uploadResponse, setUploadResponse] = useState<any>();
   const formRef = useRef<any>();
@@ -40,7 +40,7 @@ const EditCourseInfo = ({
   const queryClient = useQueryClient();
 
   const { isLoading } = useQuery(
-    [['course', courseId], courseId],
+    [["course", courseId], courseId],
     () => getCoursesById(courseId),
     {
       onSuccess: (data) => {
@@ -67,8 +67,8 @@ const EditCourseInfo = ({
     );
 
     try {
-      const res = await api.post('/api/upload/course/intro', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      const res = await api.post("/api/upload/course/intro", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           setUploadPercentage(
             Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -77,15 +77,15 @@ const EditCourseInfo = ({
       });
 
       if (res.status === 200) {
-        setMessage('Files Uploaded');
+        setMessage("Files Uploaded");
         setUploadResponse(res.data);
       } else {
-        setMessage('Something went wrong');
+        setMessage("Something went wrong");
         return;
       }
     } catch (err) {
       if (err.response.status === 500) {
-        setMessage('There was a problem with the server');
+        setMessage("There was a problem with the server");
       } else {
         setMessage(err.response.data.msg);
       }
@@ -98,10 +98,10 @@ const EditCourseInfo = ({
     // setIsButtonDisabled(true);
 
     if (!validator.isLength(updatedData.name, { min: 5 })) {
-      setError('Please enter valid course name');
+      setError("Please enter valid course name");
       return;
     } else if (!validator.isLength(updatedData.description, { min: 10 })) {
-      setError('Course description must be of length at least 10');
+      setError("Course description must be of length at least 10");
       return;
     }
     const courseData = {
@@ -109,6 +109,8 @@ const EditCourseInfo = ({
       description: updatedData.description,
       category: updatedData.category,
       price: updatedData.price,
+      isFree: updatedData.isFree,
+      published: updatedData.isPublished,
       features: updatedData.features,
       goals: updatedData.goals,
       introductoryVideo: updatedData.introductoryVideo,
@@ -118,13 +120,13 @@ const EditCourseInfo = ({
 
     courseEditMutation.mutate(courseData, {
       onSuccess: () => {
-        queryClient.invalidateQueries('courses');
+        queryClient.invalidateQueries("courses");
         setIsButtonDisabled(false);
         toast.success(`Course updated successfully`);
         setShowEditCourseInfo(false);
       },
       onError: (error: any) => {
-        toast.error('Something went wrong');
+        toast.error("Something went wrong");
         setIsButtonDisabled(false);
       },
     });
@@ -150,77 +152,77 @@ const EditCourseInfo = ({
           Please change the content that needs to be updated.
         </DialogContentText>
         {error && (
-          <DialogContentText className='error' color='error'>
+          <DialogContentText className="error" color="error">
             {error}
           </DialogContentText>
         )}
         <form
           ref={formRef}
-          id='courseData'
+          id="courseData"
           onInputCapture={() => {
             setError(null);
             setIsButtonDisabled(false);
           }}
         >
           <TextField
-            label='Course Name'
-            placeholder='enter the course name'
+            label="Course Name"
+            placeholder="enter the course name"
             fullWidth
-            size='small'
-            variant='outlined'
-            margin='dense'
-            name='courseName'
+            size="small"
+            variant="outlined"
+            margin="dense"
+            name="courseName"
             value={updatedData.name}
             onChange={(e) =>
               setUpdatedData({ ...updatedData, name: e.target.value })
             }
           />
           <TextField
-            label='Course Description'
-            placeholder='enter the course description'
+            label="Course Description"
+            placeholder="enter the course description"
             fullWidth
-            size='small'
-            variant='outlined'
+            size="small"
+            variant="outlined"
             multiline
-            margin='dense'
-            name='courseDescription'
+            margin="dense"
+            name="courseDescription"
             value={updatedData.description}
             onChange={(e) =>
               setUpdatedData({ ...updatedData, description: e.target.value })
             }
           />
           <TextField
-            label='Course Category'
-            placeholder='e.g BBA, Information Technology, Music'
+            label="Course Category"
+            placeholder="e.g BBA, Information Technology, Music"
             fullWidth
-            size='small'
-            variant='outlined'
-            margin='dense'
-            name='courseCategory'
+            size="small"
+            variant="outlined"
+            margin="dense"
+            name="courseCategory"
             value={updatedData.category}
             onChange={(e) =>
               setUpdatedData({ ...updatedData, category: e.target.value })
             }
           />
           <TextField
-            label='Course Price'
-            placeholder='e.g Rs.5000'
+            label="Course Price"
+            placeholder="e.g Rs.5000"
             fullWidth
-            size='small'
-            type='number'
-            variant='outlined'
-            margin='dense'
-            name='coursePrice'
+            size="small"
+            type="number"
+            variant="outlined"
+            margin="dense"
+            name="coursePrice"
             value={updatedData.price}
             onChange={(e) =>
               setUpdatedData({ ...updatedData, price: e.target.value })
             }
           />
           <Box>
-            <Typography variant='overline'>MAKE IT FREE COURSE</Typography>
+            <Typography variant="overline">MAKE IT FREE COURSE</Typography>
             <Switch
-              color='primary'
-              name='isFree'
+              color="primary"
+              name="isFree"
               checked={updatedData.isFree}
               onChange={(e) =>
                 setUpdatedData({ ...updatedData, isFree: e.target.checked })
@@ -228,10 +230,10 @@ const EditCourseInfo = ({
             />
           </Box>
           <Box>
-            <Typography variant='overline'>PUBLISH THIS COURSE</Typography>
+            <Typography variant="overline">PUBLISH THIS COURSE</Typography>
             <Switch
-              color='primary'
-              name='published'
+              color="primary"
+              name="published"
               checked={updatedData.published}
               onChange={(e) =>
                 setUpdatedData({
@@ -242,88 +244,88 @@ const EditCourseInfo = ({
             />
           </Box>
           <TextField
-            label='Course Features'
-            placeholder='comma separated features of the course'
+            label="Course Features"
+            placeholder="comma separated features of the course"
             fullWidth
-            size='small'
-            variant='outlined'
+            size="small"
+            variant="outlined"
             multiline
-            margin='dense'
-            value={updatedData.features.join(',')}
+            margin="dense"
+            value={updatedData.features.join(",")}
             onChange={(e) =>
               setUpdatedData({
                 ...updatedData,
-                features: e.target.value.split(','),
+                features: e.target.value.split(","),
               })
             }
-            name='courseFeatures'
+            name="courseFeatures"
           />
           <TextField
-            label='Course Goals'
-            placeholder='comma separated goals of the course'
+            label="Course Goals"
+            placeholder="comma separated goals of the course"
             fullWidth
-            size='small'
-            variant='outlined'
+            size="small"
+            variant="outlined"
             multiline
-            margin='dense'
-            name='courseGoals'
-            value={updatedData.goals.join(',')}
+            margin="dense"
+            name="courseGoals"
+            value={updatedData.goals.join(",")}
             onChange={(e) =>
               setUpdatedData({
                 ...updatedData,
-                goals: e.target.value.split(','),
+                goals: e.target.value.split(","),
               })
             }
           />
           <TextField
-            label='Instructors'
-            placeholder='comma separated names of instructors'
+            label="Instructors"
+            placeholder="comma separated names of instructors"
             fullWidth
-            size='small'
-            variant='outlined'
-            margin='dense'
-            name='courseInstructors'
-            value={updatedData.instructors.join(',')}
+            size="small"
+            variant="outlined"
+            margin="dense"
+            name="courseInstructors"
+            value={updatedData.instructors.join(",")}
             onChange={(e) =>
               setUpdatedData({
                 ...updatedData,
-                instructors: e.target.value.split(','),
+                instructors: e.target.value.split(","),
               })
             }
           />
         </form>
 
         <form onSubmit={handleCourseIntroUpload}>
-          <Typography gutterBottom variant='overline'>
+          <Typography gutterBottom variant="overline">
             Please select the thumbnail image and introductory video of the
             course
           </Typography>
           <input
-            name='courseIntroFiles'
-            type='file'
+            name="courseIntroFiles"
+            type="file"
             multiple
-            accept='image/*,video/*'
+            accept="image/*,video/*"
             onChange={handleFileChange}
           />
           <Button
-            size='small'
-            variant='contained'
-            color='primary'
-            type='submit'
+            size="small"
+            variant="contained"
+            color="primary"
+            type="submit"
           >
             Upload
           </Button>
           <LinearProgress
-            style={{ marginTop: '10px' }}
-            variant='determinate'
+            style={{ marginTop: "10px" }}
+            variant="determinate"
             value={uploadPercentage}
           />
-          {message && <Typography variant='subtitle2'>{message}</Typography>}
+          {message && <Typography variant="subtitle2">{message}</Typography>}
         </form>
 
         <DialogActions>
           <Button
-            color='primary'
+            color="primary"
             onClick={() => {
               setShowEditCourseInfo(false);
               router.reload();
@@ -332,11 +334,11 @@ const EditCourseInfo = ({
             Cancel
           </Button>
           <Button
-            id='courseData'
-            color='primary'
-            variant='outlined'
+            id="courseData"
+            color="primary"
+            variant="outlined"
             disableElevation
-            type='submit'
+            type="submit"
             onClick={handleCourseEditSubmit}
             disabled={isButtonDisabled}
           >

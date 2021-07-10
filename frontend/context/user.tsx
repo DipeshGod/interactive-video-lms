@@ -1,4 +1,4 @@
-import { useReducer, createContext, useEffect } from 'react';
+import { useReducer, createContext, useEffect } from "react";
 
 //initial state
 const initialState = {
@@ -11,11 +11,15 @@ const Context = createContext(null);
 //root reducer
 const rootReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case "LOGIN":
       return { ...state, user: action.payload };
 
-    case 'LOGOUT':
+    case "LOGOUT":
       return { ...state, user: null };
+
+    case "COURSE_ENROLL":
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      return { ...state, user: action.payload };
 
     default:
       return state;
@@ -28,8 +32,8 @@ const Provider = ({ children }) => {
 
   useEffect(() => {
     dispatch({
-      type: 'LOGIN',
-      payload: JSON.parse(localStorage.getItem('user')),
+      type: "LOGIN",
+      payload: JSON.parse(localStorage.getItem("user")),
     });
   }, []);
 

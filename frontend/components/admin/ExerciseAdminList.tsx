@@ -16,11 +16,11 @@ import deleteExercise from "../../services/client/exercise/deleteExercise";
 import getExerciseById from "../../services/client/exercise/getExerciseById";
 import Loading from "../Loading";
 
-const ExerciseAdminList = ({ id }) => {
+const ExerciseAdminList = ({ id, category }) => {
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(["exercise", id], () =>
-    getExerciseById(id)
+  const { data, isLoading } = useQuery(["exercise", id, category], () =>
+    getExerciseById(id, category)
   );
 
   const deleteExerciseMutation = useMutation((id) => deleteExercise(id));

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import {
   ICourseModuleDoc,
   ICourseModuleModel,
@@ -15,7 +15,7 @@ const courseModuleSchema = new mongoose.Schema(
       required: true,
     },
     courseId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Course',
       required: true,
     },
