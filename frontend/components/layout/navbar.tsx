@@ -7,9 +7,8 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {
   Button,
@@ -24,6 +23,7 @@ import {
   Box,
 } from '@material-ui/core';
 import { Context } from '../../context/user';
+import api from '../../services/api';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,7 +62,6 @@ export default function Navbar() {
   const classes = useStyles();
   const router = useRouter();
   const { state, dispatch } = useContext(Context);
-  console.log(state);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -91,7 +90,12 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await api.get('/api/auth/logout');
+    } catch (err) {
+      console.log('logout error', err);
+    }
     dispatch({ type: 'LOGOUT' });
     localStorage.removeItem('user');
     router.push('/');
@@ -110,9 +114,11 @@ export default function Navbar() {
     >
       {state.user && state.user.type === 'superAdmin' && (
         <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
-          <Button variant='text' color='secondary' size='small'>
-            <Link href='/admin'>Welcome Admin</Link>
-          </Button>
+          <Link href='/admin'>
+            <Button variant='text' color='secondary' size='small'>
+              Welcome Admin
+            </Button>
+          </Link>
         </MenuItem>
       )}
       <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
@@ -141,33 +147,53 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='secondary'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label='show 11 new notifications' color='inherit'>
-          <Badge badgeContent={11} color='secondary'>
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {state.user && state.user.type === 'superAdmin' && (
+        <MenuItem>
+          <Link href='/admin'>
+            <IconButton aria-label='show 4 new mails' color='inherit'>
+              <SupervisorAccountIcon />
+              <Typography style={{ marginLeft: '10px' }}>
+                Welcome Admin
+              </Typography>
+            </IconButton>
+          </Link>
+        </MenuItem>
+      )}
+
+      {state.user ? (
+        <div>
+          <MenuItem>
+            <Link href='/dashboard'>
+              <IconButton aria-label='show 4 new mails' color='inherit'>
+                <DashboardIcon />
+                <Typography style={{ marginLeft: '10px' }}>
+                  Dashboard
+                </Typography>
+              </IconButton>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleProfileMenuOpen;
+              handleLogout();
+            }}
+          >
+            <IconButton aria-label='show 4 new mails' color='inherit'>
+              <SupervisorAccountIcon />
+              <Typography style={{ marginLeft: '10px' }}>Logout</Typography>
+            </IconButton>
+          </MenuItem>
+        </div>
+      ) : (
+        <MenuItem>
+          <Link href='/login'>
+            <IconButton aria-label='show 4 new mails' color='inherit'>
+              <SupervisorAccountIcon />
+              <Typography style={{ marginLeft: '10px' }}>Login</Typography>
+            </IconButton>
+          </Link>
+        </MenuItem>
+      )}
     </Menu>
   );
 

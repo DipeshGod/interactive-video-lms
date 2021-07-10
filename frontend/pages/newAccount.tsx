@@ -65,7 +65,7 @@ const NewAccount = () => {
       <div
         style={{
           paddingTop: '2rem',
-          minHeight: '80vh',
+          minHeight: '100vh',
           backgroundImage: 'url("./images/login_back.svg")',
         }}
       >

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CourseCard = ({ name, description, price, id }) => {
+const CourseCard = ({ name, description, price, id, isFree }) => {
   const [raised, setRaised] = useState(false);
   const classes = useStyles();
 
@@ -55,21 +55,12 @@ const CourseCard = ({ name, description, price, id }) => {
               className={classes.courseTitle}
               gutterBottom
             >
-              INTRODUCTION TO MICROECONOMICS
+              {name}
             </Typography>
-            <Typography
-              gutterBottom
-              variant='overline'
-              style={{ fontSize: '0.9rem' }}
-            >
-              Learn why small choices make huge impacts
-            </Typography>
+
             <Box marginTop='1rem'>
               <Typography variant='body1' style={{ fontSize: '1.2rem' }}>
-                Microeconomics is a branch of economics that studies the
-                behavior of individuals and firms in making decisions regarding
-                the allocation of scarce resources and the interactions among
-                these individuals and firms...
+                {description}
               </Typography>
             </Box>
             <Box
@@ -81,12 +72,18 @@ const CourseCard = ({ name, description, price, id }) => {
               <Box>
                 <Link href={`/courses/${id}`}>
                   <Button variant='outlined' className={classes.learnMore}>
-                    LEARN MORE
+                    Details
                   </Button>
                 </Link>
-                <Button variant='outlined'>ENROLL NOW</Button>
+                {isFree ? (
+                  <Button color='primary' variant='contained' disableElevation>
+                    Start Course
+                  </Button>
+                ) : (
+                  <Button variant='outlined'>ENROLL NOW</Button>
+                )}
               </Box>
-              <Chip label='Rs. 3000' />
+              {isFree ? <Chip label='Free' /> : <Chip label={`Rs. ${price}`} />}
             </Box>
           </Container>
         </div>

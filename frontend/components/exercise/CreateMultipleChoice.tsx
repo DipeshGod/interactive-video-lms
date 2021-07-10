@@ -39,7 +39,6 @@ const CreateMultipleChoice = () => {
     if (e.target.checked) {
       answer.push(e.target.value);
     }
-    console.log(answer);
   };
 
   const handleMultipleChoiceSubmit = () => {
@@ -52,7 +51,7 @@ const CreateMultipleChoice = () => {
       options: quizOptions,
       answer,
       type: 'multipleChoice',
-      category: 'module',
+      category: router.query.category,
       association: id,
     };
     courseExerciseMutation.mutate(exercise, {

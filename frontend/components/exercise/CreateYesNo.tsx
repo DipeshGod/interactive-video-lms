@@ -40,7 +40,7 @@ const CreateYesNo = () => {
       question,
       answer,
       type: 'yesNo',
-      category: 'module',
+      category: router.query.category,
       association: id,
     };
 

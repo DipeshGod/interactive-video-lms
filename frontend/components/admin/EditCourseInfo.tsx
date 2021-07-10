@@ -9,6 +9,8 @@ import {
   DialogTitle,
   Typography,
   LinearProgress,
+  Switch,
+  Box,
 } from '@material-ui/core';
 import { useState, useRef } from 'react';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -132,6 +134,8 @@ const EditCourseInfo = ({
     return <Loading />;
   }
 
+  console.log(updatedData);
+
   return (
     <Dialog
       open={showEditCourseInfo}
@@ -212,6 +216,31 @@ const EditCourseInfo = ({
               setUpdatedData({ ...updatedData, price: e.target.value })
             }
           />
+          <Box>
+            <Typography variant='overline'>MAKE IT FREE COURSE</Typography>
+            <Switch
+              color='primary'
+              name='isFree'
+              checked={updatedData.isFree}
+              onChange={(e) =>
+                setUpdatedData({ ...updatedData, isFree: e.target.checked })
+              }
+            />
+          </Box>
+          <Box>
+            <Typography variant='overline'>PUBLISH THIS COURSE</Typography>
+            <Switch
+              color='primary'
+              name='published'
+              checked={updatedData.published}
+              onChange={(e) =>
+                setUpdatedData({
+                  ...updatedData,
+                  isPublished: e.target.checked,
+                })
+              }
+            />
+          </Box>
           <TextField
             label='Course Features'
             placeholder='comma separated features of the course'

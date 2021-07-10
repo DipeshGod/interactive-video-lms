@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Button,
   Box,
@@ -7,12 +7,13 @@ import {
   Theme,
   Dialog,
   DialogContent,
-} from "@material-ui/core";
-import Loading from "../../Loading";
-import YesNo from "./YesNo";
-import Result from "./Result";
-import Quiz from "./Quiz";
-import Multichoice from "./MultiChoice";
+  Typography,
+} from '@material-ui/core';
+import Loading from '../../Loading';
+import YesNo from './YesNo';
+import Result from './Result';
+import Quiz from './Quiz';
+import Multichoice from './MultiChoice';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
@@ -37,9 +38,12 @@ const Exercises = ({
   };
 
   const renderExcercise = (exercises) => {
+    if (exercises.length === 0) {
+      return <Typography variant='h6'>Not availabe</Typography>;
+    }
     const { type, question, options, answer } = exercises[questionIndex];
     switch (type) {
-      case "yesNo":
+      case 'yesNo':
         return (
           <YesNo
             question={question}
@@ -49,7 +53,7 @@ const Exercises = ({
             changeQuestion={changeQuestion}
           />
         );
-      case "quiz":
+      case 'quiz':
         return (
           <Quiz
             question={question}
@@ -60,7 +64,7 @@ const Exercises = ({
             changeQuestion={changeQuestion}
           />
         );
-      case "multipleChoice":
+      case 'multipleChoice':
         return (
           <Multichoice
             question={question}
@@ -91,10 +95,10 @@ const Exercises = ({
           )}
         </div>
 
-        <Box display="flex" justifyContent="flex-end" padding="10px">
+        <Box display='flex' justifyContent='flex-end' padding='10px'>
           <Button
-            variant="outlined"
-            size="small"
+            variant='outlined'
+            size='small'
             onClick={() => setIsQuizOpen(false)}
           >
             Cancel
