@@ -18,13 +18,13 @@ const router = Router();
 const authRepository = new AuthRepository(User, ResetPassword);
 const userRepository = new UserRepository(User);
 
-router.post("/register", (req, res) => {
-  new RegisterUserController(authRepository).execute(req, res);
-});
+router.post("/register", (req, res) =>
+  new RegisterUserController(authRepository).execute(req, res)
+);
 
-router.post("/login", (req, res) => {
-  new LoginController(authRepository, userRepository).execute(req, res);
-});
+router.post("/login", (req, res) =>
+  new LoginController(authRepository, userRepository).execute(req, res)
+);
 
 router.post("/forgot-password", (req, res) =>
   new ForgotPasswordController(authRepository).execute(req, res)
