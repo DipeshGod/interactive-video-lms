@@ -52,7 +52,11 @@ const CourseReview = () => {
       </div>
       <div className={classes.container}>
         {data.map((review) => (
-          <Card variant='outlined' key={review._id}>
+          <Card
+            style={{ marginTop: '1rem' }}
+            variant='outlined'
+            key={review._id}
+          >
             <CardContent>
               <Box display='flex' alignItems='center'>
                 <Avatar

@@ -3,7 +3,6 @@ import Layout from '../components/layout';
 import Banner from '../components/home/Banner';
 import Features from '../components/home/Features';
 import PopularCourses from '../components/home/PopularCourses';
-import FindInstructor from '../components/home/FindInstructor';
 import Testimonials from '../components/home/Testimonials';
 
 const Home = () => {
@@ -13,9 +12,8 @@ const Home = () => {
         <Banner />
         <Container>
           <Features />
-          {/* <PopularCourses />
-          <FindInstructor />
-          <Testimonials /> */}
+          {/* <PopularCourses /> */}
+          <Testimonials />
         </Container>
       </div>
     </Layout>
