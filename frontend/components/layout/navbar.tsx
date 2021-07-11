@@ -92,13 +92,13 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
+      await router.push("/");
       await api.get("/api/auth/logout");
     } catch (err) {
       console.log("logout error", err);
     }
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
-    router.push("/");
   };
 
   const menuId = "primary-search-account-menu";

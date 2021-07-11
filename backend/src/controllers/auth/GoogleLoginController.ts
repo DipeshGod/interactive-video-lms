@@ -12,7 +12,7 @@ export class GoogleLoginController extends BaseController {
   private authRepository: IAuthRepository;
   private userRepository: IUserRepository;
   private client: any;
-  private googleAuth: IUser;
+  private googleAuth: any;
 
   constructor(
     authRepository: IAuthRepository,
@@ -32,7 +32,8 @@ export class GoogleLoginController extends BaseController {
       profilePicture: '',
       isInstructor: {
         bio: '',
-        qualification: ''
+        qualification: '',
+        enrolledCourse: []
       }
     };
   }

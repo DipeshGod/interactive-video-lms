@@ -1,32 +1,34 @@
-import Link from 'next/link';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import Link from "next/link";
+import { useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
   Button,
-} from '@material-ui/core';
-import getCourseContent from '../../services/client/course/getCourseContent';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import VideoPlayer from '../videoPlayer';
-import Loading from '../Loading';
-import Exercises from './exercises';
-import getExerciseById from '../../services/client/exercise/getExerciseById';
+} from "@material-ui/core";
+import getCourseContent from "../../services/client/course/getCourseContent";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import VideoPlayer from "../videoPlayer";
+import Loading from "../Loading";
+import Exercises from "./exercises";
+import getExerciseById from "../../services/client/exercise/getExerciseById";
+import { Context as UserContext } from "../../context/user";
 
 const CourseContent = () => {
+  const { state } = useContext(UserContext);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [exerciseByModule, setExerciseByModule] = useState();
-  const [moduleId, setModuleId] = useState('');
+  const [moduleId, setModuleId] = useState("");
 
   const [data, setData] = useState(null);
   const router = useRouter();
   const courseId = router.query.id;
 
   const { isLoading } = useQuery(
-    ['courseContent', courseId],
+    ["courseContent", courseId],
     () => getCourseContent(courseId),
     {
       onSuccess: (data) => {
@@ -36,8 +38,8 @@ const CourseContent = () => {
   );
 
   const { isLoading: exerciseByModuleLoading } = useQuery(
-    ['exercise', moduleId],
-    () => getExerciseById(moduleId),
+    ["exercise", moduleId],
+    () => getExerciseById(moduleId, "module"),
     {
       onSuccess: (data) => {
         setExerciseByModule(data);
@@ -50,24 +52,24 @@ const CourseContent = () => {
   }
 
   return (
-    <div style={{ marginBottom: '3rem' }}>
+    <div style={{ marginBottom: "3rem" }}>
       {data.map((module, index) => (
-        <Accordion key={module._id} style={{ marginTop: '1rem' }} elevation={3}>
+        <Accordion key={module._id} style={{ marginTop: "1rem" }} elevation={3}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             style={{
-              backgroundColor: '#f5f5f5',
+              backgroundColor: "#f5f5f5",
             }}
           >
-            <Typography variant='h6'>{module.title}</Typography>
+            <Typography variant="h6">{module.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>{module.description}</AccordionDetails>
 
           {module.videos.map((video) => (
             <AccordionDetails key={video.title}>
-              <Accordion variant='outlined'>
+              <Accordion variant="outlined">
                 <AccordionSummary
-                  style={{ backgroundColor: '#fafafa' }}
+                  style={{ backgroundColor: "#fafafa" }}
                   expandIcon={<ExpandMoreIcon />}
                 >
                   <Typography>{video.title}</Typography>
@@ -76,7 +78,7 @@ const CourseContent = () => {
                   <VideoPlayer
                     poster={``}
                     videoSources={video}
-                    videoTitle={''}
+                    videoTitle={""}
                   />
                 </AccordionDetails>
               </Accordion>
@@ -85,8 +87,8 @@ const CourseContent = () => {
           <AccordionDetails>
             {module.hasExercise && (
               <Button
-                color='primary'
-                variant='outlined'
+                color="primary"
+                variant="outlined"
                 onClick={() => {
                   setIsQuizOpen(!isQuizOpen);
                   setModuleId(module._id);
@@ -104,15 +106,17 @@ const CourseContent = () => {
               />
             )}
           </AccordionDetails>
-          <AccordionDetails>
-            <Link
-              href={`/admin/courseContent/module/${module._id}?category=module`}
-            >
-              <Button variant='outlined' color='secondary' size='small'>
-                Manage Module
-              </Button>
-            </Link>
-          </AccordionDetails>
+          {state.user.type === "superAdmin" && (
+            <AccordionDetails>
+              <Link
+                href={`/admin/courseContent/module/${module._id}?category=module`}
+              >
+                <Button variant="outlined" color="secondary" size="small">
+                  Manage Module
+                </Button>
+              </Link>
+            </AccordionDetails>
+          )}
         </Accordion>
       ))}
     </div>

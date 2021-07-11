@@ -11,7 +11,7 @@ import { IUserRepository } from '../../interfaces/repositories/IUserRepository';
 export class FacebookLoginController extends BaseController {
   private authRepository: IAuthRepository;
   private userRepository: IUserRepository;
-  private facebookAuth: IUser;
+  private facebookAuth: any;
 
   constructor(
     authRepository: IAuthRepository,
@@ -30,7 +30,8 @@ export class FacebookLoginController extends BaseController {
       profilePicture: '',
       isInstructor: {
         bio: '',
-        qualification: ''
+        qualification: '',
+        enrolledCourse: ''
       }
     };
   }
