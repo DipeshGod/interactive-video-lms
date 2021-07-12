@@ -1,31 +1,108 @@
-import Link from "next/link";
-import { Box, Button, Card, Typography } from "@material-ui/core";
+import Link from 'next/link';
+import {
+  Box,
+  Button,
+  Card,
+  createStyles,
+  LinearProgress,
+  makeStyles,
+  Theme,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
 
-const EnrolledCourseCard = ({ id }) => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      width: '50vw',
+      margin: 'auto',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
+    chapterNumber: {
+      flexBasis: '40%',
+    },
+    progress: {
+      flexBasis: '50%',
+      [theme.breakpoints.down('sm')]: {
+        flexBasis: '100%',
+        marginTop: '1rem',
+      },
+    },
+  })
+);
+
+const BorderLinearProgress = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      height: 10,
+      borderRadius: 5,
+    },
+    colorPrimary: {
+      backgroundColor:
+        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+    },
+    bar: {
+      borderRadius: 5,
+      backgroundColor: theme.palette.secondary.main,
+    },
+  })
+)(LinearProgress);
+
+const EnrolledCourseCard = ({ id, name, category }) => {
+  const classes = useStyles();
+
   return (
-    <Card>
-      <Box display="flex" justifyContent="space-between">
+    <Card className={classes.card}>
+      <Box display='flex' justifyContent='space-between'>
         <Box
-          padding="1rem"
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-evenly"
-          flexBasis="35%"
-          style={{ backgroundColor: "red" }}
+          padding='1rem'
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-evenly'
+          flexBasis='35%'
+          style={{ backgroundColor: '#1976d2', color: 'white' }}
         >
-          <Typography variant="overline" gutterBottom>
-            Category
+          <Typography
+            variant='overline'
+            style={{ fontWeight: 'bold' }}
+            color='textSecondary'
+            gutterBottom
+          >
+            {category}
           </Typography>
-          <Typography variant="h5" gutterBottom>
-            Course Name
+          <Typography variant='h6' style={{ fontWeight: 'bold' }} gutterBottom>
+            {name}
           </Typography>
         </Box>
-        <Box flexBasis="65%" style={{ backgroundColor: "blue" }}>
-          <Link href={`/course/dashboard?id=${id}`}>
-            <Button variant="outlined" color="inherit">
-              Continue
-            </Button>
-          </Link>
+        <Box padding='10px 1rem' flexBasis='65%'>
+          <Box
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
+            marginBottom='1rem'
+            flexWrap='wrap'
+          >
+            <Typography className={classes.chapterNumber}>Chapter 4</Typography>
+            <Box className={classes.progress}>
+              <BorderLinearProgress variant='determinate' value={50} />
+            </Box>
+          </Box>
+          <Box marginBottom='1.5rem'>
+            <Typography>Chapter Name</Typography>
+          </Box>
+          <Box marginBottom='1rem' display='flex' justifyContent='flex-end'>
+            <Link href={`/course/dashboard?id=${id}`}>
+              <Button
+                variant='contained'
+                color='primary'
+                style={{ borderRadius: '1rem' }}
+              >
+                Continue
+              </Button>
+            </Link>
+          </Box>
         </Box>
       </Box>
     </Card>

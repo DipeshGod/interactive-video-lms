@@ -8,9 +8,11 @@ import EnrolledCourseCard from '../components/courses/EnrolledCourseCard';
 
 const Dashboard = () => {
   const [id, setId] = useState();
+  const [name, setName] = useState();
 
   useEffect(() => {
     setId(JSON.parse(localStorage.getItem('user'))._id);
+    setName(JSON.parse(localStorage.getItem('user')).name);
   }, []);
 
   const { isLoading, data } = useQuery(['user-courses', id], () =>
@@ -25,8 +27,15 @@ const Dashboard = () => {
         </Typography>
       );
     }
-    return data.map((enrolledCourse) => (
-      <EnrolledCourseCard key={enrolledCourse._id} id={enrolledCourse._id} />
+    return data.map(({ _id, name, category }) => (
+      <div style={{ margin: '2rem 0' }}>
+        <EnrolledCourseCard
+          key={_id}
+          id={_id}
+          name={name}
+          category={category}
+        />
+      </div>
     ));
   };
 
@@ -37,7 +46,18 @@ const Dashboard = () => {
   return (
     <Layout>
       <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
-        <Container>{showEnrolledCourses(data.enrolledCourse)}</Container>
+        <Container>
+          <Typography align='center' variant='h5' gutterBottom>
+            Welcome {name}
+          </Typography>
+          <Typography
+            align='center'
+            style={{ fontWeight: 'bold', margin: '1rem 0', fontSize: '1.5rem' }}
+          >
+            Enjoy learning with us !
+          </Typography>
+          <div>{showEnrolledCourses(data.enrolledCourse)}</div>
+        </Container>
       </div>
     </Layout>
   );
