@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Card,
   CardContent,
@@ -8,16 +8,16 @@ import {
   Button,
   TextField,
   Box,
-} from '@material-ui/core';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { Rating } from '@material-ui/lab';
-import { useMutation, useQueryClient } from 'react-query';
-import createReview from '../../services/client/course/createReview';
-import { toast } from 'react-toastify';
+} from "@material-ui/core";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { Rating } from "@material-ui/lab";
+import { useMutation, useQueryClient } from "react-query";
+import createReview from "../../services/client/course/createReview";
+import { toast } from "react-toastify";
 
-const CreateReview = () => {
+const CreateReview = ({ id }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [rating, setRating] = useState(3);
   const router = useRouter();
 
@@ -25,8 +25,8 @@ const CreateReview = () => {
   const courseMutation = useMutation((review: any) => createReview(review));
 
   const handleReviewSubmit = () => {
-    const course = router.query.slug;
-    const user = JSON.parse(localStorage.getItem('user'))._id;
+    const course = id;
+    const user = JSON.parse(localStorage.getItem("user"))._id;
     if (comment.length < 5) {
       return;
     }
@@ -36,9 +36,10 @@ const CreateReview = () => {
       comment,
       rating,
     };
+
     courseMutation.mutate(reviewData, {
       onSuccess: () => {
-        queryClient.invalidateQueries(['review', course]);
+        queryClient.invalidateQueries(["review", course]);
         setIsButtonDisabled(false);
         toast.success(`Thank you for your review`);
       },
@@ -50,39 +51,39 @@ const CreateReview = () => {
   };
 
   return (
-    <Card variant='outlined'>
+    <Card variant="outlined">
       <CardContent>
-        <Typography variant='h6' gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Leave Us Your Valuable Review
         </Typography>
         <TextField
-          variant='outlined'
-          size='small'
-          placeholder='Write your review here'
+          variant="outlined"
+          size="small"
+          placeholder="Write your review here"
           fullWidth
           multiline
           rows={3}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <Box component='fieldset' marginTop={3} borderColor='transparent'>
-          <Typography component='legend'>
+        <Box component="fieldset" marginTop={3} borderColor="transparent">
+          <Typography component="legend">
             How do you rate this course
           </Typography>
           <Rating
-            name='rating'
+            name="rating"
             value={Number(rating)}
             precision={0.5}
-            size='large'
+            size="large"
             onChange={(e: any) => setRating(e.target.value)}
-            emptyIcon={<StarBorderIcon fontSize='inherit' />}
+            emptyIcon={<StarBorderIcon fontSize="inherit" />}
           />
         </Box>
         <CardActions>
           <Button
-            variant='outlined'
-            size='small'
-            color='secondary'
+            variant="outlined"
+            size="small"
+            color="secondary"
             onClick={handleReviewSubmit}
           >
             Submit Review
