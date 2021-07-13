@@ -4,17 +4,49 @@ import { IStudentProgressDoc, IStudentProgressModel } from "../interfaces/models
 const progressSchema = new mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        required: true
     },
     courseId: {
         type: Schema.Types.ObjectId,
-        ref: 'course'
+        ref: 'course',
+        required: true
     },
     preTestScore: {
-        type: Number
+        score: {
+            type: Number,
+            min: 0,
+            max: 100,
+            default: 0
+        },
+        solvedQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
+        totalQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
+        }
     },
     finalTestScore: {
-        type: Number
+        score: {
+            type: Number,
+            min: 0,
+            max: 100,
+            default: 0
+        },
+        solvedQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
+        totalQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
+        }
     },
     module: [{
         id: {
@@ -24,16 +56,20 @@ const progressSchema = new mongoose.Schema({
         score: {
             type: Number,
             min: 0,
-            max: 100
+            max: 100,
+            default: 0
+        },
+        solvedQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
+        },
+        totalQuestions: {
+            type: Number,
+            min: 0,
+            default: 0
         }
     }],
-    totalExercise: {
-        type: Number,
-    },
-    solvedExercise: {
-        type: Number,
-        default: 0
-    }
 }, { timestamps: true })
 
 const StudentProgress = mongoose.model<IStudentProgressDoc, IStudentProgressModel>('progress', progressSchema);
