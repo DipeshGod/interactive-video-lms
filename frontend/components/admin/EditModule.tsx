@@ -49,7 +49,7 @@ const EditModule = ({ id }) => {
   }
 
   if (!data) {
-    return '';
+    return null;
   }
 
   return (

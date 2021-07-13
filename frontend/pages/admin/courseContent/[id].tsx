@@ -34,7 +34,7 @@ const ManageCourseContent = ({ course, id }) => {
 
   return (
     <Layout>
-      <div style={{ paddingTop: '2rem' }}>
+      <div style={{ paddingTop: '2rem', minHeight: '75vh' }}>
         <Container>
           <Box
             marginY='2rem'
