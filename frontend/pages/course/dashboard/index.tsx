@@ -1,15 +1,26 @@
-import { Container } from "@material-ui/core";
-import React from "react";
-import CourseContent from "../../../components/courses/CourseContent";
-import Layout from "../../../components/layout";
+import { Container, Typography } from '@material-ui/core';
+import React from 'react';
+import CourseContent from '../../../components/courses/CourseContent';
+import Layout from '../../../components/layout';
 
 const CourseDashboard = () => {
   return (
     <Layout>
-      <div style={{ marginTop: "6rem" }}>
+      <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
-          <h1>This is course dashboard</h1>
+          <Typography variant='h6' gutterBottom>
+            This is student progress bar chart
+          </Typography>
+          <Typography variant='h6' gutterBottom>
+            This is where pre-test section
+          </Typography>
           <CourseContent />
+          <Typography variant='h6' gutterBottom>
+            This is where final-test section
+          </Typography>
+          <Typography variant='h6' gutterBottom>
+            This is where stundets can leave course review
+          </Typography>
         </Container>
       </div>
     </Layout>
