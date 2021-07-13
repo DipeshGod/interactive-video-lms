@@ -1,26 +1,56 @@
-import { Container, Typography } from '@material-ui/core';
-import React from 'react';
+import { Box, Button, Container, Typography } from '@material-ui/core';
+import { useRouter } from 'next/router';
 import CourseContent from '../../../components/courses/CourseContent';
+import CourseReview from '../../../components/courses/CourseReview';
+import TrackingBarChart from '../../../components/courses/TrackingBarChart';
 import Layout from '../../../components/layout';
 
 const CourseDashboard = () => {
+  const router = useRouter();
+
   return (
     <Layout>
       <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
-          <Typography variant='h6' gutterBottom>
-            This is student progress bar chart
-          </Typography>
-          <Typography variant='h6' gutterBottom>
-            This is where pre-test section
-          </Typography>
+          <Box marginTop='7rem'>
+            <TrackingBarChart />
+          </Box>
+          <Box marginBottom='3rem' marginTop='3rem'>
+            <Button
+              style={{ width: '300px' }}
+              variant='contained'
+              color='primary'
+              size='large'
+              disableElevation
+            >
+              Pretest
+            </Button>
+            <Box marginTop='10px'>
+              <Typography variant='caption'>
+                Take pretest to know for your course eligibility
+              </Typography>
+            </Box>
+          </Box>
+
           <CourseContent />
-          <Typography variant='h6' gutterBottom>
-            This is where final-test section
-          </Typography>
-          <Typography variant='h6' gutterBottom>
-            This is where stundets can leave course review
-          </Typography>
+          <Box marginBottom='5rem'>
+            <Button
+              style={{ width: '300px' }}
+              variant='contained'
+              color='primary'
+              size='large'
+              disabled
+            >
+              Final Test
+            </Button>
+            <Box marginTop='10px'>
+              <Typography variant='caption'>
+                You need to complete 80% of the module exercises before you can
+                take final test
+              </Typography>
+            </Box>
+          </Box>
+          <CourseReview id={router.query.id} />
         </Container>
       </div>
     </Layout>

@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CourseReview = () => {
+const CourseReview = ({ id }) => {
   const classes = useStyles();
   const router = useRouter();
-  const courseId = router.query.slug;
+  const courseId = id;
 
   const { data, isLoading } = useQuery(['review', courseId], () =>
     getCourseReview(courseId)

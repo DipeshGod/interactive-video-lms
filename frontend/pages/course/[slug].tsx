@@ -6,7 +6,7 @@ import CourseIntro from '../../components/courses/CourseIntro';
 import getCoursesById from '../../services/server/course/getCourseById';
 import CourseReview from '../../components/courses/CourseReview';
 
-const CourseDetails = ({ course }) => {
+const CourseDetails = ({ course, id }) => {
   return (
     <Layout>
       <div style={{ padding: '3rem 0', minHeight: '80vh' }}>
@@ -17,7 +17,7 @@ const CourseDetails = ({ course }) => {
               ENROLL NOW for Rs. {course.price}
             </Button>
           </Box>
-          <CourseReview />
+          <CourseReview id={id} />
         </Container>
       </div>
     </Layout>
@@ -34,6 +34,7 @@ export async function getServerSideProps({ params }) {
   return {
     props: {
       course: dehydrate(queryClient).queries[0].state.data,
+      id: params.slug,
     },
   };
 }

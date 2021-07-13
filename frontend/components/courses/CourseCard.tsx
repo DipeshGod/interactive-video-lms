@@ -102,7 +102,7 @@ const CourseCard = ({ name, description, price, id, isFree }) => {
               justifyContent='space-between'
             >
               <Box>
-                <Link href={`/courses/${id}`}>
+                <Link href={`/course/${id}`}>
                   <Button variant='outlined' className={classes.learnMore}>
                     Details
                   </Button>
