@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { DeleteUserController } from '../controllers/user/DeleteUserController';
 import { EditUserInfoController } from '../controllers/user/EditUserInfoController';
 import { EditUserPasswordController } from '../controllers/user/EditUserPasswordController';
+import { GetEnrolledController } from '../controllers/user/GetEnrolledController';
 import { GetUserByIdController } from '../controllers/user/GetUserByIDController';
 import { GetUserController } from '../controllers/user/GetUserController';
-import { GetUserEnrolledCourseController } from '../controllers/user/GetUserEnrolledCoursesController';
 import { authentication } from '../middleware/authenticate';
 import { User } from '../models/User';
 import { UserRepository } from '../repositories/UserRepository';
@@ -22,7 +22,7 @@ router.put('/change-password/:id', (req, res) => {
 });
 
 router.get('/enrolled-courses/:id', (req, res) => {
-    new GetUserEnrolledCourseController(userRepository).execute(req, res)
+    new GetEnrolledController(userRepository).execute(req, res)
 });
 
 

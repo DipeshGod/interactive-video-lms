@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
+import { IUserEnrolledRepository } from "../../interfaces/repositories/IUserEnrolledRepository";
+import { IUserRepository } from "../../interfaces/repositories/IUserRepository";
 import { BaseController } from "../BaseController"
-import { IUserRepository } from './../../interfaces/repositories/IUserRepository';
 
-export class GetUserEnrolledCourseController extends BaseController {
+
+export class GetEnrolledController extends BaseController {
     private userRepository: IUserRepository
 
     constructor(userRepository: IUserRepository) {

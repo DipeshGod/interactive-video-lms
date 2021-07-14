@@ -15,6 +15,7 @@ import { reviewRouter } from './routes/review';
 import { exerciseRouter } from './routes/exercise';
 import { enterpriseRouter } from './routes/enterprise';
 import { progressRouter } from './routes/progress';
+import { userEnrolledRouter } from './routes/userEnrolled';
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use('/api/review', reviewRouter);
 app.use('/api/exercise', exerciseRouter);
 app.use('/api/enterprise', enterpriseRouter);
 app.use('/api/progress', progressRouter);
+app.use('/api/enrolled', userEnrolledRouter);
 
 mongoose.connect(
   'mongodb://localhost:27017/studentAssit',
