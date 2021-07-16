@@ -12,7 +12,6 @@ export interface IUser {
         bio: string,
         qualification: string
     };
-    enrolledCourse: [string];
 }
 
 export interface IUserDoc extends mongoose.Document {
@@ -27,7 +26,6 @@ export interface IUserDoc extends mongoose.Document {
         bio: string,
         qualification: string
     }
-    enrolledCourse: [string];
 }
 
 export interface IUserModel extends mongoose.Model<IUserDoc> { }

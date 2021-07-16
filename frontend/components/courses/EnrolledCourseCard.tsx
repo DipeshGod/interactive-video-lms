@@ -50,7 +50,7 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-const EnrolledCourseCard = ({ id, name, category }) => {
+const EnrolledCourseCard = ({ id, name, category,progress }) => {
   const classes = useStyles();
 
   return (
@@ -86,7 +86,7 @@ const EnrolledCourseCard = ({ id, name, category }) => {
           >
             <Typography className={classes.chapterNumber}>Chapter 4</Typography>
             <Box className={classes.progress}>
-              <BorderLinearProgress variant='determinate' value={50} />
+              <BorderLinearProgress variant='determinate' value={progress} />
             </Box>
           </Box>
           <Box marginBottom='1.5rem'>

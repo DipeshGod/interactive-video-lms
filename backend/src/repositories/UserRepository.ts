@@ -64,13 +64,4 @@ export class UserRepository implements IUserRepository {
       throw new Error(err.toString());
     }
   }
-
-  public getEnrolledCourses(id: string): Query<IUserDoc | null, IUserDoc, {}> {
-    try {
-      const user = this.model.findById(id).populate('enrolledCourse');
-      return user;
-    } catch (err: any) {
-      throw new Error(err.toString());
-    }
-  }
 }

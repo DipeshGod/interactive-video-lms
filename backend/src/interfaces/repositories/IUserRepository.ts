@@ -7,5 +7,4 @@ export interface IUserRepository {
   getUserById(id: string): Query<IUserDoc | null, IUserDoc, {}>;
   deleteUser(id: string): Query<IUserDoc | null, IUserDoc, {}>;
   getUserByIdWithPassword(id: string): Query<IUserDoc | null, IUserDoc, {}>;
-  getEnrolledCourses(id: string): Query<IUserDoc | null, IUserDoc, {}>;
 }

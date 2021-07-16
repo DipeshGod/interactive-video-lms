@@ -14,8 +14,8 @@ import {
 } from '@material-ui/core';
 import { Context as UserContext } from '../../context/user';
 import { useMutation } from 'react-query';
-import editUser from '../../services/client/user/editUser';
 import { toast } from 'react-toastify';
+import enrollUserToCourse from '../../services/client/user/enrollUser';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,23 +43,18 @@ const CourseCard = ({ name, description, price, id, isFree }) => {
   const { state, dispatch } = useContext(UserContext);
   const classes = useStyles();
 
-  const userEditMutation = useMutation((updatedData: any) =>
-    editUser(state.user._id, updatedData)
+  const userEditMutation = useMutation((enrollInfo: any) =>
+    enrollUserToCourse(enrollInfo)
   );
 
   const handleStartCourse = () => {
     if (!state.user) {
       return router.push('/login');
     }
-    const { enrolledCourse } = state.user;
-    if (enrolledCourse.includes(id)) {
-      return router.push('/dashboard');
-    }
     userEditMutation.mutate(
-      { enrolledCourse: [...enrolledCourse, id] },
+      { courseId:id,userId:state.user._id },
       {
         onSuccess: (data) => {
-          dispatch({ type: 'COURSE_ENROLL', payload: data });
           toast.info('Erolled successfully');
           router.push('/dashboard');
         },

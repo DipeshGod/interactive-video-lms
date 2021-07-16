@@ -45,11 +45,6 @@ const userSchema = new mongoose.Schema(
         isInstructor: {
             type: instructorSchema
         },
-        enrolledCourse: {
-            type: [Schema.Types.ObjectId],
-            ref: 'course',
-            default: []
-        }
     }
 );
 

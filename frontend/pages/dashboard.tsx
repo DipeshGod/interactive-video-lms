@@ -3,20 +3,21 @@ import { useQuery } from 'react-query';
 import Layout from '../components/layout';
 import getUserEnrolledCourse from '../services/client/user/getUserEnrolledCourse';
 import Loading from '../components/Loading';
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import EnrolledCourseCard from '../components/courses/EnrolledCourseCard';
+import {Context as UserContext} from '../context/user'
 
 const Dashboard = () => {
-  const [id, setId] = useState();
-  const [name, setName] = useState();
+ 
+  const {state} = useContext(UserContext)
 
-  useEffect(() => {
-    setId(JSON.parse(localStorage.getItem('user'))._id);
-    setName(JSON.parse(localStorage.getItem('user')).name);
-  }, []);
+  if(!state.user) {
+    return <Loading />;
+  }
 
-  const { isLoading, data } = useQuery(['user-courses', id], () =>
-    getUserEnrolledCourse(id)
+
+  const { isLoading, data } = useQuery(['user-courses', state.user._id], () =>
+    getUserEnrolledCourse(state.user._id)
   );
 
   const showEnrolledCourses = (data) => {
@@ -27,28 +28,31 @@ const Dashboard = () => {
         </Typography>
       );
     }
-    return data.map(({ _id, name, category }) => (
+    return data.map((enrolledCourse) => (
       <div style={{ margin: '2rem 0' }}>
         <EnrolledCourseCard
-          key={_id}
-          id={_id}
-          name={name}
-          category={category}
+          key={enrolledCourse._id}
+          id={enrolledCourse._id}
+          name={enrolledCourse.courseId.name}
+          category={enrolledCourse.courseId.category}
+          progress={enrolledCourse.overallProgress}
         />
       </div>
     ));
   };
 
-  if (isLoading) {
+  if (isLoading || !state.user) {
     return <Loading />;
   }
+
+
 
   return (
     <Layout>
       <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
           <Typography align='center' variant='h5' gutterBottom>
-            Welcome {name}
+            Welcome {state.user.name}
           </Typography>
           <Typography
             align='center'
@@ -56,7 +60,7 @@ const Dashboard = () => {
           >
             Enjoy learning with us !
           </Typography>
-          <div>{showEnrolledCourses(data.enrolledCourse)}</div>
+          <div>{showEnrolledCourses(data)}</div>
         </Container>
       </div>
     </Layout>
