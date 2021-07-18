@@ -50,7 +50,14 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
   })
 )(LinearProgress);
 
-const EnrolledCourseCard = ({ id, name, category,progress }) => {
+const EnrolledCourseCard = ({
+  id,
+  name,
+  category,
+  progress,
+  hasPreTest,
+  hasFinalTest,
+}) => {
   const classes = useStyles();
 
   return (
@@ -93,7 +100,9 @@ const EnrolledCourseCard = ({ id, name, category,progress }) => {
             <Typography>Chapter Name</Typography>
           </Box>
           <Box marginBottom='1rem' display='flex' justifyContent='flex-end'>
-            <Link href={`/course/dashboard?id=${id}`}>
+            <Link
+              href={`/course/dashboard?id=${id}&pretest=${hasPreTest}&finaltest=${hasFinalTest}`}
+            >
               <Button
                 variant='contained'
                 color='primary'

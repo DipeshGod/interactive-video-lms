@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { QueryClient } from 'react-query';
-import { dehydrate } from 'react-query/hydration';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import {
   Container,
   Button,
@@ -10,11 +9,14 @@ import {
   createStyles,
 } from '@material-ui/core';
 import Layout from '../../../components/layout';
-import getCoursesById from '../../../services/server/course/getCourseById';
+import getCoursesById from '../../../services/client/course/getCourseById';
 
 import CreateNewModule from '../../../components/admin/CreateNewModule';
 import CourseContent from '../../../components/courses/CourseContent';
 import { useState } from 'react';
+import editCourseInfo from '../../../services/client/course/editCourseInfo';
+import { toast } from 'react-toastify';
+import Loading from '../../../components/Loading';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,11 +28,34 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ManageCourseContent = ({ course, id }) => {
+const ManageCourseContent = ({ id }) => {
   const classes = useStyles();
   const [showCreateNewModule, setShowCreateNewModule] = useState(false);
 
-  console.log('course', course);
+  const { isLoading, data: course } = useQuery(['course', id], () =>
+    getCoursesById(id)
+  );
+
+  const queryClient = useQueryClient();
+  const courseEditMutation = useMutation((course: any) =>
+    editCourseInfo({ hasPreTest: !course.hasPreTest }, course._id)
+  );
+
+  const handlePretestStatusChange = () => {
+    courseEditMutation.mutate(course, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['course', id]);
+        toast.success(`pretest status changed`);
+      },
+      onError: (error: any) => {
+        toast.error('Something went wrong');
+      },
+    });
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Layout>
@@ -66,11 +91,13 @@ const ManageCourseContent = ({ course, id }) => {
                 className={classes.btn}
                 variant='contained'
                 color='secondary'
+                onClick={handlePretestStatusChange}
               >
                 Disable Pretest
               </Button>
             ) : (
               <Button
+                onClick={handlePretestStatusChange}
                 className={classes.btn}
                 variant='contained'
                 color='secondary'
@@ -90,7 +117,7 @@ const ManageCourseContent = ({ course, id }) => {
                 Add Final Test
               </Button>
             </Link>
-            {course.hasPreTest === true ? (
+            {course.hasFinalTest === true ? (
               <Button
                 className={classes.btn}
                 variant='contained'
@@ -124,15 +151,8 @@ const ManageCourseContent = ({ course, id }) => {
 };
 
 export async function getServerSideProps({ params }) {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(['course', params.id], () =>
-    getCoursesById(params.id)
-  );
-
   return {
     props: {
-      course: dehydrate(queryClient).queries[0].state.data,
       id: params.id,
     },
   };

@@ -3,21 +3,20 @@ import { useQuery } from 'react-query';
 import Layout from '../components/layout';
 import getUserEnrolledCourse from '../services/client/user/getUserEnrolledCourse';
 import Loading from '../components/Loading';
-import { useContext, useState } from 'react';
+import { useState, useEffect } from 'react';
 import EnrolledCourseCard from '../components/courses/EnrolledCourseCard';
-import {Context as UserContext} from '../context/user'
 
 const Dashboard = () => {
- 
-  const {state} = useContext(UserContext)
+  const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
 
-  if(!state.user) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    setUserId(JSON.parse(localStorage.getItem('user'))._id);
+    setUserName(JSON.parse(localStorage.getItem('user')).name);
+  }, []);
 
-
-  const { isLoading, data } = useQuery(['user-courses', state.user._id], () =>
-    getUserEnrolledCourse(state.user._id)
+  const { isLoading, data } = useQuery(['user-courses', userId], () =>
+    getUserEnrolledCourse(userId)
   );
 
   const showEnrolledCourses = (data) => {
@@ -29,30 +28,29 @@ const Dashboard = () => {
       );
     }
     return data.map((enrolledCourse) => (
-      <div style={{ margin: '2rem 0' }}>
+      <div key={enrolledCourse._id} style={{ margin: '2rem 0' }}>
         <EnrolledCourseCard
-          key={enrolledCourse._id}
-          id={enrolledCourse._id}
+          id={enrolledCourse.courseId._id}
           name={enrolledCourse.courseId.name}
           category={enrolledCourse.courseId.category}
           progress={enrolledCourse.overallProgress}
+          hasPreTest={enrolledCourse.courseId.hasPreTest}
+          hasFinalTest={enrolledCourse.courseId.hasFinalTest}
         />
       </div>
     ));
   };
 
-  if (isLoading || !state.user) {
+  if (isLoading) {
     return <Loading />;
   }
-
-
 
   return (
     <Layout>
       <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
           <Typography align='center' variant='h5' gutterBottom>
-            Welcome {state.user.name}
+            Welcome {userName}
           </Typography>
           <Typography
             align='center'
