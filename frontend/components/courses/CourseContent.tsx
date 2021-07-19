@@ -44,6 +44,7 @@ const CourseContent = () => {
       onSuccess: (data) => {
         setExerciseByModule(data);
       },
+      retry: false,
     }
   );
 

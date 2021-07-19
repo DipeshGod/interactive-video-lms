@@ -16,6 +16,7 @@ import { Context as UserContext } from '../../context/user';
 import { useMutation } from 'react-query';
 import { toast } from 'react-toastify';
 import enrollUserToCourse from '../../services/client/user/enrollUser';
+import createUserProgress from '../../services/client/user/createUserProgress';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,15 +47,29 @@ const CourseCard = ({ name, description, price, id, isFree }) => {
   const userEditMutation = useMutation((enrollInfo: any) =>
     enrollUserToCourse(enrollInfo)
   );
+  const userProgressCreateMutation = useMutation((progressData: any) =>
+    createUserProgress(progressData)
+  );
 
   const handleStartCourse = () => {
     if (!state.user) {
       return router.push('/login');
     }
     userEditMutation.mutate(
-      { courseId:id,userId:state.user._id },
+      { courseId: id, userId: state.user._id },
       {
         onSuccess: (data) => {
+          userProgressCreateMutation.mutate(
+            { courseId: id, userId: state.user._id },
+            {
+              onSuccess: () => {
+                console.log('started tracking');
+              },
+              onError: () => {
+                console.log('error occurred when creating tracking');
+              },
+            }
+          );
           toast.info('Erolled successfully');
           router.push('/dashboard');
         },

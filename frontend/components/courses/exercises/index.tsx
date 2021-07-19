@@ -14,6 +14,8 @@ import YesNo from './YesNo';
 import Result from './Result';
 import Quiz from './Quiz';
 import Multichoice from './MultiChoice';
+import updateUserProgress from '../../../services/client/user/updateUserProgress';
+import { useMutation, useQueryClient } from 'react-query';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
@@ -27,12 +29,37 @@ const Exercises = ({
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
+  const queryClient = useQueryClient();
+
+  console.log('exercise', exercises);
+
+  const userCourseProgressMutation = useMutation((progressData: any) =>
+    updateUserProgress(
+      exercises[0].association,
+      JSON.parse(localStorage.getItem('user'))._id,
+      progressData
+    )
+  );
 
   const changeQuestion = () => {
     if (questionIndex !== exercises.length - 1) {
       setQuestionIndex(questionIndex + 1);
       return;
     } else {
+      console.log('mero score', score);
+      userCourseProgressMutation.mutate(
+        {
+          preTestScore: {
+            solvedQuestions: score,
+            totalQuestions: exercises.length,
+          },
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries(['progress']);
+          },
+        }
+      );
       setIsFinished(true);
     }
   };
