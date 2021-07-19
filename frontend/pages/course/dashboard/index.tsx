@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-
+import { useState } from 'react';
+import Link from 'next/link';
 import { Box, Button, Container, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
 import CourseContent from '../../../components/courses/CourseContent';
@@ -36,6 +36,8 @@ const CourseDashboard = () => {
   if (isProgressLoading) {
     return <Loading />;
   }
+
+  console.log('progress', progressData);
 
   return (
     <Layout>
@@ -101,6 +103,13 @@ const CourseDashboard = () => {
               </Box>
             </Box>
           )}
+          <Box>
+            <Link href={`/course/qna?courseId=${router.query.id}`}>
+              <Button variant='outlined' color='primary' size='large'>
+                Need help ? Go to QnA page
+              </Button>
+            </Link>
+          </Box>
           <Box marginBottom='3rem'>
             <CourseReview id={router.query.id} />
           </Box>

@@ -46,20 +46,26 @@ const Exercises = ({
       setQuestionIndex(questionIndex + 1);
       return;
     } else {
-      console.log('mero score', score);
-      userCourseProgressMutation.mutate(
-        {
-          preTestScore: {
-            solvedQuestions: score,
-            totalQuestions: exercises.length,
+      if (exercises[0].category === 'preTest') {
+        userCourseProgressMutation.mutate(
+          {
+            preTestScore: {
+              solvedQuestions: score,
+              totalQuestions: exercises.length,
+            },
           },
-        },
-        {
-          onSuccess: () => {
-            queryClient.invalidateQueries(['progress']);
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries(['progress']);
+            },
+            onError: () => {
+              console.log('couldnt update progress');
+            },
+          }
+        );
+      }
+      if (exercises[0].category === 'module') {
+      }
       setIsFinished(true);
     }
   };
