@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Button,
   Box,
@@ -19,12 +19,19 @@ import { useMutation, useQueryClient } from 'react-query';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
+interface IExercises {
+  isQuizOpen: boolean;
+  setIsQuizOpen: Dispatch<SetStateAction<boolean>>;
+  exerciseLoading: boolean;
+  exercises: any;
+}
+
 const Exercises = ({
   isQuizOpen,
   setIsQuizOpen,
   exerciseLoading,
   exercises,
-}) => {
+}: IExercises) => {
   const classes = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
@@ -65,6 +72,23 @@ const Exercises = ({
         );
       }
       if (exercises[0].category === 'module') {
+        userCourseProgressMutation.mutate(
+          {
+            module: {
+              id: exercises[0].association,
+              solvedQuestions: score,
+              totalQuestions: exercises.length,
+            },
+          },
+          {
+            onSuccess: () => {
+              queryClient.invalidateQueries(['progress']);
+            },
+            onError: () => {
+              console.log('couldnt update progress');
+            },
+          }
+        );
       }
       setIsFinished(true);
     }

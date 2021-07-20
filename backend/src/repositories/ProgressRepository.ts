@@ -29,7 +29,7 @@ export class ProgressRepository implements IProgressRepository {
     }
   }
 
-  public editProgress(queryData: any, progressData: IStudentProgress) {
+  public editProgress(queryData: any, progressData: any) {
     try {
       const progress = this.model.findOneAndUpdate(
         { courseId: queryData.courseId, userId: queryData.userId },

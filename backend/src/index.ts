@@ -16,6 +16,7 @@ import { exerciseRouter } from './routes/exercise';
 import { enterpriseRouter } from './routes/enterprise';
 import { progressRouter } from './routes/progress';
 import { userEnrolledRouter } from './routes/userEnrolled';
+import { QNARouter } from './routes/qna';
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use('/api/exercise', exerciseRouter);
 app.use('/api/enterprise', enterpriseRouter);
 app.use('/api/progress', progressRouter);
 app.use('/api/enrolled', userEnrolledRouter);
+app.use('/api/qna', QNARouter);
 
 mongoose.connect(
   'mongodb://localhost:27017/studentAssit',
@@ -52,7 +54,7 @@ mongoose.connect(
   },
   () => {
     app.listen(process.env.PORT, () => {
-      console.log(`Server listening at `,process.env.PORT);
+      console.log(`Server listening at `, process.env.PORT);
     });
   }
 );

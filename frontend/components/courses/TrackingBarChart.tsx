@@ -11,6 +11,7 @@ const TrackingBarChart = () => {
         data: [
           {
             x: 'Chapter 1',
+            y: 20,
             goals: [
               {
                 name: 'Expected',
