@@ -13,7 +13,6 @@ export class CreateReviewController extends BaseController {
     protected async executeImpl(req: Request, res: Response) {
         try {
             const userAlreadyExists = await this.reviewRepository.checkUser(req.body.user, req.body.course);
-            console.log('userAlready:', userAlreadyExists);
             if (userAlreadyExists.length === 1) return this.forbidden(res, 'You have already comment for this course');
             const review = await this.reviewRepository.createReview(req.body);
             if (!review) return this.forbidden(res, 'Cannot create review, try again');

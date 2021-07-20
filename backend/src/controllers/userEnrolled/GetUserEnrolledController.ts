@@ -13,11 +13,9 @@ export class GetUserEnrolledController extends BaseController {
   protected async executeImpl(req: Request, res: Response) {
     try {
       const id = req.params.id;
-      console.log("id", id);
       const userEnrolled = await this.userEnrolledRepository.getUserEnrolled(
         id
       );
-      console.log("userEnrolled:", userEnrolled);
       return this.ok(res, userEnrolled);
     } catch (err: any) {
       return this.fail(res, err);

@@ -28,7 +28,6 @@ export class LoginController extends BaseController {
       if (!user) return this.fail(res, 'error while logging in');
       if (!user.verified) return this.fail(res, 'please verify your email');
       try {
-        console.log('user', user);
         if (checkPassword(req.body.password, user.password)) {
           let token = assignToken(user._id);
           res.cookie('token', token, {

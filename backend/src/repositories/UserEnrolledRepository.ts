@@ -50,4 +50,13 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
       throw new Error(err.toString());
     }
   }
+
+  public checkUserEnrolled(userId: string, courseId: string): any {
+    try {
+      const userEnrolled = this.model.findOne({ userId: userId, courseId: courseId });
+      return userEnrolled;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
 }

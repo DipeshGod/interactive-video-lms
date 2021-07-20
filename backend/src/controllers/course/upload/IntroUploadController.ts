@@ -37,7 +37,6 @@ export class IntroUploadController extends BaseController {
     try {
       let files: any = [];
       let fileKeys = Object.keys(req.files!);
-      console.log('fileKeys', fileKeys);
       fileKeys.forEach((key) => {
         files.push(req.files![key]);
       });

@@ -5,4 +5,5 @@ export interface IUserEnrolledRepository {
     getUserEnrolled(id: string): any;
     editUserEnrolled(id: string, userEnrolledData: IUserEnrolled): any;
     removeUserEnrolled(id: string): any;
+    checkUserEnrolled(userId: string, courseId: string): any;
 }

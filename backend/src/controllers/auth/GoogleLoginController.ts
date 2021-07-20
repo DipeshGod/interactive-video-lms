@@ -73,7 +73,6 @@ export class GoogleLoginController extends BaseController {
       });
       return this.ok(res, registerUser);
     } catch (err: any) {
-      console.log(err);
       return this.fail(res, err.toString());
     }
   }
