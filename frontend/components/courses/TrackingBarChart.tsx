@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const ReactApexChart = dynamic(() => import('react-apexcharts'));
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+});
 
 const TrackingBarChart = () => {
   let data: any = {
