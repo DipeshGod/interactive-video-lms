@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import path from 'path';
 import { ICourseRepository } from '../../../interfaces/repositories/ICourseRepository';
 import { BaseController } from '../../BaseController';
-import ffmpeg from 'fluent-ffmpeg';
 import { resolutionConverter } from '../../../services/ffmpeg';
 
 export class IntroUploadController extends BaseController {

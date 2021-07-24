@@ -15,7 +15,7 @@ export class CreateUserEnrolledController extends BaseController {
       const isUserAlreadyEnrolled = await this.userEnrolledRepository.checkUserEnrolled(req.body.userId, req.body.courseId);
       console.log(isUserAlreadyEnrolled)
       if (isUserAlreadyEnrolled !== null)
-        return this.ok(res, 'User already enrolled')
+        return this.ok(res, {isUserEnrolled: true})
       const userEnrolled = await this.userEnrolledRepository.createUserEnrolled(
         req.body
       );
