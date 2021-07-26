@@ -1,26 +1,36 @@
-import { string } from 'joi';
-import mongoose, { Schema } from 'mongoose';
-import { IQNADOC, IQNAModel } from '../interfaces/models/QNA';
+import { string } from "joi";
+import mongoose, { Schema } from "mongoose";
+import { IQNADOC, IQNAModel } from "../interfaces/models/QNA";
+
+const responseSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
+  answer: {
+    type: String,
+  },
+});
 
 const qnaSchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'user',
+    ref: "user",
     required: true,
   },
   course: {
     type: Schema.Types.ObjectId,
-    ref: 'course',
+    ref: "course",
     required: true,
   },
-  questions: {
+  question: {
     type: String,
     required: true,
   },
   response: {
-    type: [String],
+    type: [responseSchema],
   },
 });
 
-const QNA = mongoose.model<IQNADOC, IQNAModel>('qna', qnaSchema);
+const QNA = mongoose.model<IQNADOC, IQNAModel>("qna", qnaSchema);
 export { QNA };
