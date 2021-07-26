@@ -1,24 +1,8 @@
-import { useState } from 'react';
 import { Container, Divider } from '@material-ui/core';
 import EditModule from '../../../../components/admin/EditModule';
 import ManageExercise from '../../../../components/admin/ManageExercise';
+import Editor from '../../../../components/editor/Editor';
 import Layout from '../../../../components/layout';
-import dynamic from 'next/dynamic';
-import {
-  useSaveCallback,
-  useLoadData,
-  options,
-  useSetData,
-  useClearDataCallback,
-} from '../../../../components/editor';
-
-const Editor = dynamic(
-  () =>
-    import('../../../../components/editor').then(
-      (mod: any) => mod.EditorContainer
-    ),
-  { ssr: false }
-);
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
@@ -29,35 +13,14 @@ export async function getServerSideProps(context) {
 }
 
 const Module = ({ id, category }) => {
-  const [editor, setEditor] = useState(null);
-
-  // save handler
-  const onSave = useSaveCallback(editor);
-
-  // load data
-  const { data, loading } = useLoadData();
-
-  // set saved data
-  useSetData(editor, data);
-
-  // clear data callback
-  const clearData = useClearDataCallback(editor);
-
-  const disabled = editor === null || loading;
-
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
-          <Editor
-            reInit={true}
-            editorRef={setEditor}
-            options={options}
-            data={data}
-          />
           <EditModule id={id} />
           <Divider style={{ margin: '2rem 0' }} />
           <ManageExercise id={id} category={category} />
+          <Editor />
         </Container>
       </div>
     </Layout>
