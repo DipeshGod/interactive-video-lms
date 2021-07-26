@@ -1,26 +1,26 @@
-import { string } from "joi";
-import mongoose, { Schema } from "mongoose";
-import { IQNADOC, IQNAModel } from "../interfaces/models/QNA";
+import { string } from 'joi';
+import mongoose, { Schema } from 'mongoose';
+import { IQNADOC, IQNAModel } from '../interfaces/models/QNA';
 
 const responseSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
   },
   answer: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
   },
 });
 
 const qnaSchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
   course: {
     type: Schema.Types.ObjectId,
-    ref: "course",
+    ref: 'course',
     required: true,
   },
   question: {
@@ -32,5 +32,5 @@ const qnaSchema = new mongoose.Schema({
   },
 });
 
-const QNA = mongoose.model<IQNADOC, IQNAModel>("qna", qnaSchema);
+const QNA = mongoose.model<IQNADOC, IQNAModel>('qna', qnaSchema);
 export { QNA };

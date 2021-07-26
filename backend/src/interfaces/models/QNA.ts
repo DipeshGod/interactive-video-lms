@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface IQNA {
   user: string;
@@ -7,7 +7,7 @@ export interface IQNA {
   response: [
     {
       user: string;
-      answer: string;
+      answer: any;
     }
   ];
 }
@@ -19,7 +19,7 @@ export interface IQNADOC extends mongoose.Document {
   response: [
     {
       user: string;
-      answer: string;
+      answer: any;
     }
   ];
 }
