@@ -1,6 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Grid, Box, Container, Typography } from '@material-ui/core';
+import {
+  Grid,
+  Box,
+  Container,
+  Typography,
+  Link as NLink,
+  Divider,
+} from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 const Footer = () => {
   return (
@@ -89,6 +98,27 @@ const Footer = () => {
             <Image src='/images/logo.jpg' width='250px' height='250px' />
           </Grid>
         </Grid>
+        <Box marginTop='1.5rem'>
+          <Box display='flex' justifyContent='center'>
+            <Typography style={{ marginRight: '1.5rem' }}>
+              Product of Blusheep Tech
+            </Typography>
+            <NLink
+              href='https://www.facebook.com/blusheeptech'
+              target='blank'
+              style={{ marginRight: '10px', color: '#4267B2' }}
+            >
+              <FacebookIcon />
+            </NLink>
+            <NLink
+              href='https://www.instagram.com/blusheeptech/'
+              style={{ color: '#cd486b' }}
+              target='blank'
+            >
+              <InstagramIcon />
+            </NLink>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
