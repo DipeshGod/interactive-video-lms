@@ -1,9 +1,20 @@
-import { IUserEnrolled } from "../models/UserEnrolled";
+import { Query } from "mongoose";
+import { IUserEnrolled, IUserEnrolledDoc } from "../models/UserEnrolled";
 
 export interface IUserEnrolledRepository {
-    createUserEnrolled(userEnrolledData: IUserEnrolled): any;
-    getUserEnrolled(id: string): any;
-    editUserEnrolled(id: string, userEnrolledData: IUserEnrolled): any;
-    removeUserEnrolled(id: string): any;
-    checkUserEnrolled(userId: string, courseId: string): any;
+  createUserEnrolled(
+    userEnrolledData: IUserEnrolled
+  ): Promise<IUserEnrolledDoc>;
+  getUserEnrolled(id: string): Query<IUserEnrolledDoc[], IUserEnrolledDoc, {}>;
+  editUserEnrolled(
+    id: string,
+    userEnrolledData: IUserEnrolled
+  ): Query<IUserEnrolledDoc | null, IUserEnrolledDoc, {}>;
+  removeUserEnrolled(
+    id: string
+  ): Query<IUserEnrolledDoc | null, IUserEnrolledDoc, {}>;
+  checkUserEnrolled(
+    userId: string,
+    courseId: string
+  ): Query<IUserEnrolledDoc | null, IUserEnrolledDoc, {}>;
 }

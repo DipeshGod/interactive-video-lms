@@ -1,8 +1,17 @@
-import { IStudentProgress } from '../models/Progress';
+import { Query } from "mongoose";
+import { IStudentProgress, IStudentProgressDoc } from "../models/Progress";
 
 export interface IProgressRepository {
-  createProgress(progressData: IStudentProgress): any;
-  getProgress(courseId: string, userId: string): any;
-  editProgress(queryData: any, progressData: any): any;
-  removeProgress(id: string): any;
+  createProgress(progressData: IStudentProgress): Promise<IStudentProgressDoc>;
+  getProgress(
+    courseId: string,
+    userId: string
+  ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
+  editProgress(
+    queryData: any,
+    progressData: any
+  ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
+  removeProgress(
+    id: string
+  ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
 }

@@ -1,8 +1,8 @@
 import {
   IStudentProgress,
   IStudentProgressModel,
-} from '../interfaces/models/Progress';
-import { IProgressRepository } from '../interfaces/repositories/IProgressRepository';
+} from "../interfaces/models/Progress";
+import { IProgressRepository } from "../interfaces/repositories/IProgressRepository";
 
 export class ProgressRepository implements IProgressRepository {
   private model: IStudentProgressModel;
@@ -11,7 +11,7 @@ export class ProgressRepository implements IProgressRepository {
     this.model = model;
   }
 
-  public createProgress(progressData: IStudentProgress): any {
+  public createProgress(progressData: IStudentProgress) {
     try {
       let progress = new this.model(progressData);
       return progress.save();
@@ -20,7 +20,7 @@ export class ProgressRepository implements IProgressRepository {
     }
   }
 
-  public getProgress(courseId: string, userId: string): any {
+  public getProgress(courseId: string, userId: string) {
     try {
       let progress = this.model.findOne({ courseId: courseId, userId: userId });
       return progress;
@@ -42,7 +42,7 @@ export class ProgressRepository implements IProgressRepository {
     }
   }
 
-  public removeProgress(id: string): any {
+  public removeProgress(id: string) {
     try {
       const progress = this.model.findOneAndRemove({ courseId: id });
       return progress;

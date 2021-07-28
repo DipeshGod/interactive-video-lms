@@ -1,5 +1,5 @@
-import { IQNA, IQNAModel } from '../interfaces/models/QNA';
-import { IQNARepository } from '../interfaces/repositories/IQNARepository';
+import { IQNA, IQNAModel } from "../interfaces/models/QNA";
+import { IQNARepository } from "../interfaces/repositories/IQNARepository";
 
 export class QNARepository implements IQNARepository {
   private QNAModel: IQNAModel;
@@ -7,18 +7,12 @@ export class QNARepository implements IQNARepository {
   constructor(QNAModel: IQNAModel) {
     this.QNAModel = QNAModel;
   }
-  addQNAAnswer(qnaId: string, answer: any) {
-    try {
-      const qna = this.QNAModel.findByIdAndUpdate(qnaId, answer, { new: true });
-      return qna;
-    } catch (err: any) {
-      throw new Error(err.toString());
-    }
-  }
 
   getQNAById(qnaId: string) {
     try {
-      const qna = this.QNAModel.findById(qnaId);
+      const qna = this.QNAModel.findById(qnaId)
+        .populate("response.user")
+        .populate("user");
       return qna;
     } catch (err: any) {
       throw new Error(err.toString());
@@ -34,7 +28,7 @@ export class QNARepository implements IQNARepository {
     }
   }
 
-  public createQNA(QNAData: IQNA): any {
+  public createQNA(QNAData: IQNA) {
     try {
       const qna = new this.QNAModel(QNAData);
       return qna.save();

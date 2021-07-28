@@ -11,7 +11,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     this.model = model;
   }
 
-  public createUserEnrolled(userEnrolledData: IUserEnrolled): any {
+  public createUserEnrolled(userEnrolledData: IUserEnrolled) {
     try {
       const userEnrolled = new this.model(userEnrolledData);
       return userEnrolled.save();
@@ -20,7 +20,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     }
   }
 
-  public getUserEnrolled(id: string): any {
+  public getUserEnrolled(id: string) {
     try {
       const userEnrolled = this.model.find({ userId: id }).populate("courseId");
       return userEnrolled;
@@ -29,7 +29,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     }
   }
 
-  public editUserEnrolled(id: string, userEnrolledData: IUserEnrolled): any {
+  public editUserEnrolled(id: string, userEnrolledData: IUserEnrolled) {
     try {
       const userEnrolled = this.model.findOneAndUpdate(
         { userId: id },
@@ -42,7 +42,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     }
   }
 
-  public removeUserEnrolled(id: string): any {
+  public removeUserEnrolled(id: string) {
     try {
       const userEnrolled = this.model.findOneAndRemove({ userId: id });
       return userEnrolled;
@@ -51,9 +51,12 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     }
   }
 
-  public checkUserEnrolled(userId: string, courseId: string): any {
+  public checkUserEnrolled(userId: string, courseId: string) {
     try {
-      const userEnrolled = this.model.findOne({ userId: userId, courseId: courseId });
+      const userEnrolled = this.model.findOne({
+        userId: userId,
+        courseId: courseId,
+      });
       return userEnrolled;
     } catch (err: any) {
       throw new Error(err.toString());
