@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UploadCourseModuleController } from "../controllers/courseModule/upload/UploadModuleVideoController";
+import { NotePictureUploadController } from "../controllers/upload/NotePictureController";
 import { authentication } from "../middleware/authenticate";
 import { Course } from "../models/Course";
 import { CourseModule } from "../models/CourseModule";
@@ -20,7 +21,9 @@ router.post("/course-module/video", authentication, (req, res) => {
   new UploadCourseModuleController(courseModuleRepository).execute(req, res);
 });
 
-router.post("/course/picture", authentication, (req, res) => {});
+router.post("/course/picture", authentication, (req, res) => {
+  new NotePictureUploadController().execute(req, res);
+});
 
 router.post("/user/profile", authentication, (req, res) => {});
 
