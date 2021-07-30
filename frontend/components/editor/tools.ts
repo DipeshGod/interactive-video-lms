@@ -1,3 +1,5 @@
+import api from '../../services/api';
+
 let Embed = '';
 let Table = '';
 let Paragraph = '';
@@ -42,7 +44,28 @@ export const EDITOR_JS_TOOLS: any = {
   warning: Warning,
   code: Code,
   linkTool: LinkTool,
-  image: Image,
+  image: {
+    class: Image,
+    config: {
+      uploader: {
+        uploadByFile(file) {
+          let data = new FormData();
+          data.append('file', file, file.fileName);
+          return api
+            .post('/', data, {
+              headers: {
+                accept: 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${file._boundary}`,
+              },
+            })
+            .then((res) => {
+              return res.data;
+            });
+        },
+      },
+    },
+  },
   raw: Raw,
   header: Header,
   quote: Quote,
