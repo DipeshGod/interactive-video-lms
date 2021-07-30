@@ -12,10 +12,13 @@ export class CreateUserEnrolledController extends BaseController {
 
   protected async executeImpl(req: Request, res: Response) {
     try {
-      const isUserAlreadyEnrolled = await this.userEnrolledRepository.checkUserEnrolled(req.body.userId, req.body.courseId);
-      console.log(isUserAlreadyEnrolled)
+      const isUserAlreadyEnrolled =
+        await this.userEnrolledRepository.checkUserEnrolled(
+          req.body.userId,
+          req.body.courseId
+        );
       if (isUserAlreadyEnrolled !== null)
-        return this.ok(res, {isUserEnrolled: true})
+        return this.ok(res, { isUserEnrolled: true });
       const userEnrolled = await this.userEnrolledRepository.createUserEnrolled(
         req.body
       );

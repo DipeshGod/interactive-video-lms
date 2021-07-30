@@ -14,7 +14,6 @@ export class AddAnswerController extends BaseController {
     try {
       const QNA = await this.QNARepository.getQNAById(req.params.id);
       if (!QNA) return this.fail(res, "Qna not found ");
-      console.log("req.body", req.body);
       QNA.response.push({
         user: req.loggedInUser!._id,
         answer: req.body.answer,
