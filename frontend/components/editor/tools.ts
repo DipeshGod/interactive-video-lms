@@ -50,9 +50,9 @@ export const EDITOR_JS_TOOLS: any = {
       uploader: {
         uploadByFile(file) {
           let data = new FormData();
-          data.append('file', file, file.fileName);
+          data.append('picture', file, file.fileName);
           return api
-            .post('/', data, {
+            .post('/api/upload/course/picture', data, {
               headers: {
                 accept: 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -60,7 +60,14 @@ export const EDITOR_JS_TOOLS: any = {
               },
             })
             .then((res) => {
-              return res.data;
+              console.log('dsad', res);
+              return {
+                success: 1,
+                file: {
+                  url: `http://localhost:5000${res.data}`,
+                  // any other image data you want to store, such as width, height, color, extension, etc
+                },
+              };
             });
         },
       },

@@ -25,7 +25,7 @@ export class NotePictureUploadController extends BaseController {
           }
         }
       );
-      return this.ok(res, filename);
+      return this.ok(res, `/editor/${filename}`);
     } catch (err: any) {
       return this.fail(res, err);
     }

@@ -7,23 +7,26 @@ import {
   TableRow,
   Tooltip,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
+import Image from 'next/image';
 
 const renderEditor = (content) => {
+  console.log(content);
+
   switch (content.type) {
-    case "paragraph":
+    case 'paragraph':
       return <Typography>{content.data.text}</Typography>;
 
-    case "header":
+    case 'header':
       const level: any = `h${content.data.level}`;
       return <Typography variant={level}>{content.data.text}</Typography>;
 
-    case "table":
+    case 'table':
       return (
         <TableContainer
-          style={{ marginTop: "1.5rem" }}
+          style={{ marginTop: '1.5rem' }}
           component={Paper}
-          variant="outlined"
+          variant='outlined'
         >
           <Table>
             <TableBody>
@@ -39,9 +42,9 @@ const renderEditor = (content) => {
         </TableContainer>
       );
 
-    case "list":
+    case 'list':
       const { style, items } = content.data;
-      if (style === "unordered") {
+      if (style === 'unordered') {
         return (
           <ul>
             {items.map((item, i) => (
@@ -58,14 +61,17 @@ const renderEditor = (content) => {
           </ol>
         );
       }
-    case "warning":
+    case 'warning':
       return (
         <Tooltip title={content.data.message}>
-          <Typography variant="caption" color="error">
+          <Typography variant='caption' color='error'>
             {content.data.title}
           </Typography>
         </Tooltip>
       );
+
+    case 'image':
+      return <Image width='600px' height='600px' src={content.data.file.url} />;
 
     default:
       return null;
