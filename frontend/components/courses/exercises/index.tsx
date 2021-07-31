@@ -17,8 +17,6 @@ import Multichoice from './MultiChoice';
 import updateUserProgress from '../../../services/client/user/updateUserProgress';
 import { useMutation, useQueryClient } from 'react-query';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({}));
-
 interface IExercises {
   isQuizOpen: boolean;
   setIsQuizOpen: Dispatch<SetStateAction<boolean>>;
@@ -32,13 +30,10 @@ const Exercises = ({
   exerciseLoading,
   exercises,
 }: IExercises) => {
-  const classes = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [score, setScore] = useState(0);
   const queryClient = useQueryClient();
-
-  console.log('exercise', exercises);
 
   const userCourseProgressMutation = useMutation((progressData: any) =>
     updateUserProgress(

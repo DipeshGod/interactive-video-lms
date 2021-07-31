@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: '95%',
   },
   scoreQuestion: {
-    width: '400px',
+    minWidth: '400px',
     [theme.breakpoints.down('xs')]: {
       width: '280px',
     },

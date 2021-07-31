@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { INoteRepository } from "../../interfaces/repositories/INoteRepository";
-import { BaseController } from "../BaseController";
+import { Request, Response } from 'express';
+import { INoteRepository } from '../../interfaces/repositories/INoteRepository';
+import { BaseController } from '../BaseController';
 
 export class GetNoteByIdController extends BaseController {
   private NoteRepository: INoteRepository;
@@ -12,8 +12,8 @@ export class GetNoteByIdController extends BaseController {
 
   protected async executeImpl(req: Request, res: Response) {
     try {
-      const qna = await this.NoteRepository.getNoteById(req.params.id);
-      return this.ok(res, qna);
+      const note = await this.NoteRepository.getNoteById(req.params.id);
+      return this.ok(res, note);
     } catch (err: any) {
       return this.fail(res, err);
     }
