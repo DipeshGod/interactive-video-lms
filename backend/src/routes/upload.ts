@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { UploadCourseModuleController } from "../controllers/courseModule/upload/UploadModuleVideoController";
+import { UploadCourseModuleController } from "../controllers/upload/UploadModuleVideoController";
 import { NotePictureUploadController } from "../controllers/upload/NotePictureController";
 import { authentication } from "../middleware/authenticate";
 import { Course } from "../models/Course";
 import { CourseModule } from "../models/CourseModule";
 import { CourseModuleRepository } from "../repositories/CourseModuleRepository";
 import { CourseRepository } from "../repositories/CourseRepository";
-import { IntroUploadController } from "./../controllers/course/upload/IntroUploadController";
+import { IntroUploadController } from "../controllers/upload/IntroUploadController";
 
 const router = Router();
 
