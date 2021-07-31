@@ -18,6 +18,7 @@ import { progressRouter } from "./routes/progress";
 import { userEnrolledRouter } from "./routes/userEnrolled";
 import { QNARouter } from "./routes/qna";
 import { enterpriseSectionRouter } from "./routes/enterpriseSection";
+import { noteRouter } from "./routes/note";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use("/api/progress", progressRouter);
 app.use("/api/enrolled", userEnrolledRouter);
 app.use("/api/qna", QNARouter);
 app.use("/api/enterprise-section", enterpriseSectionRouter);
+app.use("/api/note", noteRouter);
 
 mongoose.connect(
   process.env.ATLAS_URI!,
