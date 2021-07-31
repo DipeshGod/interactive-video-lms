@@ -7,6 +7,14 @@ export class NoteRepository implements INoteRepository {
   constructor(NoteModel: INoteModel) {
     this.model = NoteModel;
   }
+  deleteNote(id: string) {
+    try {
+      const note = this.model.findByIdAndRemove(id);
+      return note;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
   createNote(noteData: INote) {
     try {
       const note = new this.model(noteData);
