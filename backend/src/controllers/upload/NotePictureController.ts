@@ -11,8 +11,10 @@ export class NotePictureUploadController extends BaseController {
   protected async executeImpl(req: Request, res: Response) {
     try {
       const file: any = req.files!.picture;
-      const name = file.name.split(".");
-      const filename = `${Date.now()}.${file.name.split(".")[name.length - 1]}`;
+      const fileNameLength = file.name.split(".").length;
+      const filename = `${Date.now()}.${
+        file.name.split(".")[fileNameLength - 1]
+      }`;
       if (file.mimetype.split("/")[0] !== "image")
         return this.forbidden(res, "You are only allowed to upload image");
       file.mv(
