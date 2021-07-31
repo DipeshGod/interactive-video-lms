@@ -1,10 +1,10 @@
-import api from "../../api";
+import api from '../../api';
 
-const createNote = async (title, note, moduleId) => {
-  const { data } = await api.post("/api/note", {
-    title,
-    body: note,
-    courseModule: moduleId,
+const createNote = async (note) => {
+  const { data } = await api.post('/api/note', {
+    title: note.title,
+    body: note.note,
+    courseModule: note.moduleId,
   });
   return data;
 };

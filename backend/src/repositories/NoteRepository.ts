@@ -1,5 +1,5 @@
-import { INote, INoteModel } from "../interfaces/models/Notes";
-import { INoteRepository } from "../interfaces/repositories/INoteRepository";
+import { INote, INoteModel } from '../interfaces/models/Notes';
+import { INoteRepository } from '../interfaces/repositories/INoteRepository';
 
 export class NoteRepository implements INoteRepository {
   private model: INoteModel;
@@ -9,7 +9,11 @@ export class NoteRepository implements INoteRepository {
   }
   createNote(noteData: INote) {
     try {
-      const note = new this.model(noteData);
+      const note = new this.model({
+        courseModule: noteData.courseModule,
+        title: noteData.title,
+        body: noteData.body,
+      });
       return note.save();
     } catch (err: any) {
       throw new Error(err.toString());

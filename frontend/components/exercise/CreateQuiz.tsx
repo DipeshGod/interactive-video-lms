@@ -52,6 +52,9 @@ const CreateQuiz = () => {
     courseExerciseMutation.mutate(exercise, {
       onSuccess: () => {
         queryClient.invalidateQueries(['exercise', id]);
+        setAnswer(0);
+        setQuestion('');
+        setQuizOptions([]);
       },
       onError: () => {
         console.log('err aayo hai');

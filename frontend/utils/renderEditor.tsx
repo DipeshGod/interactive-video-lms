@@ -15,16 +15,24 @@ const renderEditor = (content) => {
 
   switch (content.type) {
     case 'paragraph':
-      return <Typography>{content.data.text}</Typography>;
+      return (
+        <Typography style={{ marginBottom: '1rem' }}>
+          {content.data.text}
+        </Typography>
+      );
 
     case 'header':
       const level: any = `h${content.data.level}`;
-      return <Typography variant={level}>{content.data.text}</Typography>;
+      return (
+        <Typography style={{ marginBottom: '1rem' }} variant={level}>
+          {content.data.text}
+        </Typography>
+      );
 
     case 'table':
       return (
         <TableContainer
-          style={{ marginTop: '1.5rem' }}
+          style={{ margin: '1.5rem 0' }}
           component={Paper}
           variant='outlined'
         >
@@ -48,7 +56,9 @@ const renderEditor = (content) => {
         return (
           <ul>
             {items.map((item, i) => (
-              <li key={i}>{item}</li>
+              <li key={i} style={{ marginBottom: '1rem' }}>
+                {item}
+              </li>
             ))}
           </ul>
         );
@@ -63,7 +73,7 @@ const renderEditor = (content) => {
       }
     case 'warning':
       return (
-        <Tooltip title={content.data.message}>
+        <Tooltip style={{ marginBottom: '1rem' }} title={content.data.message}>
           <Typography variant='caption' color='error'>
             {content.data.title}
           </Typography>
