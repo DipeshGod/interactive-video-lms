@@ -43,9 +43,6 @@ const CourseDashboard = () => {
     <Layout>
       <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
-          <Box marginTop='7rem'>
-            <TrackingBarChart />
-          </Box>
           {pretest === 'true' && (
             <Box marginBottom='3rem' marginTop='3rem'>
               <Button

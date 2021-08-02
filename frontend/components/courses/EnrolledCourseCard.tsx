@@ -108,7 +108,7 @@ const EnrolledCourseCard = ({
                 color='primary'
                 style={{ borderRadius: '1rem' }}
               >
-                Continue
+                Begin
               </Button>
             </Link>
           </Box>

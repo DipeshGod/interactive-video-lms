@@ -1,4 +1,5 @@
-import { Container, Typography } from '@material-ui/core';
+import Link from 'next/link';
+import { Box, Button, Container, Typography } from '@material-ui/core';
 import { useQuery } from 'react-query';
 import Layout from '../components/layout';
 import getUserEnrolledCourse from '../services/client/user/getUserEnrolledCourse';
@@ -54,11 +55,18 @@ const Dashboard = () => {
           </Typography>
           <Typography
             align='center'
-            style={{ fontWeight: 'bold', margin: '1rem 0', fontSize: '1.5rem' }}
+            style={{ margin: '1rem 0', fontSize: '1.5rem' }}
           >
             Enjoy learning with us !
           </Typography>
           <div>{showEnrolledCourses(data)}</div>
+          <Box display='flex' justifyContent='center' marginTop='1rem'>
+            <Link href='/user/progress'>
+              <Button variant='outlined' color='secondary'>
+                View Progress on courses
+              </Button>
+            </Link>
+          </Box>
         </Container>
       </div>
     </Layout>

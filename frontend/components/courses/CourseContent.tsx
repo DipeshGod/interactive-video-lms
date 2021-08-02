@@ -16,6 +16,7 @@ import Loading from '../Loading';
 import Exercises from './exercises';
 import getExerciseById from '../../services/client/exercise/getExerciseById';
 import { Context as UserContext } from '../../context/user';
+import ModuleNotes from './ModuleNotes';
 
 const CourseContent = () => {
   const { state } = useContext(UserContext);
@@ -85,6 +86,9 @@ const CourseContent = () => {
               </Accordion>
             </AccordionDetails>
           ))}
+          <AccordionDetails>
+            <ModuleNotes moduleId={module._id} />
+          </AccordionDetails>
           <AccordionDetails>
             {module.hasExercise && (
               <Button

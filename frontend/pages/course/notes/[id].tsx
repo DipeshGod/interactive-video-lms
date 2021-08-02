@@ -16,6 +16,8 @@ const NoteDetail = () => {
     return <Loading />;
   }
 
+  console.log('dadad', data);
+
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
@@ -27,7 +29,10 @@ const NoteDetail = () => {
           >
             {data.title}
           </Typography>
-          <Box>{renderEditor(data.body[0])}</Box>
+
+          <Box marginBottom='2rem'>
+            {data.body.map((content) => renderEditor(content))}
+          </Box>
         </Container>
       </div>
     </Layout>

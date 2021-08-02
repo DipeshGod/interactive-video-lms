@@ -6,7 +6,6 @@ import {
   Container,
   Typography,
   Link as NLink,
-  Divider,
 } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -17,15 +16,39 @@ const Footer = () => {
       style={{ backgroundColor: 'black', color: '#fafafa', padding: '2rem 0' }}
     >
       <Container>
-        <Grid container alignItems='center' spacing={3}>
+        <Grid container alignItems='stretch' spacing={3}>
           <Grid item xs={12} sm={12} md={4}>
             <Typography
               gutterBottom
               variant='subtitle1'
               style={{ fontSize: '1.3rem' }}
             >
+              CONNECT
+            </Typography>
+
+            <NLink
+              href='https://www.facebook.com/blusheeptech'
+              target='blank'
+              style={{ marginRight: '10px', color: '#4267B2' }}
+            >
+              <FacebookIcon />
+            </NLink>
+
+            <NLink
+              href='https://www.instagram.com/blusheeptech/'
+              style={{ color: '#cd486b' }}
+              target='blank'
+            >
+              <InstagramIcon />
+            </NLink>
+
+            <Typography
+              gutterBottom
+              variant='subtitle1'
+              style={{ fontSize: '1.3rem' }}
+            >
               <Link href='/'>
-                <a>About Us</a>
+                <a>ABOUT US</a>
               </Link>
             </Typography>
             <Typography
@@ -34,7 +57,7 @@ const Footer = () => {
               style={{ fontSize: '1.3rem' }}
             >
               <Link href='/'>
-                <a>Be A Instructor</a>
+                <a>CONTACT</a>
               </Link>
             </Typography>
             <Typography
@@ -43,16 +66,7 @@ const Footer = () => {
               style={{ fontSize: '1.3rem' }}
             >
               <Link href='/'>
-                <a>Courses for Enterprise</a>
-              </Link>
-            </Typography>
-            <Typography
-              gutterBottom
-              variant='subtitle1'
-              style={{ fontSize: '1.3rem' }}
-            >
-              <Link href='/'>
-                <a>Careers</a>
+                <a>APPLY FOR SCHOLARSHIP</a>
               </Link>
             </Typography>
           </Grid>
@@ -63,7 +77,7 @@ const Footer = () => {
               style={{ fontSize: '1.3rem' }}
             >
               <Link href='/'>
-                <a>Featured Courses</a>
+                <a>CAREERS</a>
               </Link>
             </Typography>
             <Typography
@@ -72,7 +86,7 @@ const Footer = () => {
               style={{ fontSize: '1.3rem' }}
             >
               <Link href='/'>
-                <a>Apply for Scholarship</a>
+                <a>BE AN INSTRUCTOR</a>
               </Link>
             </Typography>
             <Typography
@@ -81,7 +95,7 @@ const Footer = () => {
               style={{ fontSize: '1.3rem' }}
             >
               <Link href='/'>
-                <a>Contact Us</a>
+                <a>COURSES FOR ENTERPRISE</a>
               </Link>
             </Typography>
             <Typography
@@ -98,27 +112,6 @@ const Footer = () => {
             <Image src='/images/logo.jpg' width='250px' height='250px' />
           </Grid>
         </Grid>
-        <Box marginTop='1.5rem'>
-          <Box display='flex' justifyContent='center'>
-            <Typography style={{ marginRight: '1.5rem' }}>
-              Product of Blusheep Tech
-            </Typography>
-            <NLink
-              href='https://www.facebook.com/blusheeptech'
-              target='blank'
-              style={{ marginRight: '10px', color: '#4267B2' }}
-            >
-              <FacebookIcon />
-            </NLink>
-            <NLink
-              href='https://www.instagram.com/blusheeptech/'
-              style={{ color: '#cd486b' }}
-              target='blank'
-            >
-              <InstagramIcon />
-            </NLink>
-          </Box>
-        </Box>
       </Container>
     </Box>
   );
