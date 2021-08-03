@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export interface IStudentProgress {
-  userId: string;
-  courseId: string;
+  user: string;
+  course: string;
   preTest: {
     score: number;
     solvedQuestions: number;
@@ -24,8 +24,8 @@ export interface IStudentProgress {
 }
 
 export interface IStudentProgressDoc extends mongoose.Document {
-  userId: string;
-  courseId: string;
+  user: string;
+  course: string;
   preTest: {
     score: number;
     solvedQuestions: number;

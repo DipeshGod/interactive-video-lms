@@ -2,9 +2,7 @@ import { Query } from "mongoose";
 import { IUserEnrolled, IUserEnrolledDoc } from "../models/UserEnrolled";
 
 export interface IUserEnrolledRepository {
-  createUserEnrolled(
-    userEnrolledData: IUserEnrolled
-  ): Promise<IUserEnrolledDoc>;
+  createUserEnrolled(userEnrolledData: any): Promise<IUserEnrolledDoc>;
   getUserEnrolled(id: string): Query<IUserEnrolledDoc[], IUserEnrolledDoc, {}>;
   editUserEnrolled(
     id: string,

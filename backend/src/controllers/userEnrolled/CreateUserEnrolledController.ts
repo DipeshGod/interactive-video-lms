@@ -22,7 +22,7 @@ export class CreateUserEnrolledController extends BaseController {
       const userEnrolled = await this.userEnrolledRepository.createUserEnrolled(
         req.body
       );
-      return this.ok(res, userEnrolled);
+      return this.ok(res, "ok");
     } catch (err: any) {
       return this.fail(res, err);
     }

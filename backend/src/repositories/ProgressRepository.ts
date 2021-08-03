@@ -20,9 +20,9 @@ export class ProgressRepository implements IProgressRepository {
     }
   }
 
-  public getProgress(courseId: string, userId: string) {
+  public getProgress(userId: string) {
     try {
-      let progress = this.model.findOne({ courseId: courseId, userId: userId });
+      let progress = this.model.find({ user: userId }).populate("course");
       return progress;
     } catch (err: any) {
       throw new Error(err.toString());
@@ -32,7 +32,7 @@ export class ProgressRepository implements IProgressRepository {
   public editProgress(queryData: any, progressData: any) {
     try {
       const progress = this.model.findOneAndUpdate(
-        { courseId: queryData.courseId, userId: queryData.userId },
+        { course: queryData.courseId, user: queryData.userId },
         progressData,
         { new: true }
       );
@@ -44,7 +44,7 @@ export class ProgressRepository implements IProgressRepository {
 
   public removeProgress(id: string) {
     try {
-      const progress = this.model.findOneAndRemove({ courseId: id });
+      const progress = this.model.findOneAndRemove({ course: id });
       return progress;
     } catch (err: any) {
       throw new Error(err.toString());

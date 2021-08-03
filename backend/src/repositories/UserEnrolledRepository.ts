@@ -11,9 +11,12 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     this.model = model;
   }
 
-  public createUserEnrolled(userEnrolledData: IUserEnrolled) {
+  public createUserEnrolled(userEnrolledData: any) {
     try {
-      const userEnrolled = new this.model(userEnrolledData);
+      const userEnrolled = new this.model({
+        user: userEnrolledData.userId,
+        course: userEnrolledData.courseId!,
+      });
       return userEnrolled.save();
     } catch (err: any) {
       throw new Error(err.toString());
@@ -22,7 +25,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
 
   public getUserEnrolled(id: string) {
     try {
-      const userEnrolled = this.model.find({ userId: id }).populate("courseId");
+      const userEnrolled = this.model.find({ user: id }).populate("course");
       return userEnrolled;
     } catch (err: any) {
       throw new Error(err.toString());
@@ -32,7 +35,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
   public editUserEnrolled(id: string, userEnrolledData: IUserEnrolled) {
     try {
       const userEnrolled = this.model.findOneAndUpdate(
-        { userId: id },
+        { user: id },
         userEnrolledData,
         { new: true }
       );
@@ -44,7 +47,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
 
   public removeUserEnrolled(id: string) {
     try {
-      const userEnrolled = this.model.findOneAndRemove({ userId: id });
+      const userEnrolled = this.model.findOneAndRemove({ user: id });
       return userEnrolled;
     } catch (err: any) {
       throw new Error(err.toString());
@@ -54,8 +57,8 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
   public checkUserEnrolled(userId: string, courseId: string) {
     try {
       const userEnrolled = this.model.findOne({
-        userId: userId,
-        courseId: courseId,
+        user: userId,
+        course: courseId,
       });
       return userEnrolled;
     } catch (err: any) {
