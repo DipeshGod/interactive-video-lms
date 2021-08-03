@@ -1,8 +1,8 @@
-import { Query } from "mongoose";
-import { IStudentProgress, IStudentProgressDoc } from "../models/Progress";
+import { Query } from 'mongoose';
+import { IStudentProgress, IStudentProgressDoc } from '../models/Progress';
 
 export interface IProgressRepository {
-  createProgress(progressData: IStudentProgress): Promise<IStudentProgressDoc>;
+  createProgress(progressData: any): Promise<IStudentProgressDoc>;
   getProgress(
     userId: string
   ): Query<IStudentProgressDoc[], IStudentProgressDoc, {}>;

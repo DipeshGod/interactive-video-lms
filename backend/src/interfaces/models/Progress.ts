@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface IStudentProgress {
   user: string;
@@ -19,6 +19,7 @@ export interface IStudentProgress {
       score: number;
       solvedQuestions: number;
       totalQuestions: number;
+      title: string;
     }
   ];
 }
@@ -42,6 +43,7 @@ export interface IStudentProgressDoc extends mongoose.Document {
       score: number;
       solvedQuestions: number;
       totalQuestions: number;
+      title: string;
     }
   ];
 }
