@@ -31,14 +31,21 @@ export class CreateUserEnrolledController extends BaseController {
         course: courseId,
         module: [],
       };
+      // get all course module
+      const courseModules =
+        await this.courseModuleRepository.getCourseModuleByCourseId(courseId);
+
+      //intitiate user progress without moduleProgress
       const userProgress = await this.progressRepository.createProgress(
         progress
       );
+
       if (!userProgress)
         throw new Error('Error while creating user progress at beggining');
-
-      const courseModules =
-        await this.courseModuleRepository.getCourseModuleByCourseId(courseId);
+      /* 1. courseModule lai map garera
+   2. [module]={title,id}
+   3. create at once with module
+*/
       courseModules.map((module) => {
         const moduleProgress = { id: module._id, title: module.title };
         console.log('module:', module);
@@ -51,18 +58,21 @@ export class CreateUserEnrolledController extends BaseController {
 
   protected async executeImpl(req: Request, res: Response) {
     try {
+      //check if user is already enrolled in a course
       const isUserAlreadyEnrolled =
         await this.userEnrolledRepository.checkUserEnrolled(
           req.body.userId,
           req.body.courseId
         );
+      //if already enrolled return isUserEnrolled=true
       if (isUserAlreadyEnrolled !== null)
         return this.ok(res, { isUserEnrolled: true });
+      //else enroll user to a course
       const userEnrolled = await this.userEnrolledRepository.createUserEnrolled(
         req.body
       );
+      //after enrolling initiate user progress on different modules(module progress)
       if (userEnrolled) {
-        console.log('userEnrolled:', userEnrolled);
         const progress = await this.createUserModuleProgress(
           userEnrolled.course,
           userEnrolled.user
