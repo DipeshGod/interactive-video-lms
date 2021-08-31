@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import {
   Container,
   Box,
@@ -32,7 +33,12 @@ const Admin = () => {
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
-          <Box display='flex' justifyContent='flex-end' marginBottom='2rem'>
+          <Box
+            display='flex'
+            flexWrap='wrap'
+            justifyContent='flex-end'
+            marginBottom='2rem'
+          >
             <Button
               variant='contained'
               color='primary'
@@ -41,6 +47,16 @@ const Admin = () => {
             >
               Create New Course
             </Button>
+            <Link href='/admin/addEnterprise'>
+              <Button
+                variant='contained'
+                style={{ marginLeft: '1rem' }}
+                color='primary'
+                disableElevation
+              >
+                Create New Enterprise
+              </Button>
+            </Link>
           </Box>
           <Box>
             <CourseAdminList courses={courseData} />

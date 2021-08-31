@@ -1,8 +1,8 @@
 //theme of the app is defined here
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 
 // Create a theme instance.
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#039be5',
