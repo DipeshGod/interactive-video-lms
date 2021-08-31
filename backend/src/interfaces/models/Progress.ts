@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Model } from "mongoose";
 
 export interface IStudentProgress {
   user: string;
@@ -13,18 +13,10 @@ export interface IStudentProgress {
     solvedQuestions: number;
     totalQuestions: number;
   };
-  module: [
-    {
-      id: string;
-      score: number;
-      solvedQuestions: number;
-      totalQuestions: number;
-      title: string;
-    }
-  ];
+  moduleProgress: [string];
 }
 
-export interface IStudentProgressDoc extends mongoose.Document {
+export interface IStudentProgressDoc extends Document {
   user: string;
   course: string;
   preTest: {
@@ -37,16 +29,25 @@ export interface IStudentProgressDoc extends mongoose.Document {
     solvedQuestions: number;
     totalQuestions: number;
   };
-  module: [
-    {
-      id: string;
-      score: number;
-      solvedQuestions: number;
-      totalQuestions: number;
-      title: string;
-    }
-  ];
+  moduleProgress: [string];
 }
 
-export interface IStudentProgressModel
-  extends mongoose.Model<IStudentProgressDoc> {}
+export interface IStudentProgressModel extends Model<IStudentProgressDoc> {}
+
+export interface IModuleProgress {
+  id: string;
+  title: string;
+  score: number;
+  solvedQuestions: number;
+  totalQuestions: number;
+}
+
+export interface IModuleProgressDoc extends Document {
+  id: string;
+  title: string;
+  score: number;
+  solvedQuestions: number;
+  totalQuestions: number;
+}
+
+export interface IModuleProgressModel extends Model<IModuleProgressDoc> {}
