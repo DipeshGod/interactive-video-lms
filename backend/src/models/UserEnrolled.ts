@@ -1,18 +1,18 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 import {
   IUserEnrolledModel,
   IUserEnrolledDoc,
-} from "../interfaces/models/UserEnrolled";
+} from '../interfaces/models/UserEnrolled';
 
 const userEnrolledSchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
   },
   course: {
     type: Schema.Types.ObjectId,
-    ref: "course",
+    ref: 'course',
     required: true,
   },
   overallProgress: {
@@ -21,16 +21,15 @@ const userEnrolledSchema = new mongoose.Schema({
     min: 0,
     max: 100,
   },
-  currentChapter: {
-    type: String,
-  },
-  currentVideo: {
-    type: String,
+  currentModule: {
+    type: Schema.Types.ObjectId,
+    ref: 'CourseModule',
+    required: true,
   },
 });
 
 const UserEnrolled = mongoose.model<IUserEnrolledDoc, IUserEnrolledModel>(
-  "userenrolled",
+  'userenrolled',
   userEnrolledSchema
 );
 
