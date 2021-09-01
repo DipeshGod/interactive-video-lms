@@ -7,10 +7,6 @@ import {
 } from '../interfaces/models/Progress';
 
 const moduleProgressSchema = new mongoose.Schema({
-  // id: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'course',
-  // },
   title: {
     type: String,
     required: true,
@@ -45,7 +41,7 @@ const progressSchema = new mongoose.Schema(
       ref: 'course',
       required: true,
     },
-    preTestScore: {
+    preTest: {
       score: {
         type: Number,
         min: 0,
@@ -63,7 +59,7 @@ const progressSchema = new mongoose.Schema(
         default: 0,
       },
     },
-    finalTestScore: {
+    finalTest: {
       score: {
         type: Number,
         min: 0,
