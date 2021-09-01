@@ -30,8 +30,8 @@ export class CreateUserEnrolledController extends BaseController {
         courseId
       );
       // 2. If already enrolled, return response already enrolled
-      /*  if (userEnrolls)
-        return this.forbidden(res, "user is already enrolled in this course"); */
+      if (userEnrolls)
+        return this.forbidden(res, "user is already enrolled in this course");
 
       // 3. If not enrolled,
       // 3a. Enroll user the course by creating user enrolled document
@@ -53,8 +53,6 @@ export class CreateUserEnrolledController extends BaseController {
         };
         moduleProgresses.push(moduleProgress);
       });
-      console.log("module progress:", moduleProgresses);
-
       // 3c. Create Progress document
       const progress = {
         user: userId,
@@ -64,7 +62,7 @@ export class CreateUserEnrolledController extends BaseController {
       const studentProgress = await this.progressRepository.createProgress(
         progress
       );
-      console.log("studentProgress", studentProgress);
+
       // 4. Return response user enrolled to the course
       return this.ok(res, userEnrolled);
     } catch (err: any) {
