@@ -24,7 +24,8 @@ export class ProgressRepository implements IProgressRepository {
     try {
       let progress = this.studentProgressModel
         .find({ user: userId })
-        .populate("course");
+        .populate("course")
+        .populate("moduleProgress.module");
       return progress;
     } catch (err: any) {
       throw new Error(err.toString());

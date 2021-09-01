@@ -14,7 +14,7 @@ export interface IStudentProgress {
     totalQuestions: number;
   };
   moduleProgress: {
-    title: string;
+    module: string;
     score: number;
     solvedQuestions: number;
     totalQuestions: number;
@@ -34,7 +34,12 @@ export interface IStudentProgressDoc extends Document {
     solvedQuestions: number;
     totalQuestions: number;
   };
-  moduleProgress: [string];
+  moduleProgress: {
+    module: string;
+    score: number;
+    solvedQuestions: number;
+    totalQuestions: number;
+  }[];
 }
 
 export interface IStudentProgressModel extends Model<IStudentProgressDoc> {}
