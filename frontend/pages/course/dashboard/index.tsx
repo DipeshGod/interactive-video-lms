@@ -1,16 +1,16 @@
-import { useState } from "react";
-import Link from "next/link";
-import { Box, Button, Container, Typography } from "@material-ui/core";
-import { useRouter } from "next/router";
-import CourseContent from "../../../components/courses/CourseContent";
-import CourseReview from "../../../components/courses/CourseReview";
-import TrackingBarChart from "../../../components/courses/TrackingBarChart";
-import Layout from "../../../components/layout";
-import Exercises from "../../../components/courses/exercises";
-import { useQuery } from "react-query";
-import getExerciseById from "../../../services/client/exercise/getExerciseById";
-import getUserCourseProgress from "../../../services/client/user/getUserCourseProgress";
-import Loading from "../../../components/Loading";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Box, Button, Container, Typography } from '@material-ui/core';
+import { useRouter } from 'next/router';
+import CourseContent from '../../../components/courses/CourseContent';
+import CourseReview from '../../../components/courses/CourseReview';
+import TrackingBarChart from '../../../components/courses/TrackingBarChart';
+import Layout from '../../../components/layout';
+import Exercises from '../../../components/courses/exercises';
+import { useQuery } from 'react-query';
+import getExerciseById from '../../../services/client/exercise/getExerciseById';
+import getUserCourseProgress from '../../../services/client/user/getUserCourseProgress';
+import Loading from '../../../components/Loading';
 
 const CourseDashboard = () => {
   const router = useRouter();
@@ -20,16 +20,16 @@ const CourseDashboard = () => {
   const { pretest, finaltest } = router.query;
 
   const { isLoading: isPretestLoading, data: coursePretest } = useQuery(
-    ["pretest", router.query.id],
-    () => getExerciseById(router.query.id, "preTest")
+    ['pretest', router.query.id],
+    () => getExerciseById(router.query.id, 'preTest')
   );
 
   const { isLoading: isProgressLoading, data: progressData } = useQuery(
-    ["progress", router.query.id],
+    ['progress', router.query.id],
     () =>
       getUserCourseProgress(
         router.query.id,
-        JSON.parse(localStorage.getItem("user"))._id
+        JSON.parse(localStorage.getItem('user'))._id
       )
   );
 
@@ -37,36 +37,36 @@ const CourseDashboard = () => {
     return <Loading />;
   }
 
-  console.log("progress", progressData);
+  console.log('progress', progressData);
 
   return (
     <Layout>
-      <div style={{ marginTop: "6rem", minHeight: "75vh" }}>
+      <div style={{ marginTop: '6rem', minHeight: '75vh' }}>
         <Container>
-          {pretest === "true" && (
-            <Box marginBottom="3rem" marginTop="3rem">
+          {pretest === 'true' && (
+            <Box marginBottom='3rem' marginTop='3rem'>
               <Button
-                style={{ width: "300px" }}
-                variant="contained"
-                color="primary"
-                size="large"
+                style={{ width: '300px' }}
+                variant='contained'
+                color='primary'
+                size='large'
                 disableElevation
                 onClick={() => setIsQuizOpen(true)}
               >
                 Pretest
               </Button>
-              <Box marginTop="10px">
-                <Typography variant="caption" color="textSecondary">
+              <Box marginTop='10px'>
+                <Typography variant='caption' color='textSecondary'>
                   Take pretest to know for your course eligibility
                 </Typography>
                 {
                   <Typography
-                    color="textSecondary"
-                    style={{ marginTop: "10px" }}
+                    color='textSecondary'
+                    style={{ marginTop: '10px' }}
                   >
-                    You have scored{" "}
-                    {progressData.length > 0 && progressData.preTestScore.score}{" "}
-                    % in pretest
+                    You have scored{' '}
+                    {progressData.length > 0 && progressData[0].preTest.score} %
+                    in pretest
                   </Typography>
                 }
               </Box>
@@ -82,19 +82,19 @@ const CourseDashboard = () => {
           )}
 
           <CourseContent />
-          {finaltest === "true" && (
-            <Box marginBottom="5rem">
+          {finaltest === 'true' && (
+            <Box marginBottom='5rem'>
               <Button
-                style={{ width: "300px" }}
-                variant="contained"
-                color="primary"
-                size="large"
+                style={{ width: '300px' }}
+                variant='contained'
+                color='primary'
+                size='large'
                 disabled
               >
                 Final Test
               </Button>
-              <Box marginTop="10px">
-                <Typography variant="caption" color="textSecondary">
+              <Box marginTop='10px'>
+                <Typography variant='caption' color='textSecondary'>
                   You need to complete 80% of the module exercises before you
                   can take final test
                 </Typography>
@@ -103,12 +103,12 @@ const CourseDashboard = () => {
           )}
           <Box>
             <Link href={`/course/qna?courseId=${router.query.id}`}>
-              <Button variant="outlined" color="primary" size="large">
+              <Button variant='outlined' color='primary' size='large'>
                 Need help ? Go to QnA page
               </Button>
             </Link>
           </Box>
-          <Box marginBottom="3rem">
+          <Box marginBottom='3rem'>
             <CourseReview id={router.query.id} />
           </Box>
         </Container>

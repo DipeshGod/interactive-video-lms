@@ -38,7 +38,15 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CourseCard = ({ name, description, price, id, isFree }) => {
+const CourseCard = ({
+  name,
+  description,
+  price,
+  id,
+  isFree,
+  hasPreTest,
+  hasFinalTest,
+}) => {
   const router = useRouter();
   const [raised, setRaised] = useState(false);
   const { state, dispatch } = useContext(UserContext);
@@ -73,8 +81,13 @@ const CourseCard = ({ name, description, price, id, isFree }) => {
           toast.info('Erolled successfully');
           router.push('/dashboard');
         },
-        onError: (err) => {
-          console.log('err aayo');
+        onError: (err: any) => {
+          console.log('err aayo', err.response);
+          if (err.response.status === 403) {
+            router.push(
+              `/course/dashboard?id=${id}&pretest=${hasPreTest}&finaltest=${hasFinalTest}`
+            );
+          }
         },
       }
     );

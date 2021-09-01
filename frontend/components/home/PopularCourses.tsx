@@ -13,6 +13,8 @@ const PopularCourses = () => {
     return <Loading />;
   }
 
+  console.log('course', data);
+
   return (
     <Box paddingBottom='2rem'>
       <Typography variant='h4' align='center' gutterBottom>
@@ -35,6 +37,8 @@ const PopularCourses = () => {
             description={course.description}
             price={course.price}
             isFree={course.isFree}
+            hasPreTest={course.hasPreTest}
+            hasFinalTest={course.hasFinalTest}
           />
         ))}
       </Box>

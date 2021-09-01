@@ -1,8 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 import {
   IStudentProgressDoc,
   IStudentProgressModel,
-} from "../interfaces/models/Progress";
+} from '../interfaces/models/Progress';
 
 const moduleProgressSchema = new mongoose.Schema({
   title: {
@@ -31,12 +31,12 @@ const progressSchema = new mongoose.Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: 'user',
       required: true,
     },
     course: {
       type: Schema.Types.ObjectId,
-      ref: "course",
+      ref: 'course',
       required: true,
     },
     preTest: {
@@ -88,10 +88,6 @@ const progressSchema = new mongoose.Schema(
 const StudentProgress = mongoose.model<
   IStudentProgressDoc,
   IStudentProgressModel
->("progress", progressSchema);
+>('progress', progressSchema);
 
-/* const ModuleProgress = mongoose.model<IModuleProgressDoc, IModuleProgressModel>(
-  'moduleprogress',
-  moduleProgressSchema
-); */
 export { StudentProgress };

@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { any } from "joi";
-import { ICourseModuleRepository } from "../../interfaces/repositories/ICourseModuleRepository";
-import { IProgressRepository } from "../../interfaces/repositories/IProgressRepository";
-import { BaseController } from "../BaseController";
-import { IUserEnrolledRepository } from "./../../interfaces/repositories/IUserEnrolledRepository";
+import { Request, Response } from 'express';
+import { any } from 'joi';
+import { ICourseModuleRepository } from '../../interfaces/repositories/ICourseModuleRepository';
+import { IProgressRepository } from '../../interfaces/repositories/IProgressRepository';
+import { BaseController } from '../BaseController';
+import { IUserEnrolledRepository } from './../../interfaces/repositories/IUserEnrolledRepository';
 
 export class CreateUserEnrolledController extends BaseController {
   private userEnrolledRepository: IUserEnrolledRepository;
@@ -31,7 +31,7 @@ export class CreateUserEnrolledController extends BaseController {
       );
       // 2. If already enrolled, return response already enrolled
       if (userEnrolls)
-        return this.forbidden(res, "user is already enrolled in this course");
+        return this.forbidden(res, 'user is already enrolled in this course');
 
       // 3. If not enrolled,
       // 3a. Enroll user the course by creating user enrolled document
@@ -59,9 +59,7 @@ export class CreateUserEnrolledController extends BaseController {
         course: courseId,
         moduleProgress: moduleProgresses,
       };
-      const studentProgress = await this.progressRepository.createProgress(
-        progress
-      );
+      await this.progressRepository.createProgress(progress);
 
       // 4. Return response user enrolled to the course
       return this.ok(res, userEnrolled);
