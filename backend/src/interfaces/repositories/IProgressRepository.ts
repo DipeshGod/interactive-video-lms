@@ -1,9 +1,5 @@
 import { Query } from "mongoose";
-import {
-  IModuleProgressDoc,
-  IStudentProgress,
-  IStudentProgressDoc,
-} from "../models/Progress";
+import { IStudentProgress, IStudentProgressDoc } from "../models/Progress";
 
 export interface IProgressRepository {
   createProgress(progressData: any): Promise<IStudentProgressDoc>;
@@ -17,5 +13,4 @@ export interface IProgressRepository {
   removeProgress(
     id: string
   ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
-  createModuleProgress(data: any): Promise<IModuleProgressDoc>;
 }

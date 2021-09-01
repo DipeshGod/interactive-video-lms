@@ -4,7 +4,7 @@ import { DeleteUserEnrolledController } from "../controllers/userEnrolled/Delete
 import { EditUserEnrolledController } from "../controllers/userEnrolled/EditUserEnrolledController";
 import { GetUserEnrolledController } from "../controllers/userEnrolled/GetUserEnrolledController";
 import { UserEnrolled } from "../models/UserEnrolled";
-import { StudentProgress, ModuleProgress } from "./../models/Progress";
+import { StudentProgress } from "./../models/Progress";
 import { ProgressRepository } from "../repositories/ProgressRepository";
 import { UserEnrolledRepository } from "../repositories/UserEnrolledRepository";
 import { CourseModuleRepository } from "../repositories/CourseModuleRepository";
@@ -13,10 +13,7 @@ import { CourseModule } from "../models/CourseModule";
 const router = Router();
 
 const userEnrolledRepository = new UserEnrolledRepository(UserEnrolled);
-const progressRepository = new ProgressRepository(
-  StudentProgress,
-  ModuleProgress
-);
+const progressRepository = new ProgressRepository(StudentProgress);
 const courseModuleRepository = new CourseModuleRepository(CourseModule);
 
 router.post("/", (req, res) =>

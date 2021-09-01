@@ -3,15 +3,12 @@ import { CreateProgressController } from "../controllers/progress/CreateProgress
 import { DeleteProgressController } from "../controllers/progress/DeleteProgressController";
 import { EditProgressController } from "../controllers/progress/EditProgressController";
 import { GetProgressController } from "../controllers/progress/GetProgressController";
-import { ModuleProgress, StudentProgress } from "../models/Progress";
+import { StudentProgress } from "../models/Progress";
 import { ProgressRepository } from "../repositories/ProgressRepository";
 
 const router = Router();
 
-const progressRepository = new ProgressRepository(
-  StudentProgress,
-  ModuleProgress
-);
+const progressRepository = new ProgressRepository(StudentProgress);
 
 router.post("/", (req, res) =>
   new CreateProgressController(progressRepository).execute(req, res)
