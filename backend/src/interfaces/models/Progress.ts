@@ -13,7 +13,12 @@ export interface IStudentProgress {
     solvedQuestions: number;
     totalQuestions: number;
   };
-  moduleProgress: [string];
+  moduleProgress: {
+    title: string;
+    score: number;
+    solvedQuestions: number;
+    totalQuestions: number;
+  }[];
 }
 
 export interface IStudentProgressDoc extends Document {
@@ -34,7 +39,7 @@ export interface IStudentProgressDoc extends Document {
 
 export interface IStudentProgressModel extends Model<IStudentProgressDoc> {}
 
-export interface IModuleProgress {
+/* export interface IModuleProgress {
   id: string;
   title: string;
   score: number;
@@ -50,4 +55,4 @@ export interface IModuleProgressDoc extends Document {
   totalQuestions: number;
 }
 
-export interface IModuleProgressModel extends Model<IModuleProgressDoc> {}
+export interface IModuleProgressModel extends Model<IModuleProgressDoc> {} */

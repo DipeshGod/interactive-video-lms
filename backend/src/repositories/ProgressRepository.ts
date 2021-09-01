@@ -1,21 +1,14 @@
 import {
-  IModuleProgressModel,
   IStudentProgress,
   IStudentProgressModel,
 } from "../interfaces/models/Progress";
 import { IProgressRepository } from "../interfaces/repositories/IProgressRepository";
-import { ModuleProgress } from "../models/Progress";
 
 export class ProgressRepository implements IProgressRepository {
   private studentProgressModel: IStudentProgressModel;
-  private moduleProgressModel: IModuleProgressModel;
 
-  constructor(
-    studentProgressModel: IStudentProgressModel,
-    moduleProgressModel: IModuleProgressModel
-  ) {
+  constructor(studentProgressModel: IStudentProgressModel) {
     this.studentProgressModel = studentProgressModel;
-    this.moduleProgressModel = moduleProgressModel;
   }
 
   public createProgress(progressData: IStudentProgress) {
@@ -62,12 +55,12 @@ export class ProgressRepository implements IProgressRepository {
     }
   }
 
-  public createModuleProgress(data: any) {
+  /*  public createModuleProgress(data: any) {
     try {
       const moduleProgress = new this.moduleProgressModel(data);
       return moduleProgress.save();
     } catch (err: any) {
       throw new Error(err.toString());
     }
-  }
+  } */
 }

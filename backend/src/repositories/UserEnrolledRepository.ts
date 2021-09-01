@@ -13,10 +13,7 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
 
   public createUserEnrolled(userEnrolledData: any) {
     try {
-      const userEnrolled = new this.model({
-        user: userEnrolledData.userId,
-        course: userEnrolledData.courseId!,
-      });
+      const userEnrolled = new this.model(userEnrolledData);
       return userEnrolled.save();
     } catch (err: any) {
       throw new Error(err.toString());
