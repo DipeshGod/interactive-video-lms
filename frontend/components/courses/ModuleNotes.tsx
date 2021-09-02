@@ -20,7 +20,7 @@ const ModuleNotes = ({ moduleId }) => {
         <Typography variant='h6'>Notes: </Typography>
       </Box>
       {data.map((note, i) => (
-        <Link href={`/course/notes/${note._id}`}>
+        <Link key={i} href={`/course/notes/${note._id}`}>
           <Typography style={{ cursor: 'pointer' }}>
             {`${i + 1}. `}
             {note.title}

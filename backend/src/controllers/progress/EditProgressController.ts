@@ -13,10 +13,16 @@ export class EditProgressController extends BaseController {
   protected async executeImpl(req: Request, res: Response) {
     try {
       const queryData: any = req.query;
+
+      req.body.preTest.score =
+        (req.body.preTest.solvedQuestions / req.body.preTest.totalQuestions) *
+        100;
+
       const progress = await this.progressRepository.editProgress(
         queryData,
         req.body
       );
+
       return this.ok(res, progress);
     } catch (err: any) {
       return this.fail(res, err);

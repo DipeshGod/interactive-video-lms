@@ -2,9 +2,6 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Button,
   Box,
-  createStyles,
-  makeStyles,
-  Theme,
   Dialog,
   DialogContent,
   Typography,
@@ -48,43 +45,6 @@ const Exercises = ({
       setQuestionIndex(questionIndex + 1);
       return;
     } else {
-      if (exercises[0].category === 'preTest') {
-        userCourseProgressMutation.mutate(
-          {
-            preTestScore: {
-              solvedQuestions: score,
-              totalQuestions: exercises.length,
-            },
-          },
-          {
-            onSuccess: () => {
-              queryClient.invalidateQueries(['progress']);
-            },
-            onError: () => {
-              console.log('couldnt update progress');
-            },
-          }
-        );
-      }
-      if (exercises[0].category === 'module') {
-        userCourseProgressMutation.mutate(
-          {
-            module: {
-              id: exercises[0].association,
-              solvedQuestions: score,
-              totalQuestions: exercises.length,
-            },
-          },
-          {
-            onSuccess: () => {
-              queryClient.invalidateQueries(['progress']);
-            },
-            onError: () => {
-              console.log('couldnt update progress');
-            },
-          }
-        );
-      }
       setIsFinished(true);
     }
   };
@@ -141,7 +101,13 @@ const Exercises = ({
       <DialogContent>
         <div>
           {isFinished ? (
-            <Result score={score} total={exercises.length} />
+            <Result
+              score={score}
+              total={exercises.length}
+              courseId={exercises[0].association}
+              userId={JSON.parse(localStorage.getItem('user'))._id}
+              category={exercises[0].category}
+            />
           ) : (
             renderExcercise(exercises)
           )}
