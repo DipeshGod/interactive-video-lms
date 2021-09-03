@@ -4,12 +4,14 @@ import { IStudentProgress, IStudentProgressDoc } from "../models/Progress";
 export interface IProgressRepository {
   createProgress(progressData: any): Promise<IStudentProgressDoc>;
   getProgress(
-    userId: string
+    userId: any
   ): Query<IStudentProgressDoc[], IStudentProgressDoc, {}>;
-  editProgress(
+  getModuleProgress(queryData: any): any;
+  editPreTest(
     queryData: any,
     progressData: any
   ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
+  editModule(moduleProgressId: any, progressData: any): any;
   removeProgress(
     id: string
   ): Query<IStudentProgressDoc | null, IStudentProgressDoc, {}>;
