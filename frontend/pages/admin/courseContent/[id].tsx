@@ -37,12 +37,27 @@ const ManageCourseContent = ({ id }) => {
   );
 
   const queryClient = useQueryClient();
-  const courseEditMutation = useMutation((course: any) =>
+  const coursePretestEditMutation = useMutation((course: any) =>
     editCourseInfo({ hasPreTest: !course.hasPreTest }, course._id)
+  );
+  const courseFinaltestEditMutation = useMutation((course: any) =>
+    editCourseInfo({ hasFinalTest: !course.hasFinalTest }, course._id)
   );
 
   const handlePretestStatusChange = () => {
-    courseEditMutation.mutate(course, {
+    coursePretestEditMutation.mutate(course, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['course', id]);
+        toast.success(`pretest status changed`);
+      },
+      onError: (error: any) => {
+        toast.error('Something went wrong');
+      },
+    });
+  };
+
+  const handleFinaltestStatusChange = () => {
+    courseFinaltestEditMutation.mutate(course, {
       onSuccess: () => {
         queryClient.invalidateQueries(['course', id]);
         toast.success(`pretest status changed`);
@@ -122,6 +137,7 @@ const ManageCourseContent = ({ id }) => {
                 className={classes.btn}
                 variant='contained'
                 color='secondary'
+                onClick={handleFinaltestStatusChange}
               >
                 Disable FinalTest
               </Button>
@@ -130,6 +146,7 @@ const ManageCourseContent = ({ id }) => {
                 className={classes.btn}
                 variant='contained'
                 color='secondary'
+                onClick={handleFinaltestStatusChange}
               >
                 Enable FinalTest
               </Button>
