@@ -1,8 +1,8 @@
-import { Typography } from "@material-ui/core";
-import { useEffect } from "react";
-import { useMutation } from "react-query";
-import updateUserProgress from "../../../services/client/user/updateUserProgress";
-import { useQueryClient } from "react-query";
+import { Typography } from '@material-ui/core';
+import { useEffect } from 'react';
+import { useMutation } from 'react-query';
+import updateUserProgress from '../../../services/client/user/updateUserProgress';
+import { useQueryClient } from 'react-query';
 
 const Result = ({ score, total, courseId, userId, category }) => {
   const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ const Result = ({ score, total, courseId, userId, category }) => {
   );
 
   useEffect(() => {
-    if (category === "preTest") {
+    if (category === 'preTest') {
       userCourseProgressMutation.mutate(
         {
           preTest: {
@@ -22,15 +22,15 @@ const Result = ({ score, total, courseId, userId, category }) => {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries(["progress"]);
+            queryClient.invalidateQueries(['progressReport', userId]);
           },
           onError: () => {
-            console.log("couldnt update progress");
+            console.log('couldnt update progress');
           },
         }
       );
     }
-    if (category === "module") {
+    if (category === 'module') {
       userCourseProgressMutation.mutate(
         {
           module: {
@@ -41,10 +41,10 @@ const Result = ({ score, total, courseId, userId, category }) => {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries(["progress"]);
+            queryClient.invalidateQueries(['progressReport', userId]);
           },
           onError: () => {
-            console.log("couldnt update progress");
+            console.log('couldnt update progress');
           },
         }
       );
@@ -53,10 +53,10 @@ const Result = ({ score, total, courseId, userId, category }) => {
 
   return (
     <div>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant='h5' gutterBottom>
         You have completed the quiz.
       </Typography>
-      <Typography variant="h6">
+      <Typography variant='h6'>
         You got {score}/{total} right.
       </Typography>
     </div>
