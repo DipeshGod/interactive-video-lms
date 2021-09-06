@@ -67,6 +67,20 @@ export class EditProgressController extends BaseController {
         console.log("progress:", progress);
         return this.ok(res, progress);
       }
+
+      //updating final test score
+      if (req.body.finalTest) {
+        req.body.finalTest.score =
+          (req.body.finalTest.solvedQuestions /
+            req.body.finalTest.totalQuestions) *
+          100;
+
+        const progress = await this.progressRepository.editPreTest(
+          queryData,
+          req.body
+        );
+        return this.ok(res, progress);
+      }
     } catch (err: any) {
       return this.fail(res, err);
     }
