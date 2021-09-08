@@ -5,85 +5,12 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
 
-const TrackingBarChart = () => {
+const TrackingBarChart = ({ stats }) => {
   let data: any = {
     series: [
       {
         name: 'Actual',
-        data: [
-          {
-            x: 'Chapter 1',
-            y: 20,
-            goals: [
-              {
-                name: 'Expected',
-                value: 14,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-          {
-            x: 'Chapter 2',
-            y: 44,
-            goals: [
-              {
-                name: 'Expected',
-                value: 54,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-          {
-            x: 'Chapter 3',
-            y: 54,
-            goals: [
-              {
-                name: 'Expected',
-                value: 52,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-          {
-            x: 'Chapter 4',
-            y: 66,
-            goals: [
-              {
-                name: 'Expected',
-                value: 65,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-          {
-            x: 'Chapter 5',
-            y: 81,
-            goals: [
-              {
-                name: 'Expected',
-                value: 66,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-          {
-            x: 'Chapter 6',
-            y: 67,
-            goals: [
-              {
-                name: 'Expected',
-                value: 70,
-                strokeWidth: 5,
-                strokeColor: '#775DD0',
-              },
-            ],
-          },
-        ],
+        data: stats,
       },
     ],
     options: {
