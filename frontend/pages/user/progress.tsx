@@ -5,6 +5,8 @@ import {
   Theme,
   Typography,
   createStyles,
+  Chip,
+  IconButton,
 } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -12,6 +14,7 @@ import TrackingBarChart from '../../components/courses/TrackingBarChart';
 import Layout from '../../components/layout';
 import Loading from '../../components/Loading';
 import getUserModuleProgress from '../../services/client/user/getUserModuleProgress';
+import CachedIcon from '@material-ui/icons/Cached';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +29,8 @@ const ShowProgressReport = ({ courseProgress }) => {
   const classes = useStyles();
 
   let stats = [];
+
+  console.log(courseProgress);
 
   courseProgress.moduleProgress.forEach((item) => {
     stats.push({
@@ -48,6 +53,24 @@ const ShowProgressReport = ({ courseProgress }) => {
         {courseProgress.course.name}
       </Typography>
       <TrackingBarChart stats={stats} />
+      <Box padding='1rem'>
+        <Chip
+          label={`Pretest ${courseProgress.preTest.score} %`}
+          variant='default'
+          color='primary'
+        />
+        <Chip
+          label={`Final Test ${courseProgress.finalTest.score} %`}
+          variant='default'
+          style={{ backgroundColor: '#ffb300', marginLeft: '1rem' }}
+        />
+        <IconButton
+          style={{ marginLeft: '5px' }}
+          onClick={() => window.location.reload()}
+        >
+          <CachedIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
