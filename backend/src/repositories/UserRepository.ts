@@ -1,6 +1,6 @@
-import { Query } from "mongoose";
-import { IUserDoc, IUserModel } from "../interfaces/models/User";
-import { IUserRepository } from "../interfaces/repositories/IUserRepository";
+import { Query } from 'mongoose';
+import { IUserDoc, IUserModel } from '../interfaces/models/User';
+import { IUserRepository } from '../interfaces/repositories/IUserRepository';
 
 export class UserRepository implements IUserRepository {
   private model: IUserModel;
@@ -35,12 +35,12 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public editUser(id: string, userData: any): Query<IUserDoc | null, IUserDoc, {}> {
+  public editUser(
+    id: string,
+    userData: any
+  ): Query<IUserDoc | null, IUserDoc, {}> {
     try {
-      let user = this.model.findByIdAndUpdate(
-        id, userData,
-        { new: true }
-      );
+      let user = this.model.findByIdAndUpdate(id, userData, { new: true });
       return user;
     } catch (err: any) {
       throw new Error(err.toString());
@@ -56,7 +56,9 @@ export class UserRepository implements IUserRepository {
     }
   }
 
-  public getUserByIdWithPassword(id: string): Query<IUserDoc | null, IUserDoc, {}> {
+  public getUserByIdWithPassword(
+    id: string
+  ): Query<IUserDoc | null, IUserDoc, {}> {
     try {
       const user = this.model.findById(id).select('+password');
       return user;
