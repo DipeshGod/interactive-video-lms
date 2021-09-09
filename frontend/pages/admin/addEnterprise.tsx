@@ -8,14 +8,19 @@ import {
   Theme,
   createStyles,
   Button,
+  Chip,
 } from '@material-ui/core';
 import { alpha } from '@material-ui/core/styles';
 import Layout from '../../components/layout';
 import SearchIcon from '@material-ui/icons/Search';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import getUserByEmail from '../../services/client/user/getUserByEmail';
 import { toast } from 'react-toastify';
+import Loading from '../../components/Loading';
+import getCourses from '../../services/client/course/getCourses';
+import AddCourseList from '../../components/admin/AddCourseList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,35 +72,40 @@ const AddEnterprise = () => {
   const [enterpriseName, setEnterpriseName] = useState('');
   const [enterpriseDescription, setEnterpriseDescription] = useState('');
   const [enterPriseAdmin, setEnterpriseAdmin] = useState('');
-  const [courses, setCourses] = useState([]);
+  const [checked, setChecked] = useState([]);
 
-  const { isLoading, data, refetch } = useQuery(
-    ['userByEmail'],
-    () => getUserByEmail(email),
-    {
-      enabled: false,
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
     }
-  );
 
-  const handleEmailChange = (e) => {
-    if (e.keyCode === 13) {
-      refetch();
-      if (data && !data.verified) {
-        toast.error('User not found');
-        setEmail('');
-        return;
-      }
+    setChecked(newChecked);
+  };
 
-      toast.info('User added');
-      setEnterpriseAdmin(data._id);
+  const { refetch } = useQuery(['userByEmail'], () => getUserByEmail(email), {
+    enabled: false,
+  });
+
+  const { isLoading, data } = useQuery(['courses'], () => getCourses());
+
+  const handleEmailSearch = async () => {
+    const response = await refetch();
+    if (response.data.length === 0) {
+      toast.error('User not found');
+      return;
     }
+    setEnterpriseAdmin(response.data._id);
+    toast.info('User added');
   };
 
   const handleCreateEnterprise = () => {
     console.log(enterpriseName, enterpriseDescription);
   };
-
-  console.log(enterPriseAdmin);
 
   return (
     <Layout>
@@ -128,14 +138,13 @@ const AddEnterprise = () => {
               <Typography variant='overline' style={{ fontSize: '1.2rem' }}>
                 Add Enterprise Admin
               </Typography>
-              <Box className={classes.addCourse}>
+              <Box className={classes.addCourse} display='flex'>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
                   </div>
                   <InputBase
                     placeholder='Search email…'
-                    onKeyUp={handleEmailChange}
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     classes={{
@@ -145,35 +154,46 @@ const AddEnterprise = () => {
                     inputProps={{ 'aria-label': 'search' }}
                   />
                 </div>
-                {enterPriseAdmin && (
-                  <Typography
-                    style={{ marginTop: '1rem' }}
-                    color='textSecondary'
-                  >
-                    {email}
-                  </Typography>
-                )}
+
+                <Button
+                  variant='contained'
+                  size='small'
+                  style={{ backgroundColor: '#ffb300' }}
+                  onClick={handleEmailSearch}
+                >
+                  ADD
+                </Button>
               </Box>
+              {enterPriseAdmin && (
+                <Chip
+                  style={{
+                    marginTop: '1rem',
+
+                    cursor: 'pointer',
+                    backgroundColor: '#ffb300',
+                    color: 'white',
+                  }}
+                  label={email}
+                  icon={
+                    <HighlightOffIcon onClick={() => setEnterpriseAdmin('')} />
+                  }
+                />
+              )}
             </Box>
             <Box marginTop='1rem'>
               <Typography variant='overline' style={{ fontSize: '1.2rem' }}>
                 Add Courses
               </Typography>
-              <Box className={classes.addCourse}>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    placeholder='Search course…'
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                  />
-                </div>
-              </Box>
+
+              {isLoading ? (
+                <Typography>Loading Courses</Typography>
+              ) : (
+                <AddCourseList
+                  courses={data}
+                  handleToggle={handleToggle}
+                  checked={checked}
+                />
+              )}
             </Box>
 
             <Button

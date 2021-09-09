@@ -14,6 +14,9 @@ export class GetUserByEmailController extends BaseController {
     try {
       const email = req.body.email;
       const user = await this.userRepository.getUserByEmail(email as string);
+      if (!user) {
+        return this.ok(res, []);
+      }
       return this.ok(res, user);
     } catch (err: any) {
       return this.fail(res, err);
