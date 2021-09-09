@@ -71,6 +71,7 @@ const AddEnterprise = () => {
 
   const [email, setEmail] = useState('');
   const [enterpriseName, setEnterpriseName] = useState('');
+  const [domain, setDomain] = useState('');
   const [enterpriseDescription, setEnterpriseDescription] = useState('');
   const [enterpriseAdmin, setEnterpriseAdmin] = useState('');
   const [checked, setChecked] = useState([]);
@@ -123,15 +124,16 @@ const AddEnterprise = () => {
       return toast.error('Please provide enterprise name');
     }
 
+    if (domain.length === 0) {
+      return toast.error('Please provide domain name');
+    }
+
     let data = {
       name: enterpriseName,
       description: enterpriseDescription,
       courses: checked,
       admins: [enterpriseAdmin],
-      domain: enterpriseAdmin
-        .split(' ')
-        .map((n) => n[0])
-        .join(''),
+      domain: domain,
     };
 
     enterpriseMutation.mutate(data, {
@@ -169,6 +171,15 @@ const AddEnterprise = () => {
                 multiline
                 value={enterpriseDescription}
                 onChange={(e) => setEnterpriseDescription(e.target.value)}
+              />
+            </Box>
+            <Box marginTop='1rem'>
+              <TextField
+                fullWidth
+                label='Enter domain'
+                variant='filled'
+                value={domain}
+                onChange={(e) => setDomain(e.target.value)}
               />
             </Box>
             <Box marginTop='1rem'>

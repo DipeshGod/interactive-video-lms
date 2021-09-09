@@ -33,11 +33,9 @@ const CourseDashboard = () => {
       )
   );
 
-  if (isProgressLoading) {
+  if (isProgressLoading || isPretestLoading) {
     return <Loading />;
   }
-
-  console.log('progress', progressData);
 
   return (
     <Layout>
@@ -89,7 +87,9 @@ const CourseDashboard = () => {
                 variant='contained'
                 color='primary'
                 size='large'
-                disabled
+                onClick={() =>
+                  router.push(`/course/test?course=${router.query.id}`)
+                }
               >
                 Final Test
               </Button>
