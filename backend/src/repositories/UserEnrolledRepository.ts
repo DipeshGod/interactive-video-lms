@@ -42,6 +42,23 @@ export class UserEnrolledRepository implements IUserEnrolledRepository {
     }
   }
 
+  public editOverallScore(
+    userId: string,
+    courseId: string,
+    overallScore: number
+  ) {
+    try {
+      const userEnrolled = this.model.findOneAndUpdate(
+        { user: userId, course: courseId },
+        { overallProgress: overallScore },
+        { new: true }
+      );
+      return userEnrolled;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
+
   public removeUserEnrolled(id: string) {
     try {
       const userEnrolled = this.model.findOneAndRemove({ user: id });

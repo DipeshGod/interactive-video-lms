@@ -4,11 +4,14 @@ import { DeleteProgressController } from "../controllers/progress/DeleteProgress
 import { EditProgressController } from "../controllers/progress/EditProgressController";
 import { GetProgressController } from "../controllers/progress/GetProgressController";
 import { StudentProgress } from "../models/Progress";
+import { UserEnrolled } from "./../models/UserEnrolled";
 import { ProgressRepository } from "../repositories/ProgressRepository";
+import { UserEnrolledRepository } from "./../repositories/UserEnrolledRepository";
 
 const router = Router();
 
 const progressRepository = new ProgressRepository(StudentProgress);
+const userEnrolledRepository = new UserEnrolledRepository(UserEnrolled);
 
 router.post("/", (req, res) =>
   new CreateProgressController(progressRepository).execute(req, res)
@@ -19,7 +22,10 @@ router.get("/", (req, res) =>
 );
 
 router.put("/", (req, res) =>
-  new EditProgressController(progressRepository).execute(req, res)
+  new EditProgressController(
+    progressRepository,
+    userEnrolledRepository
+  ).execute(req, res)
 );
 
 router.delete("/:id", (req, res) =>

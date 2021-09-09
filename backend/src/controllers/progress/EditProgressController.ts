@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { any, string } from "joi";
 import { IProgressRepository } from "../../interfaces/repositories/IProgressRepository";
+import { IUserEnrolledRepository } from "../../interfaces/repositories/IUserEnrolledRepository";
 import { BaseController } from "../BaseController";
 
 interface IModuleProgress {
@@ -12,12 +12,18 @@ interface IModuleProgress {
 
 export class EditProgressController extends BaseController {
   private progressRepository: IProgressRepository;
+  private userEnrolledRepository: IUserEnrolledRepository;
   private moduleProgressId: any;
   private moduleProgress: IModuleProgress;
   private i: number = -1;
-  constructor(progressRepository: IProgressRepository) {
+  private overallScore: number = 0;
+  constructor(
+    progressRepository: IProgressRepository,
+    userEnrolledRepository: IUserEnrolledRepository
+  ) {
     super();
     this.progressRepository = progressRepository;
+    this.userEnrolledRepository = userEnrolledRepository;
     this.moduleProgress = {
       score: 0,
       totalQuestions: 0,
@@ -64,7 +70,18 @@ export class EditProgressController extends BaseController {
         progress.moduleProgress[this.i].solvedQuestions =
           req.body.module.solvedQuestions;
         await progress.save();
-        console.log("progress:", progress);
+
+        /* Updating overall score */
+        await progress.moduleProgress.map((progress: any) => {
+          this.overallScore = this.overallScore + progress.score;
+        });
+        this.overallScore = this.overallScore / progress.moduleProgress.length;
+        const userEnrolled = await this.userEnrolledRepository.editOverallScore(
+          progress.user,
+          progress.course,
+          this.overallScore
+        );
+
         return this.ok(res, progress);
       }
 

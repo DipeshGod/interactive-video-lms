@@ -8,6 +8,7 @@ export interface IUserEnrolledRepository {
     id: string,
     userEnrolledData: IUserEnrolled
   ): Query<IUserEnrolledDoc | null, IUserEnrolledDoc, {}>;
+  editOverallScore(userId: string, courseId: string, overallScore: number): any;
   removeUserEnrolled(
     id: string
   ): Query<IUserEnrolledDoc | null, IUserEnrolledDoc, {}>;
