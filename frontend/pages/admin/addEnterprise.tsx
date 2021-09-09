@@ -15,12 +15,13 @@ import Layout from '../../components/layout';
 import SearchIcon from '@material-ui/icons/Search';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import getUserByEmail from '../../services/client/user/getUserByEmail';
 import { toast } from 'react-toastify';
-import Loading from '../../components/Loading';
 import getCourses from '../../services/client/course/getCourses';
 import AddCourseList from '../../components/admin/AddCourseList';
+import createEnterprise from '../../services/client/enterprise/createEnterprise';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -71,8 +72,9 @@ const AddEnterprise = () => {
   const [email, setEmail] = useState('');
   const [enterpriseName, setEnterpriseName] = useState('');
   const [enterpriseDescription, setEnterpriseDescription] = useState('');
-  const [enterPriseAdmin, setEnterpriseAdmin] = useState('');
+  const [enterpriseAdmin, setEnterpriseAdmin] = useState('');
   const [checked, setChecked] = useState([]);
+  const router = useRouter();
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -86,6 +88,11 @@ const AddEnterprise = () => {
 
     setChecked(newChecked);
   };
+
+  const queryClient = useQueryClient();
+  const enterpriseMutation = useMutation((enterpriseData: any) =>
+    createEnterprise(enterpriseData)
+  );
 
   const { refetch } = useQuery(['userByEmail'], () => getUserByEmail(email), {
     enabled: false,
@@ -104,7 +111,37 @@ const AddEnterprise = () => {
   };
 
   const handleCreateEnterprise = () => {
-    console.log(enterpriseName, enterpriseDescription);
+    if (enterpriseAdmin === '') {
+      return toast.error('Please add enterprise admin');
+    }
+    if (checked.length === 0) {
+      return toast.error(
+        'Please give access to at least one course to enterprise'
+      );
+    }
+    if (enterpriseName.length < 3) {
+      return toast.error('Please provide enterprise name');
+    }
+
+    let data = {
+      name: enterpriseName,
+      description: enterpriseDescription,
+      courses: checked,
+      admins: [enterpriseAdmin],
+      domain: enterpriseAdmin
+        .split(' ')
+        .map((n) => n[0])
+        .join(''),
+    };
+
+    enterpriseMutation.mutate(data, {
+      onSuccess: () => {
+        router.push('/admin');
+      },
+      onError: (err) => {
+        console.log('Couldnt create entperprise', err);
+      },
+    });
   };
 
   return (
@@ -164,7 +201,7 @@ const AddEnterprise = () => {
                   ADD
                 </Button>
               </Box>
-              {enterPriseAdmin && (
+              {enterpriseAdmin && (
                 <Chip
                   style={{
                     marginTop: '1rem',
