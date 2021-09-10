@@ -1,10 +1,10 @@
-import { Query } from "mongoose";
+import { Query } from 'mongoose';
 import {
   IExercise,
   IExerciseDoc,
   IExerciseModel,
-} from "../interfaces/models/Exercise";
-import { IExerciseRepository } from "../interfaces/repositories/IExerciseRepository";
+} from '../interfaces/models/Exercise';
+import { IExerciseRepository } from '../interfaces/repositories/IExerciseRepository';
 
 export class ExerciseRepository implements IExerciseRepository {
   private model: IExerciseModel;
@@ -61,13 +61,4 @@ export class ExerciseRepository implements IExerciseRepository {
       throw new Error(err.toString());
     }
   }
-
-  /*  public getCourseExercise(id: string, category: string):Query<IExerciseDoc[], IExerciseDoc, {}> {
-         try {
-             const exercises = this.model.find({ association: id, category: category });
-             return exercises;
-         } catch (err: any) {
-             throw new Error(err.toString())
-         }
-     } */
 }
