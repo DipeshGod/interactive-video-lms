@@ -1,5 +1,6 @@
-import { Box, Container, Grid, Typography } from '@material-ui/core';
+import { Box, Button, Container, Grid, Typography } from '@material-ui/core';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import Layout from '../../../components/layout';
 import Loading from '../../../components/Loading';
@@ -8,9 +9,12 @@ import getExerciseById from '../../../services/client/exercise/getExerciseById';
 const Test = () => {
   const router = useRouter();
   const course = router.query.course;
+  const [page, setPage] = useState(1);
 
-  const { isLoading, data } = useQuery(['finaltest', course], () =>
-    getExerciseById(course, 'finalTest')
+  const { isLoading, data, isPreviousData } = useQuery(
+    ['finaltest', course, page],
+    () => getExerciseById(course, 'finalTest', page, 5),
+    { keepPreviousData: true }
   );
 
   if (isLoading) {
@@ -30,7 +34,7 @@ const Test = () => {
             Answer questions carefully. Wish you all the best !
           </Typography>
           <Box marginTop='3rem'>
-            {data.map((item, i) => (
+            {data.exercises.map((item, i) => (
               <Grid key={i} container>
                 <Grid item xs={12}>
                   <Typography gutterBottom variant='h6'>
@@ -39,6 +43,22 @@ const Test = () => {
                 </Grid>
               </Grid>
             ))}
+          </Box>
+
+          <Box>
+            <Button
+              variant='contained'
+              color='primary'
+              size='large'
+              onClick={() => {
+                if (page < data.totalPages) {
+                  setPage(page + 1);
+                }
+              }}
+              disabled={isPreviousData || page >= data.totalPages}
+            >
+              Next
+            </Button>
           </Box>
         </Container>
       </div>
