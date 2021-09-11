@@ -21,7 +21,7 @@ const CourseDashboard = () => {
 
   const { isLoading: isPretestLoading, data: coursePretest } = useQuery(
     ['pretest', router.query.id],
-    () => getExerciseById(router.query.id, 'preTest')
+    () => getExerciseById(router.query.id, 'preTest', '', '')
   );
 
   const { isLoading: isProgressLoading, data: progressData } = useQuery(

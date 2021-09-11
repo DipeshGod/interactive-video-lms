@@ -40,7 +40,7 @@ const CourseContent = () => {
 
   const { isLoading: exerciseByModuleLoading } = useQuery(
     ['exercise', moduleId],
-    () => getExerciseById(moduleId, 'module'),
+    () => getExerciseById(moduleId, 'module', '', ''),
     {
       onSuccess: (data) => {
         setExerciseByModule(data);

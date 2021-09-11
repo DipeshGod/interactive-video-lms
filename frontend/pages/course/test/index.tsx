@@ -21,6 +21,8 @@ const Test = () => {
     return <Loading />;
   }
 
+  console.log(data);
+
   return (
     <Layout>
       <div
@@ -33,7 +35,7 @@ const Test = () => {
           <Typography align='center'>
             Answer questions carefully. Wish you all the best !
           </Typography>
-          <Box marginTop='3rem'>
+          <Box marginTop='3rem' minHeight='50vh'>
             {data.exercises.map((item, i) => (
               <Grid key={i} container>
                 <Grid item xs={12}>
