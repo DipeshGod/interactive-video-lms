@@ -1,4 +1,16 @@
-import { Box, Button, Container, Grid, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Divider,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@material-ui/core';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
@@ -17,11 +29,45 @@ const Test = () => {
     { keepPreviousData: true }
   );
 
+  const showOptions = (item) => {
+    console.log('item', item);
+    switch (item.type) {
+      case 'yesNo':
+        return (
+          <RadioGroup>
+            <FormControlLabel value='yes' control={<Radio />} label='Yes' />
+            <FormControlLabel value='no' control={<Radio />} label='No' />
+          </RadioGroup>
+        );
+      case 'quiz':
+        return (
+          <RadioGroup>
+            {item.options.map((option, i) => (
+              <FormControlLabel
+                key={i}
+                value={option}
+                control={<Radio />}
+                label={option}
+              />
+            ))}
+          </RadioGroup>
+        );
+      case 'multipleChoice':
+        return (
+          <FormGroup>
+            {item.options.map((option, i) => (
+              <FormControlLabel label={option} key={i} control={<Checkbox />} />
+            ))}
+          </FormGroup>
+        );
+      default:
+        return;
+    }
+  };
+
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(data);
 
   return (
     <Layout>
@@ -40,8 +86,12 @@ const Test = () => {
               <Grid key={i} container>
                 <Grid item xs={12}>
                   <Typography gutterBottom variant='h6'>
-                    {item.question}
+                    {i + 1}. {item.question}
                   </Typography>
+                </Grid>
+                <Grid item xs={12} style={{ marginBottom: '2rem' }}>
+                  {showOptions(item)}
+                  <Divider />
                 </Grid>
               </Grid>
             ))}

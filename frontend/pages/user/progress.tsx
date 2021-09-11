@@ -30,8 +30,6 @@ const ShowProgressReport = ({ courseProgress }) => {
 
   let stats = [];
 
-  console.log(courseProgress);
-
   courseProgress.moduleProgress.forEach((item) => {
     stats.push({
       x: item.module.title,
