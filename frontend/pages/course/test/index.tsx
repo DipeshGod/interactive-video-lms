@@ -17,11 +17,13 @@ import { useQuery } from 'react-query';
 import Layout from '../../../components/layout';
 import Loading from '../../../components/Loading';
 import getExerciseById from '../../../services/client/exercise/getExerciseById';
+import produce from 'immer';
 
 const Test = () => {
   const router = useRouter();
   const course = router.query.course;
   const [page, setPage] = useState(1);
+  const [userAnswer, setUserAnswer] = useState([]);
 
   const { isLoading, data, isPreviousData } = useQuery(
     ['finaltest', course, page],
@@ -29,12 +31,36 @@ const Test = () => {
     { keepPreviousData: true }
   );
 
-  const showOptions = (item) => {
-    console.log('item', item);
+  const handleYesNoChange = (e, answer, i) => {
+    const found = userAnswer.find((element) => element.id === i);
+
+    if (found) {
+      setUserAnswer(
+        produce((draft) => {
+          const selection = draft.find((selection) => selection.id === i);
+          selection.userSelection = e.target.value;
+        })
+      );
+    } else {
+      setUserAnswer(
+        produce((draft) => {
+          draft.push({
+            id: i,
+            userSelection: e.target.value,
+            answer: answer[0],
+          });
+        })
+      );
+    }
+  };
+
+  console.log('userAnswer', userAnswer);
+
+  const showOptions = (item, i) => {
     switch (item.type) {
       case 'yesNo':
         return (
-          <RadioGroup>
+          <RadioGroup onChange={(e) => handleYesNoChange(e, item.answer, i)}>
             <FormControlLabel value='yes' control={<Radio />} label='Yes' />
             <FormControlLabel value='no' control={<Radio />} label='No' />
           </RadioGroup>
@@ -90,7 +116,7 @@ const Test = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={12} style={{ marginBottom: '2rem' }}>
-                  {showOptions(item)}
+                  {showOptions(item, i)}
                   <Divider />
                 </Grid>
               </Grid>
