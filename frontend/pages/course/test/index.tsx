@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Chip,
   Container,
   Divider,
   FormControlLabel,
@@ -31,7 +32,7 @@ const Test = () => {
     { keepPreviousData: true }
   );
 
-  const handleYesNoChange = (e, answer, i) => {
+  const handleYesNoQuizChange = (e, answer, i) => {
     const found = userAnswer.find((element) => element.id === i);
 
     if (found) {
@@ -54,20 +55,47 @@ const Test = () => {
     }
   };
 
-  console.log('userAnswer', userAnswer);
+  const handleMultipleChoiceChange = (e, answer, i) => {
+    const found = userAnswer.find((element) => element.id === i);
+
+    if (found) {
+      setUserAnswer(
+        produce((draft) => {
+          const selection = draft.find((selection) => selection.id === i);
+          selection.userSelection = e.target.value;
+        })
+      );
+    } else {
+      setUserAnswer(
+        produce((draft) => {
+          draft.push({
+            id: i,
+            userSelection: e.target.value,
+            answer: answer,
+          });
+        })
+      );
+    }
+  };
+
+  console.log(data);
 
   const showOptions = (item, i) => {
     switch (item.type) {
       case 'yesNo':
         return (
-          <RadioGroup onChange={(e) => handleYesNoChange(e, item.answer, i)}>
+          <RadioGroup
+            onChange={(e) => handleYesNoQuizChange(e, item.answer, i)}
+          >
             <FormControlLabel value='yes' control={<Radio />} label='Yes' />
             <FormControlLabel value='no' control={<Radio />} label='No' />
           </RadioGroup>
         );
       case 'quiz':
         return (
-          <RadioGroup>
+          <RadioGroup
+            onChange={(e) => handleYesNoQuizChange(e, item.answer, i)}
+          >
             {item.options.map((option, i) => (
               <FormControlLabel
                 key={i}
@@ -80,9 +108,16 @@ const Test = () => {
         );
       case 'multipleChoice':
         return (
-          <FormGroup>
+          <FormGroup
+            onChange={(e) => handleMultipleChoiceChange(e, item.answer, i)}
+          >
             {item.options.map((option, i) => (
-              <FormControlLabel label={option} key={i} control={<Checkbox />} />
+              <FormControlLabel
+                label={option}
+                key={i}
+                value={option}
+                control={<Checkbox />}
+              />
             ))}
           </FormGroup>
         );
@@ -110,10 +145,17 @@ const Test = () => {
           <Box marginTop='3rem' minHeight='50vh'>
             {data.exercises.map((item, i) => (
               <Grid key={i} container>
-                <Grid item xs={12}>
-                  <Typography gutterBottom variant='h6'>
-                    {i + 1}. {item.question}
-                  </Typography>
+                <Grid item xs={12} lg={12}>
+                  <Box display='flex' justifyContent='space-between'>
+                    <Typography gutterBottom variant='h6'>
+                      {i + 1}. {item.question}
+                    </Typography>
+                    <Chip
+                      label={item.type.toUpperCase()}
+                      style={{ backgroundColor: '#ffb300' }}
+                      size='small'
+                    />
+                  </Box>
                 </Grid>
                 <Grid item xs={12} style={{ marginBottom: '2rem' }}>
                   {showOptions(item, i)}
@@ -123,7 +165,7 @@ const Test = () => {
             ))}
           </Box>
 
-          <Box>
+          <Box display='flex' justifyContent='space-between'>
             <Button
               variant='contained'
               color='primary'
@@ -137,6 +179,11 @@ const Test = () => {
             >
               Next
             </Button>
+            {page >= data.totalPages && (
+              <Button color='primary' variant='contained'>
+                Submit And Get Result
+              </Button>
+            )}
           </Box>
         </Container>
       </div>

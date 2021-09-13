@@ -97,7 +97,7 @@ const Progress = () => {
             align='center'
             style={{ marginBottom: '2rem' }}
           >
-            Your Progress On Different Courses
+            Your Progress On Enrolled Courses
           </Typography>
           {data.map((item, i) => {
             return <ShowProgressReport key={i} courseProgress={item} />;
