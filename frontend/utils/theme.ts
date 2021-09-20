@@ -5,7 +5,7 @@ import { createTheme } from '@material-ui/core/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#039be5',
+      main: '#6f00ff',
     },
     secondary: {
       main: '#795548',
@@ -14,6 +14,9 @@ const theme = createTheme({
   typography: {
     fontFamily: ['Open Sans', 'sans-serif'].join(','),
     fontSize: 16,
+  },
+  shape: {
+    borderRadius: 6,
   },
 });
 

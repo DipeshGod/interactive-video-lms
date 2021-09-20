@@ -14,6 +14,8 @@ import CourseAdminList from '../../components/admin/CourseAdminList';
 import Layout from '../../components/layout';
 import Loading from '../../components/Loading';
 import getCourses from '../../services/client/course/getCourses';
+import EnterpriseAdminList from '../../components/admin/EnterpriseAdminList';
+import getEnterprise from '../../services/client/enterprise/getEnterprise';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}));
 
@@ -25,7 +27,12 @@ const Admin = () => {
     getCourses
   );
 
-  if (isCourseLoading) {
+  const { data: enterpriseData, isLoading: isEnterpriseDataLoading } = useQuery(
+    'enterprises',
+    getEnterprise
+  );
+
+  if (isCourseLoading || isEnterpriseDataLoading) {
     return <Loading />;
   }
 
@@ -60,6 +67,7 @@ const Admin = () => {
           </Box>
           <Box>
             <CourseAdminList courses={courseData} />
+            <EnterpriseAdminList enterprises={enterpriseData} />
           </Box>
         </Container>
         {
