@@ -65,12 +65,22 @@ const Test = () => {
     const found = userAnswer.find((element) => element.id === i);
 
     if (found) {
-      setUserAnswer(
-        produce((draft) => {
-          const selection = draft.find((selection) => selection.id === i);
-          selection.userSelection += ` ${e.target.value}`;
-        })
-      );
+      //1. check if the element is checked or unchecked
+      if (e.target.checked) {
+        // 1.a if checked add it to the userselection if not already there
+        if (found.userSelection.split(' ').includes(e.target.value)) {
+          return;
+        }
+        setUserAnswer(
+          produce((draft) => {
+            const selection = draft.find((selection) => selection.id === i);
+            selection.userSelection += ` ${e.target.value}`;
+          })
+        );
+      } else {
+        // 1.b if unchecked remove if from userselection
+        console.log('unchecked');
+      }
     } else {
       setUserAnswer(
         produce((draft) => {

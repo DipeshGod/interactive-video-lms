@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import { Enterprise } from '../models/Enterprise';
 import { CreateEnterpriseController } from '../controllers/enterprise/CreateEnterpriseController';
 import { DeleteEnterpriseController } from '../controllers/enterprise/DeleteEnterpriseController';
 import { EditEnterpriseController } from '../controllers/enterprise/EditEnterpriseController';
+import { GetEnterpriseByIdController } from '../controllers/enterprise/GetEnterpriseByIdController';
 import { GetEnterpriseController } from '../controllers/enterprise/GetEnterpriseController';
-import { Enterprise } from '../models/Enterprise';
+
 import { EnterpriseRepository } from '../repositories/EnterpriseRepository';
 
 const router = Router();
@@ -16,6 +18,10 @@ router.post('/', (req, res) =>
 
 router.get('/', (req, res) =>
   new GetEnterpriseController(enterpriseRepository).execute(req, res)
+);
+
+router.get('/:id', (req, res) =>
+  new GetEnterpriseByIdController(enterpriseRepository).execute(req, res)
 );
 
 router.put('/:id', (req, res) =>

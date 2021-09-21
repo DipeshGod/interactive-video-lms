@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router';
 import { Box, Typography, Chip } from '@material-ui/core';
 
 const EnterpriseAdminList = ({ enterprises }) => {
-  console.log('enterprise', enterprises);
+  const router = useRouter();
 
   return (
     <Box marginTop='2rem' marginBottom='2rem'>
@@ -9,6 +10,8 @@ const EnterpriseAdminList = ({ enterprises }) => {
       <Box marginTop='2rem'>
         {enterprises.map((enterprise, i) => (
           <Box
+            onClick={() => router.push(`/admin/enterprise/${enterprise._id}`)}
+            key={i}
             style={{
               backgroundColor: '#fbc02d',
               padding: '1rem',

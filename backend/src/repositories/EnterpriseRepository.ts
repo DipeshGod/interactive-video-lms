@@ -13,6 +13,17 @@ export class EnterpriseRepository implements IEnterpriseRepository {
     this.model = model;
   }
 
+  getEnterpriseById(
+    id: string
+  ): Query<IEnterpriseDoc | null, IEnterpriseDoc, {}> {
+    try {
+      const enterprise = this.model.findById(id);
+      return enterprise;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
+
   public createEnterprise(
     enterpriseData: IEnterprise
   ): Promise<IEnterpriseDoc> {
@@ -26,8 +37,8 @@ export class EnterpriseRepository implements IEnterpriseRepository {
 
   public getEnterprise(): Query<IEnterpriseDoc[], IEnterpriseDoc, {}> {
     try {
-      const enterprise = this.model.find({});
-      return enterprise;
+      const enterprises = this.model.find({});
+      return enterprises;
     } catch (err: any) {
       throw new Error(err.toString());
     }
