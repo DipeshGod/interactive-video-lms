@@ -13,8 +13,6 @@ const PopularCourses = () => {
     return <Loading />;
   }
 
-  console.log('course', data);
-
   return (
     <Box paddingBottom='2rem'>
       <Typography variant='h4' align='center' gutterBottom>

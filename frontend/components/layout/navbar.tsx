@@ -121,9 +121,18 @@ export default function Navbar() {
           </Link>
         </MenuItem>
       )}
+      {state.user && state.user.type.includes('enterprise') && (
+        <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
+          <Link href='/enterprise/dashboard'>
+            <Button variant='text' color='secondary' size='small'>
+              Enterprise
+            </Button>
+          </Link>
+        </MenuItem>
+      )}
       <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
         <Button variant='text' color='secondary' size='small'>
-          <Link href='/dashboard'>Dashboard</Link>
+          <Link href='/dashboard'>My Courses</Link>
         </Button>
       </MenuItem>
       <Box onClick={handleLogout}>
@@ -167,11 +176,21 @@ export default function Navbar() {
               <IconButton aria-label='show 4 new mails' color='inherit'>
                 <DashboardIcon />
                 <Typography style={{ marginLeft: '10px' }}>
-                  Dashboard
+                  My Courses
                 </Typography>
               </IconButton>
             </Link>
           </MenuItem>
+          {state.user.type.includes('enterprise') && (
+            <MenuItem>
+              <IconButton>
+                <DashboardIcon />
+                <Typography style={{ marginLeft: '10px' }}>
+                  Enterprise
+                </Typography>
+              </IconButton>
+            </MenuItem>
+          )}
           <MenuItem
             onClick={() => {
               handleProfileMenuOpen;

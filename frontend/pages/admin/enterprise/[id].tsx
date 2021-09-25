@@ -17,6 +17,8 @@ const EnterPriseDetails = () => {
     return <Loading />;
   }
 
+  console.log('ent', data);
+
   return (
     <Layout>
       <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>

@@ -5,15 +5,20 @@ import { DeleteEnterpriseController } from '../controllers/enterprise/DeleteEnte
 import { EditEnterpriseController } from '../controllers/enterprise/EditEnterpriseController';
 import { GetEnterpriseByIdController } from '../controllers/enterprise/GetEnterpriseByIdController';
 import { GetEnterpriseController } from '../controllers/enterprise/GetEnterpriseController';
-
 import { EnterpriseRepository } from '../repositories/EnterpriseRepository';
+import { UserRepository } from '../repositories/UserRepository';
+import { User } from '../models/User';
 
 const router = Router();
 
 const enterpriseRepository = new EnterpriseRepository(Enterprise);
+const userRepository = new UserRepository(User);
 
 router.post('/', (req, res) =>
-  new CreateEnterpriseController(enterpriseRepository).execute(req, res)
+  new CreateEnterpriseController(enterpriseRepository, userRepository).execute(
+    req,
+    res
+  )
 );
 
 router.get('/', (req, res) =>

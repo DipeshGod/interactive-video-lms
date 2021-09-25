@@ -5,7 +5,7 @@ const EnterpriseAdminList = ({ enterprises }) => {
   const router = useRouter();
 
   return (
-    <Box marginTop='2rem' marginBottom='2rem'>
+    <Box marginTop='2rem'>
       <Typography variant='h5'>ENTERPRISE CLIENTS</Typography>
       <Box marginTop='2rem'>
         {enterprises.map((enterprise, i) => (
@@ -19,6 +19,7 @@ const EnterpriseAdminList = ({ enterprises }) => {
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
+              marginBottom: '1.5rem',
             }}
           >
             <Chip label={`Client No : ${i + 1}`} color='primary' />
