@@ -79,7 +79,15 @@ const Test = () => {
         );
       } else {
         // 1.b if unchecked remove if from userselection
-        console.log('unchecked');
+        setUserAnswer(
+          produce((draft) => {
+            const selection = draft.find((selection) => selection.id === i);
+            selection.userSelection = selection.userSelection
+              .split(' ')
+              .filter((item) => item !== e.target.value)
+              .join(' ');
+          })
+        );
       }
     } else {
       setUserAnswer(

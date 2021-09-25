@@ -1,18 +1,18 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from 'react';
 import {
   Button,
   Box,
   Dialog,
   DialogContent,
   Typography,
-} from "@material-ui/core";
-import Loading from "../../Loading";
-import YesNo from "./YesNo";
-import Result from "./Result";
-import Quiz from "./Quiz";
-import Multichoice from "./MultiChoice";
-import updateUserProgress from "../../../services/client/user/updateUserProgress";
-import { useMutation, useQueryClient } from "react-query";
+} from '@material-ui/core';
+import Loading from '../../Loading';
+import YesNo from './YesNo';
+import Result from './Result';
+import Quiz from './Quiz';
+import Multichoice from './MultiChoice';
+import updateUserProgress from '../../../services/client/user/updateUserProgress';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface IExercises {
   isQuizOpen: boolean;
@@ -35,7 +35,7 @@ const Exercises = ({
   const userCourseProgressMutation = useMutation((progressData: any) =>
     updateUserProgress(
       exercises[0].association,
-      JSON.parse(localStorage.getItem("user"))._id,
+      JSON.parse(localStorage.getItem('user'))._id,
       progressData
     )
   );
@@ -50,13 +50,12 @@ const Exercises = ({
   };
 
   const renderExcercise = (exercises) => {
-    console.log("exercises:", exercises);
     if (exercises.length === 0) {
-      return <Typography variant="h6">Not availabe</Typography>;
+      return <Typography variant='h6'>Not availabe</Typography>;
     }
     const { type, question, options, answer } = exercises[questionIndex];
     switch (type) {
-      case "yesNo":
+      case 'yesNo':
         return (
           <YesNo
             question={question}
@@ -66,7 +65,7 @@ const Exercises = ({
             changeQuestion={changeQuestion}
           />
         );
-      case "quiz":
+      case 'quiz':
         return (
           <Quiz
             question={question}
@@ -77,7 +76,7 @@ const Exercises = ({
             changeQuestion={changeQuestion}
           />
         );
-      case "multipleChoice":
+      case 'multipleChoice':
         return (
           <Multichoice
             question={question}
@@ -106,7 +105,7 @@ const Exercises = ({
               score={score}
               total={exercises.length}
               courseId={exercises[0].association}
-              userId={JSON.parse(localStorage.getItem("user"))._id}
+              userId={JSON.parse(localStorage.getItem('user'))._id}
               category={exercises[0].category}
             />
           ) : (
@@ -114,10 +113,10 @@ const Exercises = ({
           )}
         </div>
 
-        <Box display="flex" justifyContent="flex-end" padding="10px">
+        <Box display='flex' justifyContent='flex-end' padding='10px'>
           <Button
-            variant="outlined"
-            size="small"
+            variant='outlined'
+            size='small'
             onClick={() => setIsQuizOpen(false)}
           >
             Cancel

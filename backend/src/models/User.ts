@@ -1,5 +1,5 @@
-import mongoose, { Schema } from "mongoose";
-import { IUser, IUserDoc, IUserModel } from "./../interfaces/models/User";
+import mongoose, { Schema } from 'mongoose';
+import { IUser, IUserDoc, IUserModel } from './../interfaces/models/User';
 
 const instructorSchema = new mongoose.Schema({
   bio: {
@@ -12,9 +12,9 @@ const instructorSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   type: {
-    type: String,
-    default: "student",
-    enum: ["superAdmin", "enterprise", "instructor", "student"],
+    type: [String],
+    default: ['student'],
+    enum: ['superAdmin', 'enterprise', 'instructor', 'student'],
   },
   name: {
     type: String,
@@ -40,13 +40,13 @@ const userSchema = new mongoose.Schema({
   },
   enterprise: {
     type: Schema.Types.ObjectId,
-    ref:'enterprise',
+    ref: 'enterprise',
   },
   isInstructor: {
     type: instructorSchema,
   },
 });
 
-const User = mongoose.model<IUserDoc, IUserModel>("user", userSchema);
+const User = mongoose.model<IUserDoc, IUserModel>('user', userSchema);
 
 export { User };

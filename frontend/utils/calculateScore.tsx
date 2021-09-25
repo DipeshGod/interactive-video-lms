@@ -18,9 +18,7 @@ const calculateScore = (userAnswer) => {
         }
         return;
       case 'multipleChoice':
-        if (
-          (_.isEqual(answer.userSelection.split(' ').sort()), answer.answer)
-        ) {
+        if (_.isEqual(answer.userSelection.split(' ').sort(), answer.answer)) {
           console.log(answer);
           score++;
         }
