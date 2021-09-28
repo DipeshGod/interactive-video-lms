@@ -14,6 +14,9 @@ export class GetEnterpriseByIdController extends BaseController {
     try {
       const id = req.params.id;
       const enterprise = await this.enterpriseRepository.getEnterpriseById(id);
+      if (!enterprise) {
+        return this.ok(res, []);
+      }
       return this.ok(res, enterprise);
     } catch (err: any) {
       return this.fail(res, err);

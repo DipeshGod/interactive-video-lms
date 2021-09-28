@@ -16,7 +16,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Badge,
   MenuItem,
   Menu,
   Avatar,
@@ -123,7 +122,7 @@ export default function Navbar() {
       )}
       {state.user && state.user.type.includes('enterprise') && (
         <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
-          <Link href='/enterprise/dashboard'>
+          <Link href={`/enterprise/dashboard?id=${state.user._id}`}>
             <Button variant='text' color='secondary' size='small'>
               Enterprise
             </Button>
