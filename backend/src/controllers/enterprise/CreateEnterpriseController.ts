@@ -26,6 +26,7 @@ export class CreateEnterpriseController extends BaseController {
       const userId = enterprise.admins[0];
       const user = await this.userRepository.getUserById(userId);
       user?.type.push('enterprise');
+      user!.enterprise = enterprise._id;
       await user?.save();
       return this.ok(res, enterprise);
     } catch (err: any) {

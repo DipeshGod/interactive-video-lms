@@ -120,9 +120,9 @@ export default function Navbar() {
           </Link>
         </MenuItem>
       )}
-      {state.user && state.user.type.includes('enterprise') && (
+      {state.user && state.user.enterprise && (
         <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
-          <Link href={`/enterprise/dashboard?id=${state.user._id}`}>
+          <Link href={`/enterprise/dashboard?id=${state.user.enterprise}`}>
             <Button variant='text' color='secondary' size='small'>
               Enterprise
             </Button>
@@ -180,7 +180,7 @@ export default function Navbar() {
               </IconButton>
             </Link>
           </MenuItem>
-          {state.user.type.includes('enterprise') && (
+          {state.user.enterprise && (
             <MenuItem>
               <IconButton>
                 <DashboardIcon />
