@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Avatar,
   Box,
@@ -17,6 +18,8 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import { useState } from 'react';
+import { CSVReader } from 'react-papaparse';
 
 const CreateEnterpriseSectionDialog = ({
   open,
@@ -26,7 +29,46 @@ const CreateEnterpriseSectionDialog = ({
   handleToggle,
   checked,
 }) => {
-  const handleCreateSection = () => {};
+  const [title, setTitle] = useState('');
+  const buttonRef = React.createRef<any>();
+
+  const handleOpenDialog = (e) => {
+    // Note that the ref is set async, so it might be null at some point
+    if (buttonRef.current) {
+      buttonRef.current.open(e);
+    }
+  };
+
+  const handleOnFileLoad = (data) => {
+    console.log('---------------------------');
+    console.log(data);
+    console.log('---------------------------');
+  };
+
+  const handleOnError = (err, file, inputElem, reason) => {
+    console.log('---------------------------');
+    console.log(err);
+    console.log('---------------------------');
+  };
+
+  const handleOnRemoveFile = (data) => {
+    console.log('---------------------------');
+    console.log(data);
+    console.log('---------------------------');
+  };
+
+  const handleRemoveFile = (e) => {
+    // Note that the ref is set async, so it might be null at some point
+    if (buttonRef.current) {
+      buttonRef.current.removeFile(e);
+    }
+  };
+
+  const handleCreateSection = () => {
+    console.log('enterprise id', enterpriseId);
+    console.log('selected courses', checked);
+    console.log('title', title);
+  };
 
   return (
     <Dialog
@@ -43,6 +85,8 @@ const CreateEnterpriseSectionDialog = ({
         <TextField
           autoFocus
           margin='dense'
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           id='name'
           label='Section Name (Eg: Semester I)'
           fullWidth
@@ -79,7 +123,61 @@ const CreateEnterpriseSectionDialog = ({
             Add Users From CSV file
           </Typography>
           <Box>
-            <input type='file' accept='.csv' name='users' />
+            <CSVReader
+              ref={buttonRef}
+              onFileLoad={handleOnFileLoad}
+              onError={handleOnError}
+              noClick
+              noDrag
+              onRemoveFile={handleOnRemoveFile}
+            >
+              {({ file }) => (
+                <aside
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    marginBottom: 10,
+                  }}
+                >
+                  <Button
+                    size='small'
+                    variant='outlined'
+                    onClick={handleOpenDialog}
+                    style={{
+                      borderRadius: 0,
+                      marginLeft: 0,
+                      marginRight: 0,
+                      width: '40%',
+                    }}
+                  >
+                    Browse file
+                  </Button>
+                  <div
+                    style={{
+                      margin: '0 10px',
+                      width: '60%',
+                      color: '#e3a507',
+                    }}
+                  >
+                    {file && file.name}
+                  </div>
+                  <Button
+                    size='small'
+                    variant='outlined'
+                    style={{
+                      borderRadius: 0,
+                      marginLeft: 0,
+                      marginRight: 0,
+                      paddingLeft: '1rem',
+                      paddingRight: '1rem',
+                    }}
+                    onClick={handleRemoveFile}
+                  >
+                    Remove
+                  </Button>
+                </aside>
+              )}
+            </CSVReader>
           </Box>
         </Box>
       </DialogContent>
