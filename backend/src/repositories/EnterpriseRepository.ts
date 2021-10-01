@@ -17,7 +17,7 @@ export class EnterpriseRepository implements IEnterpriseRepository {
     id: string
   ): Query<IEnterpriseDoc | null, IEnterpriseDoc, {}> {
     try {
-      const enterprise = this.model.findById(id);
+      const enterprise = this.model.findById(id).populate('courses');
       return enterprise;
     } catch (err: any) {
       throw new Error(err.toString());

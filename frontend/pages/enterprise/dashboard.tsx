@@ -12,16 +12,28 @@ const Dashboard = () => {
   const enterpriseId = router.query.id;
 
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState([]);
 
   const { isLoading, data } = useQuery(['enterprise', enterpriseId], () =>
     getEnterpriseById(enterpriseId)
   );
 
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log('da', data);
 
   return (
     <Layout>
@@ -45,6 +57,10 @@ const Dashboard = () => {
                 <CreateEnterpriseSectionDialog
                   open={open}
                   handleClose={() => setOpen(false)}
+                  enterpriseId={enterpriseId}
+                  courses={data.courses}
+                  checked={checked}
+                  handleToggle={handleToggle}
                 />
               </Box>
             </>

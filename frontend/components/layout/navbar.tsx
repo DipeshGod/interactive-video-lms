@@ -120,15 +120,17 @@ export default function Navbar() {
           </Link>
         </MenuItem>
       )}
-      {state.user && state.user.enterprise && (
-        <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
-          <Link href={`/enterprise/dashboard?id=${state.user.enterprise}`}>
-            <Button variant='text' color='secondary' size='small'>
-              Enterprise
-            </Button>
-          </Link>
-        </MenuItem>
-      )}
+      {state.user &&
+        state.user.enterprise &&
+        state.user.type.includes('enterprise') && (
+          <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
+            <Link href={`/enterprise/dashboard?id=${state.user.enterprise}`}>
+              <Button variant='text' color='secondary' size='small'>
+                Enterprise
+              </Button>
+            </Link>
+          </MenuItem>
+        )}
       <MenuItem style={{ padding: '0 10px' }} onClick={handleMenuClose}>
         <Button variant='text' color='secondary' size='small'>
           <Link href='/dashboard'>My Courses</Link>
@@ -180,7 +182,7 @@ export default function Navbar() {
               </IconButton>
             </Link>
           </MenuItem>
-          {state.user.enterprise && (
+          {state.user.enterprise && state.user.type.includes('enterprise') && (
             <MenuItem>
               <IconButton>
                 <DashboardIcon />
