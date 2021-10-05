@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { IEnterpriseSectionRepository } from "../../interfaces/repositories/IEnterpriseSectionRepository";
-import { BaseController } from "../BaseController";
+import { Request, Response } from 'express';
+import { IEnterpriseSectionRepository } from '../../interfaces/repositories/IEnterpriseSectionRepository';
+import { BaseController } from '../BaseController';
 
-export class GetEnterpriseSectionController extends BaseController {
+export class GetEnterpriseSectionByIdController extends BaseController {
   private enterpriseSectionRepository: IEnterpriseSectionRepository;
 
   constructor(enterpriseSectionRepository: IEnterpriseSectionRepository) {

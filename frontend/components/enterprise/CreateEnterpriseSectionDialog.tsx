@@ -20,6 +20,9 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { CSVReader } from 'react-papaparse';
+import { useMutation, useQueryClient } from 'react-query';
+import createEnterpriseSection from '../../services/client/enterpriseSection/createEnterpriseSection';
+import { toast } from 'react-toastify';
 
 const CreateEnterpriseSectionDialog = ({
   open,
@@ -30,7 +33,13 @@ const CreateEnterpriseSectionDialog = ({
   checked,
 }) => {
   const [title, setTitle] = useState('');
+  const [students, setStudents] = useState([]);
   const buttonRef = React.createRef<any>();
+
+  const queryClient = useQueryClient();
+  const enterpriseSectionMutation = useMutation((enterpriseData: any) =>
+    createEnterpriseSection(enterpriseData)
+  );
 
   const handleOpenDialog = (e) => {
     // Note that the ref is set async, so it might be null at some point
@@ -40,21 +49,15 @@ const CreateEnterpriseSectionDialog = ({
   };
 
   const handleOnFileLoad = (data) => {
-    console.log('---------------------------');
-    console.log(data);
-    console.log('---------------------------');
+    setStudents(data);
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
-    console.log('---------------------------');
     console.log(err);
-    console.log('---------------------------');
   };
 
   const handleOnRemoveFile = (data) => {
-    console.log('---------------------------');
-    console.log(data);
-    console.log('---------------------------');
+    setStudents([]);
   };
 
   const handleRemoveFile = (e) => {
@@ -65,9 +68,25 @@ const CreateEnterpriseSectionDialog = ({
   };
 
   const handleCreateSection = () => {
-    console.log('enterprise id', enterpriseId);
-    console.log('selected courses', checked);
-    console.log('title', title);
+    const data = {
+      enterprise: enterpriseId,
+      name: title,
+      courses: checked,
+      users: students,
+    };
+
+    if (title.length < 3 || checked.length < 1 || students.length < 1) {
+      toast.error('Please provide all necessary data');
+    }
+
+    enterpriseSectionMutation.mutate(data, {
+      onSuccess: () => {
+        toast.success(`Section ${title} created successfully`);
+      },
+      onError: () => {
+        toast.error('couldnt create the section');
+      },
+    });
   };
 
   return (
