@@ -66,4 +66,13 @@ export class UserRepository implements IUserRepository {
       throw new Error(err.toString());
     }
   }
+
+  public createEnterpriseSectionUsers(users: any): Promise<IUserDoc[]> {
+    try {
+      const savedUsers = this.model.insertMany(users);
+      return savedUsers;
+    } catch (err: any) {
+      throw new Error(err.toString());
+    }
+  }
 }

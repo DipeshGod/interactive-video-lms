@@ -3,19 +3,23 @@ import { CreateEnterpriseSectionController } from '../controllers/enterpriseSect
 import { GetEnterpriseSectionByIdController } from '../controllers/enterpriseSection/GetEnterpriseSectionByIdController';
 import { Enterprise } from '../models/Enterprise';
 import { EnterpriseSection } from '../models/EnterpriseSection';
+import { User } from '../models/User';
 import { EnterpriseRepository } from '../repositories/EnterpriseRepository';
 import { EnterpriseSectionRepository } from '../repositories/EnterpriseSectionRepository';
+import { UserRepository } from '../repositories/UserRepository';
 
 const router = Router();
 const enterpriseSectionRepository = new EnterpriseSectionRepository(
   EnterpriseSection
 );
 const enterpriseRepository = new EnterpriseRepository(Enterprise);
+const userRepository = new UserRepository(User);
 
 router.post('/', (req, res) =>
   new CreateEnterpriseSectionController(
     enterpriseSectionRepository,
-    enterpriseRepository
+    enterpriseRepository,
+    userRepository
   ).execute(req, res)
 );
 
