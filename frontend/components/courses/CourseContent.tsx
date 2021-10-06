@@ -111,7 +111,7 @@ const CourseContent = () => {
               />
             )}
           </AccordionDetails>
-          {state.user.type === 'superAdmin' && (
+          {state.user.type.includes('superAdmin') && (
             <AccordionDetails>
               <Link
                 href={`/admin/courseContent/module/${module._id}?category=module`}
