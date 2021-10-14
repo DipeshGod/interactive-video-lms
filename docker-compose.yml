@@ -1,0 +1,37 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3000:80'
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./backend
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    environment:
+      - PORT=5000
+      - SALT_ROUNDS=10
+      - JWT_SECRET_KEY=videolms
+      - NODEMAILER_SERVICE=Gmail
+      - NODEMAILER_USER=sg.emailsender@gmail.com
+      - NODEMAILER_PASS=testEmail
+      - CLIENT_ADDRESS=http://localhost:3000
+      - GOOGLE_CLIENT_ID=74425847240-1b681et1difjssofsonht7mu71vlbvmh.apps.googleusercontent.com
+      - FACEBOOK_CLIENT_ID=939221580248767
+      - ATLAS_URI=mongodb+srv://codewithsg:admintest@lms.hy0eu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+  client:
+    depends_on:
+      - api
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
