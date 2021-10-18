@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { IQNARepository } from "../../interfaces/repositories/IQNARepository";
-import { BaseController } from "../BaseController";
+import { Request, Response } from 'express';
+import { IQNARepository } from '../../interfaces/repositories/IQNARepository';
+import { BaseController } from '../BaseController';
 
 export class AddAnswerController extends BaseController {
   private QNARepository: IQNARepository;
@@ -10,10 +10,10 @@ export class AddAnswerController extends BaseController {
     this.QNARepository = QNARepository;
   }
 
-  protected async executeImpl(req: Request, res: Response) {
+  protected async executeImpl(req: any, res: Response) {
     try {
       const QNA = await this.QNARepository.getQNAById(req.params.id);
-      if (!QNA) return this.fail(res, "Qna not found ");
+      if (!QNA) return this.fail(res, 'Qna not found ');
       QNA.response.push({
         user: req.loggedInUser!._id,
         answer: req.body.answer,

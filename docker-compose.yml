@@ -1,19 +1,13 @@
 version: '3'
 services:
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '3000:80'
   api:
     build:
       dockerfile: Dockerfile.dev
       context: ./backend
     volumes:
-      - /app/node_modules
-      - ./backend:/app
+      - ./backend:/usr/src/app/api
+      - /usr/src/app/api/node_modules
+    container_name: node-api
     environment:
       - PORT=5000
       - SALT_ROUNDS=10
@@ -25,13 +19,18 @@ services:
       - GOOGLE_CLIENT_ID=74425847240-1b681et1difjssofsonht7mu71vlbvmh.apps.googleusercontent.com
       - FACEBOOK_CLIENT_ID=939221580248767
       - ATLAS_URI=mongodb+srv://codewithsg:admintest@lms.hy0eu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+    ports:
+      - '5000:5000'
   client:
     depends_on:
       - api
     stdin_open: true
+    container_name: client-ui
     build:
       dockerfile: Dockerfile.dev
       context: ./frontend
     volumes:
-      - /app/node_modules
-      - ./frontend:/app
+      - ./frontend:/usr/src/app/client
+      - /usr/src/app/client/node_modules
+    ports:
+      - '3000:3000'

@@ -15,7 +15,7 @@ app
       server.use(
         '/api',
         createProxyMiddleware({
-          target: 'http://localhost:5000',
+          target: 'http://node-api:5000',
           changeOrigin: true,
         })
       );
@@ -27,7 +27,7 @@ app
 
     server.listen(3000, (err) => {
       if (err) throw err;
-      console.log('> Ready on http://localhost:5000');
+      console.log('> Ready on http://localhost:3000');
     });
   })
   .catch((err) => {
