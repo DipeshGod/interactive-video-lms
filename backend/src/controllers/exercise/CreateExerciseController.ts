@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Console } from "node:console";
 import { ICourseModuleRepository } from "../../interfaces/repositories/ICourseModuleRepository";
 import { IExerciseRepository } from "../../interfaces/repositories/IExerciseRepository";
 import { BaseController } from "../BaseController";
