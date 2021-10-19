@@ -1,4 +1,5 @@
 FROM node:14.15.1
+RUN mkdir -p /usr/src/app/api
 WORKDIR /usr/src/app/api
 COPY ./package.json ./
 RUN npm install
