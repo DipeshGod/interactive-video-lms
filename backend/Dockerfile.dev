@@ -1,5 +1,7 @@
 FROM node:14.15.1
 RUN mkdir -p /usr/src/app/api
+RUN apt-get -y update
+RUN apt-get install -y ffmpeg
 WORKDIR /usr/src/app/api
 COPY ./package.json ./
 RUN npm install
