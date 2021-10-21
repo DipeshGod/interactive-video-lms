@@ -6,6 +6,7 @@ WORKDIR /usr/src/app/api
 COPY ./package.json ./
 RUN npm install
 COPY . .
+RUN mkdir -p backend/src/upload/{intro/{poster,video},editor,course}
 EXPOSE 5000
 CMD ["npm","run","start:dev"]
 
