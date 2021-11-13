@@ -46,7 +46,7 @@ const CourseCard = ({
   isFree,
   hasPreTest,
   hasFinalTest,
-}) => {
+}: any) => {
   const router = useRouter();
   const [raised, setRaised] = useState(false);
   const { state, dispatch } = useContext(UserContext);
