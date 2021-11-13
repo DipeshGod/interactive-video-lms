@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+# before_install:
+#   - docker build -t dipeshgod/frontend-test -f ./frontend/Dockerfile.dev ./frontend
+
+# scripts:
+#   - docker run dipeshgod/frontend-test npm test -- --coverage
+
+after_success:
+  - docker build -t dipeshgod/lms-frontend ./frontend
+  - docker build -t dipeshgod/lms-nginx ./nginx
+  - docker build - t dipeshgod/lms-backend ./backend
+  #  Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push dipeshgod/lms-frontend
+  - docker push dipeshgod/lms-nginx
+  - docker push dipeshgod/lms-backend
