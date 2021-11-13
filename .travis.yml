@@ -16,6 +16,8 @@ scripts:
   #  Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
+
+after_success:
   - docker push dipeshgod/lms-frontend
   - docker push dipeshgod/lms-nginx
   - docker push dipeshgod/lms-backend
