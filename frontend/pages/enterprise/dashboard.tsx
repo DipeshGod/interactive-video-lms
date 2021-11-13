@@ -6,6 +6,7 @@ import Loading from '../../components/Loading';
 import CreateEnterpriseSectionDialog from '../../components/enterprise/CreateEnterpriseSectionDialog';
 import getEnterpriseById from '../../services/client/enterprise/getEnterpriseById';
 import { useState } from 'react';
+import getSectionByEnterpriseId from '../../services/client/enterpriseSection/getSectionByEnterpriseId';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ const Dashboard = () => {
   const { isLoading, data } = useQuery(['enterprise', enterpriseId], () =>
     getEnterpriseById(enterpriseId)
   );
+
+  const { isLoading: isSectionsLoading, data: sections } = useQuery(['section', enterpriseId], () => getSectionByEnterpriseId(enterpriseId))
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -31,9 +34,11 @@ const Dashboard = () => {
     setChecked(newChecked);
   };
 
-  if (isLoading) {
+  if (isLoading || isSectionsLoading) {
     return <Loading />;
   }
+
+  console.log(sections);
 
   return (
     <Layout>
