@@ -12,10 +12,9 @@ services:
 scripts:
   - docker build -t dipeshgod/lms-frontend ./frontend
   - docker build -t dipeshgod/lms-nginx ./nginx
-  - docker build - t dipeshgod/lms-backend ./backend
-  #  Log in to the docker CLI
+  - docker build -t dipeshgod/lms-backend ./backend
+    #  Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
 
 after_success:
   - docker push dipeshgod/lms-frontend
