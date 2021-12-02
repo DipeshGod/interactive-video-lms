@@ -3,12 +3,6 @@ sudo: required
 services:
   - docker
 
-# before_install:
-#   - docker build -t dipeshgod/frontend-test -f ./frontend/Dockerfile.dev ./frontend
-
-# scripts:
-#   - docker run dipeshgod/frontend-test npm test -- --coverage
-
 scripts:
   - docker build -t dipeshgod/lms-frontend ./frontend
   - docker build -t dipeshgod/lms-nginx ./nginx
@@ -20,3 +14,15 @@ after_success:
   - docker push dipeshgod/lms-frontend
   - docker push dipeshgod/lms-nginx
   - docker push dipeshgod/lms-backend
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-south-1'
+  app: 'learning-management-system'
+  env: 'Learningmanagementsystem-env'
+  bucket_name: 'elasticbeanstalk-ap-south-1-432756220123'
+  bucket_path: 'learning-management-system'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
