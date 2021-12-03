@@ -19,7 +19,7 @@
       "name": "nginx",
       "image": "dipeshgod/lms-nginx",
       "hostname": "nginx",
-      "essential": false,
+      "essential": true,
       "memory": 128,
       "portMappings": [
         {
