@@ -3,8 +3,8 @@ import { QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import Layout from '../../components/layout';
 import CourseIntro from '../../components/courses/CourseIntro';
-import getCoursesById from '../../services/server/course/getCourseById';
 import CourseReview from '../../components/courses/CourseReview';
+import getCoursesById from '../../services/client/course/getCourseById';
 
 const CourseDetails = ({ course, id }) => {
   return (
