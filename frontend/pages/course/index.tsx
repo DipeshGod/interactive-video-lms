@@ -1,37 +1,31 @@
-import { Typography, Container, Box } from "@material-ui/core";
-import { QueryClient } from "react-query";
-import { dehydrate } from "react-query/hydration";
-import CourseCard from "../../components/courses/CourseCard";
-import Layout from "../../components/layout";
-import getCourses from "../../services/server/course/getCourses";
+import { Typography, Container, Box } from '@material-ui/core';
+import { useQuery } from 'react-query';
+import CourseCard from '../../components/courses/CourseCard';
+import Layout from '../../components/layout';
+import Loading from '../../components/Loading';
+import getCourses from '../../services/client/course/getCourses';
 
-export async function getServerSideProps({ params }) {
-  const queryClient = new QueryClient();
+const Courses = () => {
+  const { isLoading, data } = useQuery(['courses'], () => getCourses());
 
-  await queryClient.prefetchQuery("courses", () => getCourses());
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  return {
-    props: {
-      courses: dehydrate(queryClient).queries[0].state.data,
-    },
-  };
-}
-
-const Courses = ({ courses }) => {
   return (
     <Layout>
-      <div style={{ paddingTop: "2rem", minHeight: "80vh" }}>
+      <div style={{ paddingTop: '2rem', minHeight: '80vh' }}>
         <Container>
           <Box>
-            <Typography align="center" variant="h4" gutterBottom>
+            <Typography align='center' variant='h4' gutterBottom>
               OUR COURSES
             </Typography>
-            <Typography align="center" variant="h5" gutterBottom>
+            <Typography align='center' variant='h5' gutterBottom>
               Here are the courses we currenly offer. More to come !
             </Typography>
           </Box>
-          <Box marginY="3rem">
-            {courses.map((course) => (
+          <Box marginY='3rem'>
+            {data.map((course) => (
               <CourseCard
                 name={course.name}
                 description={course.description}
