@@ -33,8 +33,8 @@ export class GoogleLoginController extends BaseController {
       isInstructor: {
         bio: '',
         qualification: '',
-        enrolledCourse: []
-      }
+        enrolledCourse: [],
+      },
     };
   }
 
@@ -45,6 +45,7 @@ export class GoogleLoginController extends BaseController {
         idToken: googleIdToken,
         audience: process.env.GOOGLE_CLIENT_ID,
       });
+
       this.googleAuth.email = response.payload.email;
       if (response.payload.email_verified === false)
         return this.fail(
@@ -73,6 +74,7 @@ export class GoogleLoginController extends BaseController {
       });
       return this.ok(res, registerUser);
     } catch (err: any) {
+      console.log('errr', err);
       return this.fail(res, err.toString());
     }
   }
